@@ -37,7 +37,7 @@ public class ReflectBean {
     String table = "image_blog";
     //生成的实体类名类名
     String nameOfClass = "ImageBlogPo";
-    String entityPrefixPath = "D:/git/orangeblog/orange-blog-dao/src/main/java/";
+    String entityPrefixPath = "D:/github/ideaproject/orangeblog/orange-blog-dao/src/main/java/";
     String entityPackagePath = "com/ck/orangeblogdao/po/";
     //数据库的列名称  
     private String[] colnames; // 列名数组  
