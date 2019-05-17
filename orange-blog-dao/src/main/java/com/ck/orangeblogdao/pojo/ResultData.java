@@ -51,7 +51,7 @@ public class ResultData {
     }
 
     public static ResultData error(String msg) {
-        return error().setSuccess(false);
+        return error().setSuccess(false).setMsg(msg);
     }
 
     public String getMsg() {

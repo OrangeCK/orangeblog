@@ -33,7 +33,7 @@ public class Swagger2Config {
                 //控制暴露出去的路径下的实例
                 //如果某个接口不想暴露,可以使用以下注解
                 //@ApiIgnore 这样,该接口就不会暴露在 swagger2 的页面下
-                .apis(RequestHandlerSelectors.basePackage("com.ck.multimoduleweb.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.ck.orangeblogservice.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
