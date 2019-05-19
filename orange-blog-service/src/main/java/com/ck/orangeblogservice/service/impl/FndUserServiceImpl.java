@@ -29,15 +29,6 @@ public class FndUserServiceImpl extends ServiceImpl<FndUserMapper, FndUserPo> im
     private FndUserRoleMapper fndUserRoleMapper;
 
     @Override
-    public ResultData testMethod() {
-        Page<FndUserPo> page = new Page(1, 5);
-        QueryWrapper<FndUserPo> fndUserPoQueryWrapper = new QueryWrapper<>();
-        fndUserPoQueryWrapper.eq("enable_flag", "Y");
-        IPage<FndUserPo> iPage = fndUserMapper.selectPage(page, fndUserPoQueryWrapper);
-        return ResultData.ok(iPage);
-    }
-
-    @Override
     public ResultData getUserPage(UserVo userVo, int pageIndex, int pageSize) {
         Page<FndUserPo> page = new Page(pageIndex, pageSize);
         QueryWrapper<FndUserPo> fndUserPoQueryWrapper = new QueryWrapper<>();
@@ -52,30 +43,34 @@ public class FndUserServiceImpl extends ServiceImpl<FndUserMapper, FndUserPo> im
         FndUserPo fndUserPo = new FndUserPo();
         BeanUtils.copyProperties(userVo, fndUserPo);
         if(fndUserPo.getId() != null){
-            fndUserPo.setSUt(date);
+            fndUserPo.setsUt(date);
             fndUserMapper.updateById(fndUserPo);
             QueryWrapper<FndUserRolePo> fndUserRolePoQueryWrapper = new QueryWrapper<>();
             fndUserRolePoQueryWrapper.eq("user_id", fndUserPo.getId());
             fndUserRoleMapper.delete(fndUserRolePoQueryWrapper);
         }else{
-            fndUserPo.setSCt(date);
-            fndUserPo.setSUt(date);
+            fndUserPo.setsCt(date);
+            fndUserPo.setsUt(date);
             fndUserMapper.insert(fndUserPo);
         }
         for(FndRolePo rolePo : userVo.getRolePoList()){
             FndUserRolePo fndUserRolePo = new FndUserRolePo();
             fndUserRolePo.setUserId(fndUserPo.getId());
             fndUserRolePo.setRoleId(rolePo.getId());
-            fndUserRolePo.setSCt(date);
-            fndUserRolePo.setSUt(date);
+            fndUserRolePo.setsCt(date);
+            fndUserRolePo.setsUt(date);
             fndUserRoleMapper.insert(fndUserRolePo);
         }
         return ResultData.ok();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultData deleteUser(UserVo userVo) {
-        fndUserRoleMapper.deleteById(userVo.getId());
+        QueryWrapper<FndUserRolePo> fndUserRolePoQueryWrapper = new QueryWrapper<>();
+        fndUserRolePoQueryWrapper.eq("user_id", userVo.getId());
+        fndUserRoleMapper.delete(fndUserRolePoQueryWrapper);
+        fndUserMapper.deleteById(userVo.getId());
         return ResultData.ok();
     }
 }

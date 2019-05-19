@@ -26,19 +26,19 @@ import java.sql.SQLException;
 public class ReflectBean {  
     private Connection connection;  
     /*mysql url的连接字符串*/  
-    private static String url = "jdbc:mysql://localhost:3306/lm_dev?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8";
+    private static String url = "jdbc:mysql://47.103.17.3:3306/lm_dev?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8";
     //账号  
-    private static String user = "root";  
+    private static String user = "chenkang";
     //密码  
     private static String password = "258963";
     //mysql jdbc的java包驱动字符串  
     private String driverClassName = "com.mysql.cj.jdbc.Driver";
     //数据库中的表名  
-    String table = "b_role_perm_relation";
+    String table = "image_blog";
     //生成的实体类名类名
-    String nameOfClass = "FndRolePermPo";
-//    String entityPrefixPath = "D:/github/ideaproject/orangeblog/orange-blog-dao/src/main/java/";
-    String entityPrefixPath = "D:/git/orangeblog/orange-blog-dao/src/main/java/";
+    String nameOfClass = "ImageBlogPo";
+    String entityPrefixPath = "D:/github/ideaproject/orangeblog/orange-blog-dao/src/main/java/";
+//    String entityPrefixPath = "D:/git/orangeblog/orange-blog-dao/src/main/java/";
     String entityPackagePath = "com/ck/orangeblogdao/po/";
     //数据库的列名称  
     private String[] colnames; // 列名数组  

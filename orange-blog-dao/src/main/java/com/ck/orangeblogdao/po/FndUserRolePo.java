@@ -1,16 +1,17 @@
 package com.ck.orangeblogdao.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.ck.orangeblogdao.pojo.BasePo;
 
 import java.util.Date;
 
 @TableName(value="b_user_role_relation")
-public class FndUserRolePo{
-	/*  */
-    private Long id;
+public class FndUserRolePo extends BasePo {
 
 	/*  */
-    private Long userId;
+    private String userId;
 
 	/*  */
     private Long roleId;
@@ -19,33 +20,25 @@ public class FndUserRolePo{
     private String enableFlag;
 
 	/*  */
-    private Long sCid;
+    private String sCid;
 
 	/*  */
     private Date sCt;
 
 	/*  */
-    private Long sUid;
+    private String sUid;
 
 	/*  */
     private Date sUt;
 
-    public Long getId(){
-
-        return this.id;
+    public String getUserId() {
+        return userId;
     }
-    public void setId(Long id){
 
-        this.id = id;
-    }
-    public Long getUserId(){
-
-        return this.userId;
-    }
-    public void setUserId(Long userId){
-
+    public void setUserId(String userId) {
         this.userId = userId;
     }
+
     public Long getRoleId(){
 
         return this.roleId;
@@ -62,36 +55,38 @@ public class FndUserRolePo{
 
         this.enableFlag = enableFlag;
     }
-    public Long getSCid(){
 
-        return this.sCid;
+    public String getsCid() {
+        return sCid;
     }
-    public void setSCid(Long sCid){
 
+    public void setsCid(String sCid) {
         this.sCid = sCid;
     }
-    public Date getSCt(){
 
-        return this.sCt;
+    public Date getsCt() {
+        return sCt;
     }
-    public void setSCt(Date sCt){
 
+    public void setsCt(Date sCt) {
         this.sCt = sCt;
     }
-    public Long getSUid(){
 
-        return this.sUid;
+    public String getsUid() {
+        return sUid;
     }
-    public void setSUid(Long sUid){
 
+    public void setsUid(String sUid) {
         this.sUid = sUid;
     }
-    public Date getSUt(){
 
-        return this.sUt;
+    public Date getsUt() {
+        return sUt;
     }
-    public void setSUt(Date sUt){
 
+    public void setsUt(Date sUt) {
         this.sUt = sUt;
     }
+
+
 }

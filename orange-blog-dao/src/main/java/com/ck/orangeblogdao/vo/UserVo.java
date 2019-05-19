@@ -14,7 +14,7 @@ import java.util.List;
 public class UserVo {
 	/*  */
     @ApiModelProperty(value = "id", example = "1")
-    private Long id;
+    private String id;
 
 	/*  */
     @NotBlank(message = "登录名不能为空")
@@ -44,18 +44,6 @@ public class UserVo {
 	/*  */
     private String enableFlag;
 
-	/*  */
-    private Long sCid;
-
-	/*  */
-    private Date sCt;
-
-	/*  */
-    private Long sUid;
-
-	/*  */
-    private Date sUt;
-
     private List<FndRolePo> rolePoList = new ArrayList<>();
 
     public List<FndRolePo> getRolePoList() {
@@ -66,14 +54,14 @@ public class UserVo {
         this.rolePoList = rolePoList;
     }
 
-    public Long getId(){
-
-        return this.id;
+    public String getId() {
+        return id;
     }
-    public void setId(Long id){
 
+    public void setId(String id) {
         this.id = id;
     }
+
     public String getLoginName(){
 
         return this.loginName;
@@ -138,35 +126,5 @@ public class UserVo {
 
         this.enableFlag = enableFlag;
     }
-    public Long getsCid() {
-        return sCid;
-    }
 
-    public void setsCid(Long sCid) {
-        this.sCid = sCid;
-    }
-
-    public Date getsCt() {
-        return sCt;
-    }
-
-    public void setsCt(Date sCt) {
-        this.sCt = sCt;
-    }
-
-    public Long getsUid() {
-        return sUid;
-    }
-
-    public void setsUid(Long sUid) {
-        this.sUid = sUid;
-    }
-
-    public Date getsUt() {
-        return sUt;
-    }
-
-    public void setsUt(Date sUt) {
-        this.sUt = sUt;
-    }
 }

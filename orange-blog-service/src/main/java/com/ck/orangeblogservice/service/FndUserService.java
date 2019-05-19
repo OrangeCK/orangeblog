@@ -7,8 +7,6 @@ import com.ck.orangeblogdao.vo.UserVo;
 
 public interface FndUserService extends IService<FndUserPo> {
 
-    ResultData testMethod();
-
     ResultData getUserPage(UserVo userVo, int pageIndex, int pageSize);
 
     ResultData saveUser(UserVo userVo);

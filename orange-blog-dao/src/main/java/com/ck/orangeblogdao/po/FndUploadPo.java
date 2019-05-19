@@ -1,11 +1,10 @@
 package com.ck.orangeblogdao.po;
 
+import com.ck.orangeblogdao.pojo.BasePo;
+
 import java.util.Date;
 
-public class FndUploadPo{
-	/*  */
-    private Long id;
-
+public class FndUploadPo extends BasePo {
 	/*  */
     private String refTable;
 
@@ -28,25 +27,17 @@ public class FndUploadPo{
     private String enableFlag;
 
 	/*  */
-    private Long sCid;
+    private String sCid;
 
 	/*  */
     private Date sCt;
 
 	/*  */
-    private Long sUid;
+    private String sUid;
 
 	/*  */
     private Date sUt;
 
-    public Long getId(){
-
-        return this.id;
-    }
-    public void setId(Long id){
-
-        this.id = id;
-    }
     public String getRefTable(){
 
         return this.refTable;
@@ -103,36 +94,36 @@ public class FndUploadPo{
 
         this.enableFlag = enableFlag;
     }
-    public Long getSCid(){
 
-        return this.sCid;
+    public String getsCid() {
+        return sCid;
     }
-    public void setSCid(Long sCid){
 
+    public void setsCid(String sCid) {
         this.sCid = sCid;
     }
-    public Date getSCt(){
 
-        return this.sCt;
+    public Date getsCt() {
+        return sCt;
     }
-    public void setSCt(Date sCt){
 
+    public void setsCt(Date sCt) {
         this.sCt = sCt;
     }
-    public Long getSUid(){
 
-        return this.sUid;
+    public String getsUid() {
+        return sUid;
     }
-    public void setSUid(Long sUid){
 
+    public void setsUid(String sUid) {
         this.sUid = sUid;
     }
-    public Date getSUt(){
 
-        return this.sUt;
+    public Date getsUt() {
+        return sUt;
     }
-    public void setSUt(Date sUt){
 
+    public void setsUt(Date sUt) {
         this.sUt = sUt;
     }
 }
