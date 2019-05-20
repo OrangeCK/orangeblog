@@ -1,22 +1,31 @@
-package com.ck.orangeblogdao.po;
+package com.ck.orangeblogdao.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.ck.orangeblogdao.pojo.BasePo;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
+@ApiModel(value="ImageBlogVo",description="ImageBlog对象")
+public class ImageBlogVo{
 
-@TableName(value="image_blog")
-public class ImageBlogPo extends BasePo {
+    private String id;
+
 	/*  */
+    @ApiModelProperty(value = "标题", example = "你好")
+    @NotBlank(message = "标题不能为空")
     private String title;
 
 	/*  */
+    @NotBlank(message = "outline不能为空")
     private String outline;
 
 	/*  */
+    @NotBlank(message = "content不能为空")
     private String content;
 
 	/*  */
+    @NotBlank(message = "markdownText不能为空")
     private String markdownText;
 
 	/*  */
@@ -138,5 +147,13 @@ public class ImageBlogPo extends BasePo {
 
     public void setsUt(Date sUt) {
         this.sUt = sUt;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

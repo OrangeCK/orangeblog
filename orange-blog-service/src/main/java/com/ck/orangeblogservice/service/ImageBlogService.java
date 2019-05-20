@@ -1,0 +1,16 @@
+package com.ck.orangeblogservice.service;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.ck.orangeblogdao.po.ImageBlogPo;
+import com.ck.orangeblogdao.pojo.ResultData;
+import com.ck.orangeblogdao.vo.ImageBlogVo;
+
+public interface ImageBlogService extends IService<ImageBlogPo> {
+
+    ResultData imagePageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize);
+
+    ResultData saveImageBlog(ImageBlogVo imageBlogVo);
+
+    ResultData deleteImageBlog(ImageBlogVo imageBlogVo);
+
+}
