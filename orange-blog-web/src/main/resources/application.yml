@@ -48,6 +48,7 @@ mybatis-plus:
     #配置JdbcTypeForNull, oracle数据库必须配置
     jdbc-type-for-null: "null"
 
+# 如果想不显示大量自动配置的相关信息
 logging:
   level:
     org:

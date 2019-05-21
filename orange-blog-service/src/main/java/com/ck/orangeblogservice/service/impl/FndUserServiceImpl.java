@@ -73,4 +73,11 @@ public class FndUserServiceImpl extends ServiceImpl<FndUserMapper, FndUserPo> im
         fndUserMapper.deleteById(userVo.getId());
         return ResultData.ok();
     }
+
+    @Override
+    public FndUserPo loginAccountByLoginName(String name) {
+        QueryWrapper<FndUserPo> fndUserPoQueryWrapper = new QueryWrapper<>();
+        fndUserPoQueryWrapper.eq("login_name", name);
+        return fndUserMapper.selectOne(fndUserPoQueryWrapper);
+    }
 }

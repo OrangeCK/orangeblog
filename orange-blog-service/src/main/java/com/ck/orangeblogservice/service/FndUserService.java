@@ -12,4 +12,6 @@ public interface FndUserService extends IService<FndUserPo> {
     ResultData saveUser(UserVo userVo);
 
     ResultData deleteUser(UserVo userVo);
+
+    FndUserPo loginAccountByLoginName(String name);
 }

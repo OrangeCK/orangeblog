@@ -8,11 +8,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.BeanUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +22,7 @@ public class FndUserController {
     @Autowired
     private FndUserService fndUserService;
 
+    @RequiresPermissions("employeePageList")
     @RequestMapping(value = "/employeePageList", method = RequestMethod.POST)
     @ApiOperation(value = "用户分页查询", notes = "用户分页查询", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @ApiImplicitParams({
@@ -37,6 +37,7 @@ public class FndUserController {
         return fndUserService.getUserPage(userVo, pageIndex, pageSize);
     }
 
+    @RequiresPermissions("saveEmployee")
     @RequestMapping(value = "/saveEmployee", method = RequestMethod.POST)
     @ApiOperation(value = "保存用户", notes = "保存用户", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @ApiImplicitParam(name = "userVo", value = "用户信息",paramType = CommonConstant.PARAM_TYPE_BODY, dataType = "UserVo")
@@ -48,6 +49,7 @@ public class FndUserController {
         return fndUserService.saveUser(userVo);
     }
 
+    @RequiresPermissions("disableEmployee")
     @RequestMapping(value = "/disableEmployee", method = RequestMethod.POST)
     @ApiOperation(value = "删除用户", notes = "删除用户", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @ApiImplicitParam(name = "id", value = "用户id",paramType = CommonConstant.PARAM_TYPE_QUERY, dataType = CommonConstant.DATA_TYPE_STRING)

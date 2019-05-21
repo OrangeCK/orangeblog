@@ -6,6 +6,13 @@ import com.ck.orangeblogdao.po.FndPermissionPo;
 import com.ck.orangeblogservice.service.FndPermissionService;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class FndPermissionServiceImpl extends ServiceImpl<FndPermissionMapper, FndPermissionPo> implements FndPermissionService {
+
+    @Override
+    public Set<String> findAllPermissionsById(String id) {
+        return null;
+    }
 }
