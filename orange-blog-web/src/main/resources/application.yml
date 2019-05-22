@@ -12,7 +12,7 @@ server:
 #spring
 spring:
   application:
-    name: multi-module-web
+    name: orange-blog-web
   devtools:
     restart:
       enabled: true
