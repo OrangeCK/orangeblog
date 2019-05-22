@@ -16,7 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/employee")
+@RequestMapping("/orangeblog/employee")
 @Api(description = "用户管理")
 public class FndUserController {
     @Autowired

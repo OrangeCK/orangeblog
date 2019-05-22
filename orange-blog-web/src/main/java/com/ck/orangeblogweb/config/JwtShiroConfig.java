@@ -1,6 +1,7 @@
 package com.ck.orangeblogweb.config;
 
 import com.ck.orangeblogweb.filter.JwtFilter;
+import com.ck.orangeblogweb.filter.TestFilter;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SecurityManager;
@@ -34,6 +35,11 @@ public class JwtShiroConfig {
         logger.info("------------------------shiro filter------------------------");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
+        // 添加自己的过滤器并且取名为jwt
+        Map<String, Filter> filterMap = new HashMap<String, Filter>(1);
+        filterMap.put("jwt", new JwtFilter());
+        shiroFilterFactoryBean.setFilters(filterMap);
+        // 过滤链定义，从上向下顺序执行，一般将/**放在最为下边
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/static/**", "anon");
         filterChainDefinitionMap.put("/images/**", "anon");
@@ -44,14 +50,8 @@ public class JwtShiroConfig {
         filterChainDefinitionMap.put("/swagger-resources/**", "anon");
         filterChainDefinitionMap.put("/v2/api-docs", "anon");
         filterChainDefinitionMap.put("/webjars/springfox-swagger-ui/**", "anon");
+        filterChainDefinitionMap.put("/orangeblog/**", "jwt");
         filterChainDefinitionMap.put("/**", "authc");
-        logger.info("所有权限:{}", filterChainDefinitionMap);
-        // 添加自己的过滤器并且取名为jwt
-        Map<String, Filter> filterMap = new HashMap<String, Filter>(1);
-        filterMap.put("jwt", new JwtFilter());
-        shiroFilterFactoryBean.setFilters(filterMap);
-        // 过滤链定义，从上向下顺序执行，一般将/**放在最为下边
-        filterChainDefinitionMap.put("/**", "jwt");
         // 未授权界面;
         shiroFilterFactoryBean.setUnauthorizedUrl("/login/unAuthorization");
         shiroFilterFactoryBean.setLoginUrl("/login/unAuthorization");

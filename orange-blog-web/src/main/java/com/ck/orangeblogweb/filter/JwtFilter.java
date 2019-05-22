@@ -63,22 +63,18 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         // 得到header中的token
         String token = httpServletRequest.getHeader(LmEnum.AUTHORIZATION.getName());
-        try {
-            // 获取用户名和密码
-            String loginName = JwtUtil.getLoginName(token, LmEnum.LOGIN_NAME.getName());
-            if(loginName == null){
-                throw new AuthenticationException("token身份认证失败，token格式不正确");
-            }
-            // 验证token是否失效
-            if(!JwtUtil.verify(token, loginName)){
-                throw new IncorrectCredentialsException("token身份认证失败，token失效");
-            }
-            // 提交给realm进行登入，如果错误他会抛出异常并被捕获
-            JwtToken jwtToken = new JwtToken(token);
-            getSubject(request, response).login(jwtToken);
-        } catch (Exception e) {
-            logger.warn(e.getMessage());
+        // 获取用户名和密码
+        String loginName = JwtUtil.getLoginName(token, LmEnum.LOGIN_NAME.getName());
+        if(loginName == null){
+            throw new AuthenticationException("token身份认证失败，token格式不正确");
         }
+        // 验证token是否失效
+        if(!JwtUtil.verify(token, loginName)){
+            throw new IncorrectCredentialsException("token身份认证失败，token失效");
+        }
+        // 提交给realm进行登入，如果错误他会抛出异常并被捕获
+        JwtToken jwtToken = new JwtToken(token);
+        getSubject(request, response).login(jwtToken);
         // 如果没有抛出异常则代表登入成功，返回true
         return true;
     }

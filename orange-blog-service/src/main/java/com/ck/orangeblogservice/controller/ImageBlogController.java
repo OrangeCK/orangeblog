@@ -15,7 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/image")
+@RequestMapping("/orangeblog/image")
 @Api(description = "blog管理")
 public class ImageBlogController {
     @Autowired
