@@ -7,10 +7,10 @@
     <meta name="referrer" content="never">
     <meta name="keywords" content="">
 	<meta name="description" content="" />
-	<link th:href="@{/css/carousel.css}" rel="styleSheet" type="text/css">
-	<link th:href="@{/css/common.css}" rel="styleSheet" type="text/css">
-	<link th:href="@{/css/cikonss.css}" rel="styleSheet" type="text/css">
-	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/carousel.css}" rel="styleSheet" type="text/css"/>
+	<link th:href="@{/css/common.css}" rel="styleSheet" type="text/css"/>
+	<link th:href="@{/css/cikonss.css}" rel="styleSheet" type="text/css"/>
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
 	<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <script th:src="@{/js/lm.js}"></script>
     <script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
@@ -63,7 +63,7 @@
   <body>
     <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="background:linear-gradient(to bottom right,#524E4D, #626063, #898989, #CBD0D3)!important">
-    <a class="navbar-brand" href="#"><span th:text="${total}">橙子</span></a>
+    <a class="navbar-brand" href="#"><span>橙子</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -147,10 +147,10 @@
         <div th:each="blog,stat : ${rows}">
             <div class="row featurette"  th:if="${stat.odd}" >
                 <div class="col-md-7">
-                    <h2 class="featurette-heading blog_head" th:text="${blog.title}" th:onclick="|javascript:clickBlog(${blog.id})|">标题错误 <span class="text-muted" th:text="${blog.outline}">副标题错误</span></h2>
+                    <h2 class="featurette-heading blog_head" th:text="${blog.title}" th:data-id="${blog.id}" onclick="clickBlog(this.getAttribute('data-id'))">标题错误 <span class="text-muted" th:text="${blog.outline}">副标题错误</span></h2>
                     <p class="lead" th:utext="${blog.outline}">内容未知.</p>
                 </div>
-                <div class="col-md-5 imghover" th:onclick="|javascript:clickBlog(${blog.id})|">
+                <div class="col-md-5 imghover" th:data-id="${blog.id}" onclick="clickBlog(this.getAttribute('data-id'))">
                     <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 替换">
                         <defs>
                             <pattern id="imgId6" width="1" height="1">
@@ -164,10 +164,10 @@
 
             <div class="row featurette" th:if="${stat.even}" >
                 <div class="col-md-7 order-md-2">
-                    <h2 class="featurette-heading blog_head" th:text="${blog.title}" th:onclick="'clickBlog(\''+${blog.id}+'\')'">标题错误. <span class="text-muted" th:text="${blog.outline}">副标题错误.</span></h2>
+                    <h2 class="featurette-heading blog_head" th:text="${blog.title}" th:data-id="${blog.id}" onclick="clickBlog(this.getAttribute('data-id'))">标题错误. <span class="text-muted" th:text="${blog.outline}">副标题错误.</span></h2>
                     <p class="lead" th:utext="${blog.outline}">内容未知.</p>
                 </div>
-                <div class="col-md-5 imghover" th:onclick="'clickBlog(\''+${blog.id}+'\')'">
+                <div class="col-md-5 imghover" th:data-id="${blog.id}" onclick="clickBlog(this.getAttribute('data-id'))">
                     <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 替换">
                         <defs>
                             <pattern id="imgId7" width="1" height="1">

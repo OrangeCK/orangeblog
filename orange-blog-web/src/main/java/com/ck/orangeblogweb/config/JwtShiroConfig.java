@@ -39,8 +39,8 @@ public class JwtShiroConfig {
         Map<String, Filter> filterMap = new HashMap<String, Filter>(1);
         filterMap.put("jwt", new JwtFilter());
         shiroFilterFactoryBean.setFilters(filterMap);
-        // 过滤链定义，从上向下顺序执行，一般将/**放在最为下边
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
+        // 过滤链定义，从上向下顺序执行，一般将/**放在最为下边
         filterChainDefinitionMap.put("/static/**", "anon");
         filterChainDefinitionMap.put("/images/**", "anon");
         filterChainDefinitionMap.put("/index/**", "anon");
