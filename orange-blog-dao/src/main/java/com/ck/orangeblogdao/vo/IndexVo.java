@@ -1,13 +1,14 @@
-package com.ck.orangeblogdao.po;
+package com.ck.orangeblogdao.vo;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.ck.orangeblogdao.pojo.BasePo;
+import io.swagger.annotations.ApiModel;
 
 import java.util.Date;
 
-@TableName(value="image_blog")
-public class ImageBlogPo extends BasePo {
+@ApiModel(value="IndexVo",description="主页对象")
+public class IndexVo {
+
+    private String id;
+
 	/*  */
     private String title;
 
@@ -21,13 +22,10 @@ public class ImageBlogPo extends BasePo {
     private String markdownText;
 
 	/*  */
-    private String categoryId;
+    private String category;
 
-    /*  */
-    private String categoryName;
-
-    /*  */
-    private String authorName;
+	/*  */
+    private String defaultImageFlag;
 
 	/*  */
     private String imageUrl;
@@ -39,7 +37,6 @@ public class ImageBlogPo extends BasePo {
     private String sCid;
 
 	/*  */
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date sCt;
 
 	/*  */
@@ -80,31 +77,22 @@ public class ImageBlogPo extends BasePo {
 
         this.markdownText = markdownText;
     }
+    public String getCategory(){
 
-    public String getCategoryId() {
-        return categoryId;
+        return this.category;
     }
+    public void setCategory(String category){
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+        this.category = category;
     }
+    public String getDefaultImageFlag(){
 
-    public String getCategoryName() {
-        return categoryName;
+        return this.defaultImageFlag;
     }
+    public void setDefaultImageFlag(String defaultImageFlag){
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+        this.defaultImageFlag = defaultImageFlag;
     }
-
-    public String getAuthorName() {
-        return authorName;
-    }
-
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
-
     public String getImageUrl(){
 
         return this.imageUrl;
@@ -152,5 +140,13 @@ public class ImageBlogPo extends BasePo {
 
     public void setsUt(Date sUt) {
         this.sUt = sUt;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

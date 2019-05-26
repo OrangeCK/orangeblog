@@ -43,6 +43,11 @@ public class JwtShiroConfig {
         // 过滤链定义，从上向下顺序执行，一般将/**放在最为下边
         filterChainDefinitionMap.put("/static/**", "anon");
         filterChainDefinitionMap.put("/images/**", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/fonts/**", "anon");
+        filterChainDefinitionMap.put("/image/**", "anon");
+        filterChainDefinitionMap.put("/images/**", "anon");
         filterChainDefinitionMap.put("/index/**", "anon");
         filterChainDefinitionMap.put("/blog/**", "anon");
         filterChainDefinitionMap.put("/login/**", "anon");
@@ -54,7 +59,7 @@ public class JwtShiroConfig {
         filterChainDefinitionMap.put("/**", "authc");
         // 未授权界面;
         shiroFilterFactoryBean.setUnauthorizedUrl("/login/unAuthorization");
-        shiroFilterFactoryBean.setLoginUrl("/login/unAuthorization");
+//        shiroFilterFactoryBean.setLoginUrl("/login/unAuthorization");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

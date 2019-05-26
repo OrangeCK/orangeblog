@@ -84,7 +84,7 @@ h2 {
   border: 1px solid rgb(193, 193, 193);
   background: linear-gradient(to top right,#524E4D, #626063, #898989, #CBD0D3)!important;
   border-radius: 5px;
-  padding: 0 20px;
+  padding: 0.2em 0.5em;
 }
 h3 {
   font-size: 1.2em;

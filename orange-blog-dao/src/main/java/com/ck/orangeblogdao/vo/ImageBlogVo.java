@@ -1,6 +1,5 @@
 package com.ck.orangeblogdao.vo;
 
-import com.ck.orangeblogdao.pojo.BasePo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -28,11 +27,14 @@ public class ImageBlogVo{
     @NotBlank(message = "markdownText不能为空")
     private String markdownText;
 
-	/*  */
-    private String category;
+    /*  */
+    private String categoryId;
 
-	/*  */
-    private String defaultImageFlag;
+    /*  */
+    private String categoryName;
+
+    /*  */
+    private String authorName;
 
 	/*  */
     private String imageUrl;
@@ -84,22 +86,31 @@ public class ImageBlogVo{
 
         this.markdownText = markdownText;
     }
-    public String getCategory(){
 
-        return this.category;
+    public String getCategoryId() {
+        return categoryId;
     }
-    public void setCategory(String category){
 
-        this.category = category;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
-    public String getDefaultImageFlag(){
 
-        return this.defaultImageFlag;
+    public String getCategoryName() {
+        return categoryName;
     }
-    public void setDefaultImageFlag(String defaultImageFlag){
 
-        this.defaultImageFlag = defaultImageFlag;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
     public String getImageUrl(){
 
         return this.imageUrl;

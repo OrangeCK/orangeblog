@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ck.orangeblogdao.mapper.FndPermissionMapper" >
     <!--获得用户所有权限-->
-    <select id="findAllPermissionsById" parameterType="java.lang.Long" resultType="java.lang.String">
+    <select id="findAllPermissionsById" parameterType="java.lang.String" resultType="java.lang.String">
         SELECT
             fp.perm_code
         FROM

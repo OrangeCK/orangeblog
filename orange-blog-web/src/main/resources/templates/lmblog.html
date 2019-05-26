@@ -65,9 +65,9 @@
         <h1>log4j2的配置，不同级别日志保存在不同文件夹基于springboot</h1>
     </div>
     <div style="font-size:0.9rem;margin:0.5em 0.1em 0.1em 0.5em;color:grey;">
-      <label>2019年1月11日22:49:51</label>
-      <label style="margin:0 0 0 5em">栗子味橙子</label>
-      <label style="margin:0 0 0 5em">标签</label>
+      <span class="label label-info" th:text="${#dates.format(blog.sCt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+      <span class="label label-info" style="margin:0 0 0 5em" th:text="${blog.sCid}"></span>
+      <span class="label label-info" style="margin:0 0 0 5em" th:text="${blog.categoryName}">标签</span>
   </div>
     <hr style="border-bottom: 1px solid #ddd;">
   <div class="container marketing" th:utext="${blog.content}">

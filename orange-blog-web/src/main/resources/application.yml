@@ -23,7 +23,7 @@ spring:
       enabled: true
   # 环境 dev|test|prod
   profiles:
-    active: dev
+    active: prod
 
 # 配置mybatis-plus
 mybatis-plus:

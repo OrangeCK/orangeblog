@@ -74,7 +74,11 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         }
         // 提交给realm进行登入，如果错误他会抛出异常并被捕获
         JwtToken jwtToken = new JwtToken(token);
-        getSubject(request, response).login(jwtToken);
+        try {
+            getSubject(request, response).login(jwtToken);
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+        }
         // 如果没有抛出异常则代表登入成功，返回true
         return true;
     }

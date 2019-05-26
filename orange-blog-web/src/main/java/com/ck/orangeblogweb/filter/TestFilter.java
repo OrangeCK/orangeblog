@@ -2,6 +2,7 @@ package com.ck.orangeblogweb.filter;
 
 import com.ck.orangeblogcommon.exception.SysException;
 import org.apache.shiro.web.filter.AccessControlFilter;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
 
 import javax.servlet.ServletRequest;

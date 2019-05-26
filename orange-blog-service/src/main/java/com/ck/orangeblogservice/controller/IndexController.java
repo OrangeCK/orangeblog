@@ -25,10 +25,10 @@ public class IndexController {
     private ImageBlogService imageBlogService;
 
     /**
-     * 分页查询
+     * 主页的blogs展示
      * @return
      */
-    @RequestMapping(value = "/imagePageList", method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "/indexBlogs", method = RequestMethod.GET)
     public ModelAndView imagePageList(){
         ImageBlogVo imageBlogVo = new ImageBlogVo();
         ResultData resultData = imageBlogService.imagePageList(imageBlogVo, 1, 10);

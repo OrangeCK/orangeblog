@@ -6,11 +6,11 @@
         <groupId>com.ck</groupId>
         <artifactId>orange-blog</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ck</groupId>
     <artifactId>orange-blog-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>orange-blog-service</name>
     <description>Demo project for Spring Boot</description>
 
