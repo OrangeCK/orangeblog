@@ -35,14 +35,14 @@ public class JwtShiroConfig {
         logger.info("------------------------shiro filter------------------------");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        // 添加自己的过滤器并且取名为jwt
+        // 自定义过滤器
         Map<String, Filter> filterMap = new HashMap<String, Filter>(1);
         filterMap.put("jwt", new JwtFilter());
         shiroFilterFactoryBean.setFilters(filterMap);
+        // 拦截器
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 过滤链定义，从上向下顺序执行，一般将/**放在最为下边
         filterChainDefinitionMap.put("/static/**", "anon");
-        filterChainDefinitionMap.put("/images/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/fonts/**", "anon");

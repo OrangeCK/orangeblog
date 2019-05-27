@@ -26,7 +26,9 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <!--指定Maven用什么编码来读取源码及文档 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <start-class>com.ck.orangeblogweb.OrangeBlogWebApplication</start-class>
     </properties>
     <!--只是声明依赖，并不实现引入，因此子项目需要显示的声明需要用的依赖。如果不在子项目中声明依赖，
     是不会从父项目中继承下来的；只有在子项目中写了该依赖项，并且没有指定具体版本，才会从父项目中继承该项，

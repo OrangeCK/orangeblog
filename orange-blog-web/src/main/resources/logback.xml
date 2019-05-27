@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration packages="com.ck.multimodulecommon.converter">
+<configuration packages="com.ck.orangeblogweb.converter">
     <conversionRule conversionWord="ip" converterClass="com.ck.orangeblogweb.converter.IpConverter" />
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
     <property resource="config/sys.properties" />
