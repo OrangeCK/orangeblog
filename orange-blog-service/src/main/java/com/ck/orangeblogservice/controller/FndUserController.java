@@ -22,7 +22,6 @@ public class FndUserController {
     @Autowired
     private FndUserService fndUserService;
 
-    @RequiresPermissions("employeePageList")
     @RequestMapping(value = "/employeePageList", method = RequestMethod.POST)
     @ApiOperation(value = "用户分页查询", notes = "用户分页查询", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @ApiImplicitParams({
@@ -37,7 +36,6 @@ public class FndUserController {
         return fndUserService.getUserPage(userVo, pageIndex, pageSize);
     }
 
-    @RequiresPermissions("saveEmployee")
     @RequestMapping(value = "/saveEmployee", method = RequestMethod.POST)
     @ApiOperation(value = "保存用户", notes = "保存用户", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @ApiImplicitParam(name = "userVo", value = "用户信息",paramType = CommonConstant.PARAM_TYPE_BODY, dataType = "UserVo")
@@ -49,7 +47,6 @@ public class FndUserController {
         return fndUserService.saveUser(userVo);
     }
 
-    @RequiresPermissions("disableEmployee")
     @RequestMapping(value = "/disableEmployee", method = RequestMethod.POST)
     @ApiOperation(value = "删除用户", notes = "删除用户", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @ApiImplicitParam(name = "id", value = "用户id",paramType = CommonConstant.PARAM_TYPE_QUERY, dataType = CommonConstant.DATA_TYPE_STRING)

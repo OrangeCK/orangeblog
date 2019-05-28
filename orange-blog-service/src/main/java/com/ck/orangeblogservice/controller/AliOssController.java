@@ -36,7 +36,6 @@ public class AliOssController {
      * @param multipartFile
      * @return
      */
-    @RequiresPermissions("uploadToOss")
     @RequestMapping(value = "/uploadToOss", method = RequestMethod.POST)
     @ResponseBody
     public ResultData uploadOss(@RequestParam("multipartFile") MultipartFile multipartFile, HttpServletRequest request){

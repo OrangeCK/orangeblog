@@ -1,7 +1,8 @@
 package com.ck.orangeblogweb.config;
 
 import com.ck.orangeblogweb.filter.JwtFilter;
-import com.ck.orangeblogweb.filter.TestFilter;
+import com.ck.orangeblogweb.filter.MyAuthenticationFilter;
+import com.ck.orangeblogweb.filter.MyAuthorizaionFilter;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SecurityManager;
@@ -38,6 +39,8 @@ public class JwtShiroConfig {
         // 自定义过滤器
         Map<String, Filter> filterMap = new HashMap<String, Filter>(1);
         filterMap.put("jwt", new JwtFilter());
+        filterMap.put("myAuthc", new MyAuthenticationFilter());
+        filterMap.put("myAuthz", new MyAuthorizaionFilter());
         shiroFilterFactoryBean.setFilters(filterMap);
         // 拦截器
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
@@ -55,7 +58,7 @@ public class JwtShiroConfig {
         filterChainDefinitionMap.put("/swagger-resources/**", "anon");
         filterChainDefinitionMap.put("/v2/api-docs", "anon");
         filterChainDefinitionMap.put("/webjars/springfox-swagger-ui/**", "anon");
-        filterChainDefinitionMap.put("/orangeblog/**", "jwt");
+        filterChainDefinitionMap.put("/orangeblog/**", "myAuthc,myAuthz");
         filterChainDefinitionMap.put("/**", "authc");
         // 未授权界面;
         shiroFilterFactoryBean.setUnauthorizedUrl("/login/unAuthorization");

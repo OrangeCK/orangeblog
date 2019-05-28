@@ -3,9 +3,12 @@ package com.ck.orangeblogservice.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ck.orangeblogcommon.constant.CommonConstant;
+import com.ck.orangeblogcommon.constant.LmEnum;
 import com.ck.orangeblogcommon.utils.JwtUtil;
+import com.ck.orangeblogcommon.utils.RedisUtil;
 import com.ck.orangeblogdao.po.FndUserPo;
 import com.ck.orangeblogdao.pojo.ResultData;
+import com.ck.orangeblogservice.service.FndPermissionService;
 import com.ck.orangeblogservice.service.FndUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -19,15 +22,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/login")
 @Api(description = "登陆入口")
 public class LoginController {
     private final static Logger logger = LoggerFactory.getLogger(LoginController.class);
-
     @Autowired
     private FndUserService fndUserService;
+    @Autowired
+    private FndPermissionService fndPermissionService;
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      * 登录
@@ -47,8 +54,14 @@ public class LoginController {
         }else if(StringUtils.isEmpty(employee.getPassword()) || !employee.getPassword().equals(password)){
             return ResultData.error("密码错误");
         }else{
+            Set<String> permList = fndPermissionService.findAllPermissionsById(employee.getId());
+            String[] arr = new String[permList.size()];
+            permList.toArray(arr);
+            String authorization = JwtUtil.sign(loginName, arr);
+            redisUtil.hset(authorization, LmEnum.USER_INFO.getName(), JSONObject.toJSONString(employee), LmEnum.LOGIN_INFO_EXPIRE.getNum());
+            redisUtil.hset(authorization, LmEnum.PERMISSIONS.getName(), permList, LmEnum.LOGIN_INFO_EXPIRE.getNum());
             Map<String, Object> map = new HashMap<>();
-            map.put("Authorization", JwtUtil.sign(loginName));
+            map.put("Authorization", authorization);
             map.put("Refresh_Token", JwtUtil.refreshSign(loginName, employee.getPassword()));
             map.put("loginName",loginName);
             map.put("id",employee.getId());

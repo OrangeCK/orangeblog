@@ -7,6 +7,8 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author ck
@@ -86,6 +88,15 @@ public class JwtUtil {
         }
     }
 
+    public static String[] getValue(String token, String name) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getClaim(name).asArray(String.class);
+        } catch (JWTDecodeException e) {
+            return null;
+        }
+    }
+
     /**
      *
      * @param loginName 登录名
@@ -93,7 +104,7 @@ public class JwtUtil {
      */
     public static String sign(String loginName) {
         String secret = JwtUtil.SECRET;
-        Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
+        Date date = new Date(System.currentTimeMillis() + REFRESH_EXPIRE_TIME);
         // 使用secret秘钥进行HS256签名
         Algorithm algorithm = Algorithm.HMAC256(secret);
         // 附带loginName信息
@@ -108,6 +119,7 @@ public class JwtUtil {
     /**
      *
      * @param loginName 登录名
+     * @param password 密码
      * @return token校验码
      */
     public static String refreshSign(String loginName, String password) {
@@ -119,6 +131,26 @@ public class JwtUtil {
         return JWT.create()
                 .withClaim("loginName", loginName)
                 .withClaim("password", password)
+                // 到期时间
+                .withExpiresAt(refreshDate)
+                // 创建一个新的JWT，并使用给定的算法进行标记
+                .sign(algorithm);
+    }
+
+    /**
+     *
+     * @param loginName 登录名
+     * @return token校验码
+     */
+    public static String sign(String loginName, String[] permList) {
+        String secret = JwtUtil.SECRET;
+        Date refreshDate = new Date(System.currentTimeMillis() + REFRESH_EXPIRE_TIME);
+        // 使用secret秘钥进行HS256签名
+        Algorithm algorithm = Algorithm.HMAC256(secret);
+        // 附带loginName信息
+        return JWT.create()
+                .withClaim("loginName", loginName)
+                .withArrayClaim("permList", permList)
                 // 到期时间
                 .withExpiresAt(refreshDate)
                 // 创建一个新的JWT，并使用给定的算法进行标记

@@ -4,7 +4,7 @@
     <!--获得用户所有权限-->
     <select id="findAllPermissionsById" parameterType="java.lang.String" resultType="java.lang.String">
         SELECT
-            fp.perm_code
+            fp.resources
         FROM
             b_user_role_relation brr,
             m_fnd_role fr,

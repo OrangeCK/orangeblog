@@ -58,6 +58,6 @@ public class SysExceptionHandler {
     @ResponseBody
     public ResultData page403(HttpServletResponse response) {
         response.setStatus(403);
-        return ResultData.error("用户没有访问权限").setCode(403);
+        return ResultData.error("Sorry，您没有接口访问权限").setCode(403);
     }
 }
