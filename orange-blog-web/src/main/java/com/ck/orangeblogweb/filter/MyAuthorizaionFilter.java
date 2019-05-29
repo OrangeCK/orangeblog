@@ -39,11 +39,8 @@ public class MyAuthorizaionFilter extends AccessControlFilter {
                 .orElse(false);
         if(permSetExist){
             String servletPath = httpServletRequest.getServletPath();
-//        String[] permArray = JwtUtil.getValue(token, "permList");
-            FndUserPo emp = JSONObject.parseObject(redisUtil.hget(token, LmEnum.USER_INFO.getName()).toString(), new TypeReference<FndUserPo>(){});
+//            FndUserPo emp = JSONObject.parseObject(redisUtil.hget(token, LmEnum.USER_INFO.getName()).toString(), new TypeReference<FndUserPo>(){});
             Set<String> permissionSet = JSONObject.parseObject(JSON.toJSONString(redisUtil.hget(token, LmEnum.PERMISSIONS.getName())), new TypeReference<Set<String>>(){});
-//            Set<String> permissionSet = new HashSet<>(Arrays.asList(JSON.toJSONString(redisUtil.hget(token, LmEnum.PERMISSIONS.getName()))));
-//            Set<String> permissionSet = new HashSet<>(Arrays.asList(permArray));
             if(!permissionSet.contains(servletPath)){
                 WebUtils.toHttp(servletResponse).sendError(403, "无接口访问权限");
                 return false;

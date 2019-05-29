@@ -262,6 +262,18 @@ public class AliyunOssClientUtil {
         return null;
     }
 
+    /**
+     * 外部调用删除的方法
+     * @param key 文件名
+     */
+    public static void invokeOssDelete(String key){
+        //初始化OSSClient
+        OSSClient ossClient = AliyunOssClientUtil.getOSSClient();
+        AliyunOssClientUtil.deleteFile(ossClient, BACKET_NAME, FOLDER, key);
+        // 关闭OSSClient
+        ossClient.shutdown();
+    }
+
     //测试
     public static void main(String[] args) {
         //初始化OSSClient

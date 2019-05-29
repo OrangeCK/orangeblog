@@ -3,9 +3,12 @@ package com.ck.orangeblogweb.config;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.ck.orangeblogcommon.annotation.CurrentUserHandlerMethodArgumentResolver;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -18,16 +21,18 @@ import java.util.List;
  * @date 2019/5/25 0025
  * Description : web 配置
  */
-//@Configuration
+@Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/js/");
-//        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/css/");
-//        registry.addResourceHandler("/fonts/**").addResourceLocations("classpath:/fonts/");
-//        registry.addResourceHandler("/image/**").addResourceLocations("classpath:/image/");
-//    }
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(currentUserHandlerMethodArgumentResolver());
+    }
+
+    @Bean
+    public CurrentUserHandlerMethodArgumentResolver currentUserHandlerMethodArgumentResolver() {
+        return new CurrentUserHandlerMethodArgumentResolver();
+    }
 
     /**
      * 使用阿里 fastjson 作为JSON MessageConverter

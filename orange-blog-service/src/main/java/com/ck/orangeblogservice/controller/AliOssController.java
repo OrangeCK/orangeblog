@@ -62,4 +62,11 @@ public class AliOssController {
         return ResultData.ok("http://" + LmEnum.BACKET_NAME.getName() + "." + LmEnum.ENDPOINT.getName() + "/" + LmEnum.FOLDER.getName() + rootFileName);
     }
 
+    @RequestMapping(value = "/deleteFromOss", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultData deleteFromOss(@RequestParam String key){
+        AliyunOssClientUtil.invokeOssDelete(key);
+        return ResultData.ok();
+    }
+
 }

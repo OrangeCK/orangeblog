@@ -17,6 +17,7 @@ import com.ck.orangeblogdao.vo.ImageBlogVo;
 import com.ck.orangeblogdao.vo.UserVo;
 import com.ck.orangeblogservice.service.FndUserService;
 import com.ck.orangeblogservice.service.ImageBlogService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,10 +39,21 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
     }
 
     @Override
-    public ResultData saveImageBlog(ImageBlogVo imageBlogVo) {
+    public ResultData saveImageBlog(ImageBlogVo imageBlogVo, FndUserPo currentUser) {
+        Date date = DateUtil.date();
         ImageBlogPo imageBlogPo = new ImageBlogPo();
         BeanUtils.copyProperties(imageBlogVo, imageBlogPo);
-        imageBlogMapper.insert(imageBlogPo);
+        if(StringUtils.isNotBlank(imageBlogPo.getId())){
+            imageBlogPo.setsCid(currentUser.getId());
+            imageBlogPo.setsUid(currentUser.getId());
+            imageBlogPo.setsCt(date);
+            imageBlogPo.setsUt(date);
+            imageBlogMapper.insert(imageBlogPo);
+        }else{
+            imageBlogPo.setsUid(currentUser.getId());
+            imageBlogPo.setsUt(date);
+            imageBlogMapper.updateById(imageBlogPo);
+        }
         return ResultData.ok();
     }
 

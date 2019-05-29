@@ -1,13 +1,12 @@
 package com.ck.orangeblogservice.controller;
 
+import com.ck.orangeblogcommon.annotation.CurrentUser;
 import com.ck.orangeblogcommon.constant.CommonConstant;
+import com.ck.orangeblogdao.po.FndUserPo;
 import com.ck.orangeblogdao.pojo.ResultData;
 import com.ck.orangeblogdao.vo.ImageBlogVo;
 import com.ck.orangeblogservice.service.ImageBlogService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -37,11 +36,11 @@ public class ImageBlogController {
     @ApiOperation(value = "保存blog", notes = "保存blog", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @ApiImplicitParam(name = "userVo", value = "blog信息",paramType = CommonConstant.PARAM_TYPE_BODY, dataType = "ImageBlogVo")
     @ResponseBody
-    public ResultData saveImageBlog(@Validated @RequestBody ImageBlogVo imageBlogVo, BindingResult bindingResult) {
+    public ResultData saveImageBlog(@ApiParam(hidden = true) @CurrentUser FndUserPo currentUser, @Validated @RequestBody ImageBlogVo imageBlogVo, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             return ResultData.error(bindingResult.getFieldError().getDefaultMessage());
         }
-        return imageBlogService.saveImageBlog(imageBlogVo);
+        return imageBlogService.saveImageBlog(imageBlogVo, currentUser);
     }
 
     @ApiOperation(value = "删除blog", notes = "删除blog", httpMethod = CommonConstant.HTTP_METHOD_POST)

@@ -38,7 +38,6 @@ public class JwtShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // 自定义过滤器
         Map<String, Filter> filterMap = new HashMap<String, Filter>(1);
-        filterMap.put("jwt", new JwtFilter());
         filterMap.put("myAuthc", new MyAuthenticationFilter());
         filterMap.put("myAuthz", new MyAuthorizaionFilter());
         shiroFilterFactoryBean.setFilters(filterMap);

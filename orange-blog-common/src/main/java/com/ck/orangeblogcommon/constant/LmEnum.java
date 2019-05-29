@@ -25,7 +25,7 @@ public enum LmEnum {
     /**
      * Redis的缓存时间
      */
-    LOGIN_INFO_EXPIRE(300),
+    LOGIN_INFO_EXPIRE(300),LOGIN_EXPIRE(3600),
     /**
      * 请求类型
      */

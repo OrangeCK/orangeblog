@@ -38,17 +38,20 @@ public class FndUserServiceImpl extends ServiceImpl<FndUserMapper, FndUserPo> im
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ResultData saveUser(UserVo userVo) {
+    public ResultData saveUser(UserVo userVo, FndUserPo currentUser) {
         Date date = DateUtil.date();
         FndUserPo fndUserPo = new FndUserPo();
         BeanUtils.copyProperties(userVo, fndUserPo);
         if(fndUserPo.getId() != null){
+            fndUserPo.setsUid(currentUser.getId());
             fndUserPo.setsUt(date);
             fndUserMapper.updateById(fndUserPo);
             QueryWrapper<FndUserRolePo> fndUserRolePoQueryWrapper = new QueryWrapper<>();
             fndUserRolePoQueryWrapper.eq("user_id", fndUserPo.getId());
             fndUserRoleMapper.delete(fndUserRolePoQueryWrapper);
         }else{
+            fndUserPo.setsUid(currentUser.getId());
+            fndUserPo.setsCid(currentUser.getId());
             fndUserPo.setsCt(date);
             fndUserPo.setsUt(date);
             fndUserMapper.insert(fndUserPo);
@@ -57,6 +60,8 @@ public class FndUserServiceImpl extends ServiceImpl<FndUserMapper, FndUserPo> im
             FndUserRolePo fndUserRolePo = new FndUserRolePo();
             fndUserRolePo.setUserId(fndUserPo.getId());
             fndUserRolePo.setRoleId(rolePo.getId());
+            fndUserRolePo.setsCid(currentUser.getId());
+            fndUserRolePo.setsUid(currentUser.getId());
             fndUserRolePo.setsCt(date);
             fndUserRolePo.setsUt(date);
             fndUserRoleMapper.insert(fndUserRolePo);

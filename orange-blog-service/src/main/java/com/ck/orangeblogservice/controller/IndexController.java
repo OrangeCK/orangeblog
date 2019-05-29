@@ -1,10 +1,12 @@
 package com.ck.orangeblogservice.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.ck.orangeblogcommon.constant.CommonConstant;
 import com.ck.orangeblogdao.pojo.ResultData;
 import com.ck.orangeblogdao.vo.ImageBlogVo;
 import com.ck.orangeblogservice.service.ImageBlogService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,7 @@ public class IndexController {
      * 主页的blogs展示
      * @return
      */
+    @ApiOperation(value = "主页展示信息", notes = "主页展示信息", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @RequestMapping(value = "/indexBlogs", method = RequestMethod.GET)
     public ModelAndView imagePageList(){
         ImageBlogVo imageBlogVo = new ImageBlogVo();

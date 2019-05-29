@@ -1,13 +1,13 @@
 package com.ck.orangeblogservice.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.ck.orangeblogcommon.annotation.CurrentUser;
 import com.ck.orangeblogcommon.constant.CommonConstant;
+import com.ck.orangeblogdao.po.FndUserPo;
 import com.ck.orangeblogdao.pojo.ResultData;
 import com.ck.orangeblogdao.vo.UserVo;
 import com.ck.orangeblogservice.service.FndUserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,11 +40,11 @@ public class FndUserController {
     @ApiOperation(value = "保存用户", notes = "保存用户", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @ApiImplicitParam(name = "userVo", value = "用户信息",paramType = CommonConstant.PARAM_TYPE_BODY, dataType = "UserVo")
     @ResponseBody
-    public ResultData saveUser(@Validated @RequestBody UserVo userVo, BindingResult bindingResult) {
+    public ResultData saveUser(@ApiParam(hidden = true) @CurrentUser FndUserPo currentUser, @Validated @RequestBody UserVo userVo, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             return ResultData.error(bindingResult.getFieldError().getDefaultMessage());
         }
-        return fndUserService.saveUser(userVo);
+        return fndUserService.saveUser(userVo, currentUser);
     }
 
     @RequestMapping(value = "/disableEmployee", method = RequestMethod.POST)

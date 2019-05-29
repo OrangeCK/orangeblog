@@ -1,25 +1,17 @@
 package com.ck.orangeblogweb.filter;
 
 import com.ck.orangeblogcommon.constant.LmEnum;
-import com.ck.orangeblogcommon.exception.SysException;
 import com.ck.orangeblogcommon.utils.JwtUtil;
 import com.ck.orangeblogcommon.utils.RedisUtil;
 import com.ck.orangeblogcommon.utils.SpringContextUtil;
-import com.ck.orangeblogservice.service.FndUserService;
 import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.web.filter.AccessControlFilter;
-import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
-import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -66,12 +58,12 @@ public class MyAuthenticationFilter extends AccessControlFilter {
         if(redisUtil == null){
             redisUtil = (RedisUtil)SpringContextUtil.getBean("redisUtil");
         }
-//        // 验证此账户是否存在
+        // 验证此账户是否存在
         boolean employeeExist = Optional.ofNullable(redisUtil.hasKey(token))
                 .map(s -> redisUtil.hHasKey(token, LmEnum.USER_INFO.getName()))
                 .orElse(false);
         if(!employeeExist){
-            throw new UnknownAccountException("用户不存在");
+            throw new UnknownAccountException("请重新登录");
         }
         // 如果没有抛出异常则代表登入成功，返回true
         return true;
