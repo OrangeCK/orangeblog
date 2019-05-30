@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -99,6 +100,28 @@ public class LoginController {
         }
         logger.info("用户：" + loginName + "退出登录");
         return ResultData.ok();
+    }
+
+    @ApiOperation(value = "校验是否登录", notes = "校验是否登录", httpMethod = CommonConstant.HTTP_METHOD_GET)
+    @RequestMapping(value = "/judgeLogin", method = RequestMethod.GET)
+    public ResultData judgeLogin(HttpServletRequest request){
+        String token = request.getHeader(LmEnum.AUTHORIZATION.getName());
+        String loginName = JwtUtil.getLoginName(token, LmEnum.LOGIN_NAME.getName());
+        if(StringUtils.isBlank(loginName)){
+            return ResultData.error("身份认证失败，token格式不正确");
+        }
+        // 验证token是否失效
+        if(!JwtUtil.verify(token, loginName)){
+            return ResultData.error("身份认证失败，token失效");
+        }
+        // 验证此账户是否存在
+        boolean employeeExist = Optional.ofNullable(redisUtil.hasKey(token))
+                .map(s -> redisUtil.hHasKey(token, LmEnum.USER_INFO.getName()))
+                .orElse(false);
+        if(!employeeExist){
+            return ResultData.error("请重新登录");
+        }
+        return  ResultData.ok();
     }
 
     @RequestMapping(value = "/unAuthorization", method = RequestMethod.POST)

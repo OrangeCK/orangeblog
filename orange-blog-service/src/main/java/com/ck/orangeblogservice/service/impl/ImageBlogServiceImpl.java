@@ -43,7 +43,7 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
         Date date = DateUtil.date();
         ImageBlogPo imageBlogPo = new ImageBlogPo();
         BeanUtils.copyProperties(imageBlogVo, imageBlogPo);
-        if(StringUtils.isNotBlank(imageBlogPo.getId())){
+        if(StringUtils.isBlank(imageBlogPo.getId())){
             imageBlogPo.setsCid(currentUser.getId());
             imageBlogPo.setsUid(currentUser.getId());
             imageBlogPo.setsCt(date);

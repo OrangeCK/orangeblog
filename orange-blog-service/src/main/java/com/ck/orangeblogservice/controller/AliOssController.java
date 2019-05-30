@@ -65,7 +65,11 @@ public class AliOssController {
     @RequestMapping(value = "/deleteFromOss", method = RequestMethod.POST)
     @ResponseBody
     public ResultData deleteFromOss(@RequestParam String key){
-        AliyunOssClientUtil.invokeOssDelete(key);
+        try {
+            AliyunOssClientUtil.invokeOssDelete(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ResultData.ok();
     }
 

@@ -20,6 +20,7 @@ public class ImageBlogController {
     @Autowired
     private ImageBlogService imageBlogService;
 
+    @RequestMapping(value = "/imageBlogPageList", method = RequestMethod.POST)
     @ApiOperation(value = "blog分页查询", notes = "blog分页查询", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "imageBlogVo", value = "blog信息",paramType = CommonConstant.PARAM_TYPE_BODY, dataType = "ImageBlogVo"),
@@ -33,6 +34,7 @@ public class ImageBlogController {
         return imageBlogService.imagePageList(imageBlogVo, pageIndex, pageSize);
     }
 
+    @RequestMapping(value = "/saveImageBlog", method = RequestMethod.POST)
     @ApiOperation(value = "保存blog", notes = "保存blog", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @ApiImplicitParam(name = "userVo", value = "blog信息",paramType = CommonConstant.PARAM_TYPE_BODY, dataType = "ImageBlogVo")
     @ResponseBody
@@ -43,6 +45,7 @@ public class ImageBlogController {
         return imageBlogService.saveImageBlog(imageBlogVo, currentUser);
     }
 
+    @RequestMapping(value = "/deleteImageBlog", method = RequestMethod.POST)
     @ApiOperation(value = "删除blog", notes = "删除blog", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @ApiImplicitParam(name = "id", value = "blog的id",paramType = CommonConstant.PARAM_TYPE_QUERY, dataType = CommonConstant.DATA_TYPE_STRING)
     @ResponseBody
