@@ -54,4 +54,12 @@ public class ImageBlogController {
         imageBlogVo.setId(id);
         return imageBlogService.deleteImageBlog(imageBlogVo);
     }
+
+    @RequestMapping(value = "/updateImageBlogStatus", method = RequestMethod.POST)
+    @ApiOperation(value = "更新blog状态", notes = "更新blog状态", httpMethod = CommonConstant.HTTP_METHOD_POST)
+    @ApiImplicitParam(name = "id", value = "blog的id",paramType = CommonConstant.PARAM_TYPE_QUERY, dataType = CommonConstant.DATA_TYPE_STRING)
+    @ResponseBody
+    public ResultData updateImageBlogStatus(@ApiParam(hidden = true) @CurrentUser FndUserPo currentUser, @RequestParam String id) {
+        return imageBlogService.updateImageBlogStatus(currentUser, id);
+    }
 }

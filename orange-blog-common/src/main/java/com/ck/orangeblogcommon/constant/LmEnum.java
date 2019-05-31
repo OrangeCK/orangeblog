@@ -15,6 +15,10 @@ public enum LmEnum {
      */
     SEX_MALE("男", "1"),SEX_FEMALE("女", "0"),
     /**
+     * 状态
+     */
+    BLOG_STATUS_0("草稿", "0"),BLOG_STATUS_1("已发布", "1"),
+    /**
      * 返回json的code
      */
     RETURN_NUM_200(200),RETURN_NUM_201(201),RETURN_NUM_202(202),RETURN_NUM_203(203),RETURN_NUM_401(401),

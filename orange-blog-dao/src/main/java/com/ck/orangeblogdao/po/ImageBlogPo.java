@@ -32,6 +32,12 @@ public class ImageBlogPo extends BasePo {
 	/*  */
     private String imageUrl;
 
+    /*  */
+    private String status;
+
+    /*  */
+    private String statusName;
+
 	/*  */
     private String enableFlag;
 
@@ -152,5 +158,21 @@ public class ImageBlogPo extends BasePo {
 
     public void setsUt(Date sUt) {
         this.sUt = sUt;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
     }
 }

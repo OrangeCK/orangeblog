@@ -39,6 +39,12 @@ public class ImageBlogVo{
 	/*  */
     private String imageUrl;
 
+    /*  */
+    private String status;
+
+    /*  */
+    private String statusName;
+
 	/*  */
     private String enableFlag;
 
@@ -166,5 +172,21 @@ public class ImageBlogVo{
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
     }
 }

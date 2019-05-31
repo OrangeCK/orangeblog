@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ck.orangeblogcommon.constant.LmEnum;
 import com.ck.orangeblogdao.mapper.FndUserMapper;
 import com.ck.orangeblogdao.mapper.FndUserRoleMapper;
 import com.ck.orangeblogdao.mapper.ImageBlogMapper;
@@ -46,8 +47,11 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
         if(StringUtils.isBlank(imageBlogPo.getId())){
             imageBlogPo.setsCid(currentUser.getId());
             imageBlogPo.setsUid(currentUser.getId());
+            imageBlogPo.setAuthorName(currentUser.getUserName());
             imageBlogPo.setsCt(date);
             imageBlogPo.setsUt(date);
+            imageBlogPo.setStatus(LmEnum.BLOG_STATUS_0.getCode());
+            imageBlogPo.setStatusName(LmEnum.BLOG_STATUS_0.getName());
             imageBlogMapper.insert(imageBlogPo);
         }else{
             imageBlogPo.setsUid(currentUser.getId());
@@ -61,5 +65,21 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
     public ResultData deleteImageBlog(ImageBlogVo imageBlogVo) {
         imageBlogMapper.deleteById(imageBlogVo.getId());
         return ResultData.ok();
+    }
+
+    @Override
+    public ResultData updateImageBlogStatus(FndUserPo currentUser, String id) {
+        ImageBlogPo imageBlogPo = new ImageBlogPo();
+        imageBlogPo.setId(id);
+        imageBlogPo.setStatus(LmEnum.BLOG_STATUS_1.getCode());
+        imageBlogPo.setStatusName(LmEnum.BLOG_STATUS_1.getName());
+        imageBlogPo.setsUid(currentUser.getId());
+        imageBlogPo.setsUt(DateUtil.date());
+        int count = imageBlogMapper.updateById(imageBlogPo);
+        if(count > 0){
+            return ResultData.ok();
+        }else{
+            return ResultData.error("更新失败");
+        }
     }
 }
