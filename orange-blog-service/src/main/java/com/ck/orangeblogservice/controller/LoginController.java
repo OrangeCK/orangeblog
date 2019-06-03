@@ -1,5 +1,7 @@
 package com.ck.orangeblogservice.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ck.orangeblogcommon.constant.CommonConstant;
 import com.ck.orangeblogcommon.constant.LmEnum;
@@ -20,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -122,6 +126,28 @@ public class LoginController {
             return ResultData.error("请重新登录");
         }
         return  ResultData.ok();
+    }
+
+    /**
+     * 测试
+     */
+    @RequestMapping(value = "/testCompnanyRedis", method = RequestMethod.POST)
+    public JSONObject testCompnanyRedis(HttpServletRequest request){
+        try {
+            BufferedReader br = request.getReader();
+            String str, wholeStr = "";
+            while((str = br.readLine()) != null){
+                wholeStr += str;
+            }
+            logger.info("接收到的字符串:" + wholeStr);
+            JSONArray jsonArray = JSON.parseArray(wholeStr);
+            System.out.println("JSONArray转换:" + jsonArray.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("success","false");
+        return jsonObject;
     }
 
     @RequestMapping(value = "/unAuthorization", method = RequestMethod.POST)
