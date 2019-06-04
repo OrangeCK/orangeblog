@@ -35,6 +35,12 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
     public ResultData imagePageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize) {
         Page<ImageBlogPo> page = new Page<>(pageIndex, pageSize);
         QueryWrapper<ImageBlogPo> imageBlogPoQueryWrapper = new QueryWrapper<>();
+        if(StringUtils.isNotBlank(imageBlogVo.getTitle())){
+            imageBlogPoQueryWrapper.lambda().likeRight(ImageBlogPo::getTitle, imageBlogVo.getTitle());
+        }
+        if(StringUtils.isNotBlank(imageBlogVo.getCategoryId())){
+            imageBlogPoQueryWrapper.lambda().eq(ImageBlogPo::getCategoryId, imageBlogVo.getCategoryId());
+        }
         IPage<ImageBlogPo> ipage = imageBlogMapper.selectPage(page, imageBlogPoQueryWrapper);
         return ResultData.ok(ipage);
     }

@@ -73,6 +73,7 @@ public class LoginController {
                 map.put("Authorization", authorization);
                 map.put("Refresh_Token", JwtUtil.refreshSign(loginName, employee.getPassword()));
                 map.put("loginName",loginName);
+                map.put("userName",employee.getUserName());
                 map.put("id",employee.getId());
             } catch (Exception e) {
                 logger.info("当前用户：" + employee.getLoginName() + "登录失败");

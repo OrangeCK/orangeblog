@@ -1,11 +1,14 @@
 package com.ck.orangeblogdao.po;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ck.orangeblogdao.pojo.BasePo;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @TableName(value="m_fnd_user")
 public class FndUserPo extends BasePo {
@@ -45,6 +48,18 @@ public class FndUserPo extends BasePo {
 
 	/*  */
     private Date sUt;
+
+    @TableField(exist = false)
+    private List<FndRolePo> rolePoList = new ArrayList<>();
+
+
+    public List<FndRolePo> getRolePoList() {
+        return rolePoList;
+    }
+
+    public void setRolePoList(List<FndRolePo> rolePoList) {
+        this.rolePoList = rolePoList;
+    }
 
     public String getLoginName(){
 

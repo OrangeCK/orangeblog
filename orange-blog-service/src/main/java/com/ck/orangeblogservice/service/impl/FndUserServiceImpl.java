@@ -13,12 +13,15 @@ import com.ck.orangeblogdao.po.FndUserRolePo;
 import com.ck.orangeblogdao.pojo.ResultData;
 import com.ck.orangeblogdao.vo.UserVo;
 import com.ck.orangeblogservice.service.FndUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class FndUserServiceImpl extends ServiceImpl<FndUserMapper, FndUserPo> implements FndUserService {
@@ -32,7 +35,18 @@ public class FndUserServiceImpl extends ServiceImpl<FndUserMapper, FndUserPo> im
     public ResultData getUserPage(UserVo userVo, int pageIndex, int pageSize) {
         Page<FndUserPo> page = new Page(pageIndex, pageSize);
         QueryWrapper<FndUserPo> fndUserPoQueryWrapper = new QueryWrapper<>();
+        if(StringUtils.isNotBlank(userVo.getLoginName())){
+            fndUserPoQueryWrapper.lambda().likeRight(FndUserPo::getLoginName, userVo.getLoginName());
+        }
+        if(StringUtils.isNotBlank(userVo.getUserName())){
+            fndUserPoQueryWrapper.lambda().likeRight(FndUserPo::getUserName, userVo.getUserName());
+        }
         IPage<FndUserPo> iPage = fndUserMapper.selectPage(page, fndUserPoQueryWrapper);
+        List<FndUserPo> fndUserPoList = iPage.getRecords();
+        fndUserPoList.parallelStream().forEach(f -> {
+            List<FndRolePo> fndRolePoList = fndUserMapper.getUserRoles(f.getId());
+            f.setRolePoList(fndRolePoList);
+        });
         return ResultData.ok(iPage);
     }
 
