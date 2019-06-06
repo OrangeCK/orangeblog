@@ -60,6 +60,26 @@ public class ImageBlogVo{
 	/*  */
     private Date sUt;
 
+    private String parentCategoryId;
+
+    private String parentCategoryName;
+
+    public String getParentCategoryId() {
+        return parentCategoryId;
+    }
+
+    public void setParentCategoryId(String parentCategoryId) {
+        this.parentCategoryId = parentCategoryId;
+    }
+
+    public String getParentCategoryName() {
+        return parentCategoryName;
+    }
+
+    public void setParentCategoryName(String parentCategoryName) {
+        this.parentCategoryName = parentCategoryName;
+    }
+
     public String getTitle(){
 
         return this.title;

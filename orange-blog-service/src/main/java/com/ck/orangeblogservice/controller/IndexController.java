@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -39,5 +40,13 @@ public class IndexController {
         mv.addObject("rows", ((IPage)resultData.getData()).getRecords());
         mv.addObject("total", ((IPage)resultData.getData()).getTotal());
         return mv;
+    }
+
+    @RequestMapping(value = "/indexBlogsMore", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultData indexBlogsMore(){
+        ImageBlogVo imageBlogVo = new ImageBlogVo();
+        ResultData resultData = imageBlogService.imagePageList(imageBlogVo, 1, 10);
+        return ResultData.ok(((IPage)resultData.getData()).getRecords());
     }
 }

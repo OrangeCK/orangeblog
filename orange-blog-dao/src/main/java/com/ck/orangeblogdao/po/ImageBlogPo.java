@@ -26,6 +26,10 @@ public class ImageBlogPo extends BasePo {
     /*  */
     private String categoryName;
 
+    private String parentCategoryId;
+
+    private String parentCategoryName;
+
     /*  */
     private String authorName;
 
@@ -53,6 +57,23 @@ public class ImageBlogPo extends BasePo {
 
 	/*  */
     private Date sUt;
+
+
+    public String getParentCategoryId() {
+        return parentCategoryId;
+    }
+
+    public void setParentCategoryId(String parentCategoryId) {
+        this.parentCategoryId = parentCategoryId;
+    }
+
+    public String getParentCategoryName() {
+        return parentCategoryName;
+    }
+
+    public void setParentCategoryName(String parentCategoryName) {
+        this.parentCategoryName = parentCategoryName;
+    }
 
     public String getTitle(){
 

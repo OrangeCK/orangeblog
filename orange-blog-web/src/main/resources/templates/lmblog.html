@@ -8,12 +8,16 @@
 	<meta name="description" content="" />
 	<script th:src="@{/js/lm.js}"></script>
 	<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
-	<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+	<script th:src="@{/js/bootstrap.min.js}" ></script>
+    <script th:src="@{/js/highlight.pack.js}" ></script>
 	<script>window.jQuery || document.write('<script th:src="@{/js/bootstrap.bundle.min.js}"><\/script>')</script>
-	<link th:href="@{/css/common.css}" rel="styleSheet" type="text/css">
+    <link rel="shortcut icon" type="image/x-iccnpmon" th:href="@{/image/favicon.ico}">
+    <link th:href="@{/css/common.css}" rel="styleSheet" type="text/css">
 	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
 	<link th:href="@{/css/markdown.css}" rel="styleSheet" type="text/css">
-    <title>first_vue_project</title>
+    <link th:href="@{/css/iconfont.css}" rel="styleSheet" type="text/css"/>
+    <link th:href="@{/css/idea.css}" rel="styleSheet" type="text/css">
+    <title th:text="${blog.title}"></title>
   </head>
   <style type="text/css">
 	.bd-placeholder-img {
@@ -62,16 +66,15 @@
 
 <main role="main" class="lm-shadow">
     <div style="margin:0em 0.1em 0em 0.5em;">
-        <h1>log4j2的配置，不同级别日志保存在不同文件夹基于springboot</h1>
+        <h1 th:text="${blog.title}"></h1>
     </div>
-    <div style="font-size:0.9rem;margin:0.5em 0.1em 0.1em 0.5em;color:grey;">
-      <span class="label label-info" th:text="${#dates.format(blog.sCt, 'yyyy-MM-dd HH:mm:ss')}"></span>
-      <span class="label label-info" style="margin:0 0 0 5em" th:text="${blog.sCid}"></span>
-      <span class="label label-info" style="margin:0 0 0 5em" th:text="${blog.categoryName}">标签</span>
-  </div>
+    <div>
+      <span class="badge badge-light" th:text="${#dates.format(blog.sCt, 'yyyy年MM月dd日 HH:mm:ss')}"></span>
+      <span class="badge badge-light" th:text="${blog.authorName}"></span>
+      <span class="badge badge-pill badge-primary iconfont icon-tag-o" th:text="${blog.categoryName}"></span>
+    </div>
     <hr style="border-bottom: 1px solid #ddd;">
   <div class="container marketing" th:utext="${blog.content}">
-
 
   </div><!-- /.container -->
   <!-- FOOTER -->
@@ -85,6 +88,9 @@
 <script type="text/javascript" th:inline="javascript">
 	$(document).ready(function(){
 		$("#myCarousel").carousel('pause');
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
 	});
 </script>
 </html>

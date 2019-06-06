@@ -6,3 +6,12 @@
     box-shadow:2px 2px 10px #CBD0D3;
     padding: 60px 1em 1em 1em;
 }
+.f-divider_margin{
+    margin:2rem;
+}
+.badge_padding{
+    padding-bottom:1rem;
+}
+.inp_display{
+    display:none;
+}
