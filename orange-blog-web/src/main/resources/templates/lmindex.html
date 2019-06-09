@@ -20,65 +20,64 @@
     <title>lmorange</title>
   </head>
   <style type="text/css">
-	.bd-placeholder-img {
+    .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
       }
     @media (min-width: 768px) {
-		.bd-placeholder-img-lg {
-		  font-size: 3.5rem;
-		}
-	  }
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
     .my-sm-0:hover{
-		background-color:orange;
-
-	 }
+        background-color:orange;
+     }
     .imghover{
-		cursor: pointer;
-		transition: all 0.5s;
-	 }
+        cursor: pointer;
+        transition: all 0.5s;
+     }
     .imghover:hover{
-		transform: scale(1.05);
-	 }
+        transform: scale(1.05);
+     }
     .load_div{
         padding: 5px 0;
         text-align:center;
-		cursor: pointer;
-	 }
+        cursor: pointer;
+     }
     .load_div .load_status1{
-		height:8em;
-	 }
+        height:8em;
+     }
     .load_div .load_status2{
-		height:3em;
-	 }
+        height:3em;
+     }
     .load_active{
-		display:block;
-	 }
+        display:block;
+     }
     .load_no_active{
-		display:none;
-	 }
+        display:none;
+     }
     .blog_head{
          cursor: pointer;
      }
-	 
+
   </style>
   <body>
     <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="background:linear-gradient(to bottom right,#524E4D, #626063, #898989, #CBD0D3)!important">
-    <a class="navbar-brand" href="#"><span>橙子</span></a>
+    <a class="navbar-brand" href="#"><span>首页</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link disabled" href="#">主页</a>
+          <a class="nav-link disabled" href="#">橙子的个人生活</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#">文章</a>
+          <a class="nav-link disabled" href="#">栗子厨房</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#">版本</a>
+          <a class="nav-link disabled" href="#">Java</a>
         </li>
       </ul>
       <form class="form-inline mt-2 mt-md-0">
@@ -106,7 +105,6 @@
           <div class="carousel-caption text-left">
             <h1>示例1号</h1>
             <p>内容未知.</p>
-            <p><a class="btn btn-lg btn-primary" href="#" role="button">今天的登陆</a></p>
           </div>
         </div>
       </div>
@@ -118,7 +116,6 @@
           <div class="carousel-caption">
             <h1>实例二号</h1>
             <p>内容未知.</p>
-            <p><a class="btn btn-lg btn-primary" href="#" role="button">学习更多</a></p>
           </div>
         </div>
       </div>
@@ -130,7 +127,6 @@
           <div class="carousel-caption text-right">
             <h1>还有一个示例</h1>
             <p>内容未知.</p>
-            <p><a class="btn btn-lg btn-primary" href="#" role="button">浏览器知识</a></p>
           </div>
         </div>
       </div>
@@ -146,67 +142,26 @@
   </div>
 
     <div class="container marketing" >
-        <div th:each="blog,stat : ${rows}">
-            <div class="row featurette shadow p-3 mb-5 bg-white rounded"  th:if="${stat.odd}" >
-                <input th:value="${stat.index}" class="inp_display"/>
-                <div class="col-md-7">
-                    <h2 class="featurette-heading blog_head" th:text="${blog.title}" th:data-id="${blog.id}" onclick="clickBlog(this.getAttribute('data-id'))">标题错误</h2>
-                    <div class="badge_padding">
-                        <span class="badge badge-light" th:text="${#dates.format(blog.sCt, 'yyyy年MM月dd日 HH:mm:ss')}"></span>
-                        <span class="badge badge-light" th:text="${blog.authorName}"></span>
-                        <span class="badge badge-pill badge-primary iconfont icon-tag-o" th:text="' ' + ${blog.categoryName}"></span>
-                    </div>
-                    <p class="lead" th:text="${blog.outline}">内容未知.</p>
-                </div>
-                <div class="col-md-5 imghover" th:data-id="${blog.id}" onclick="clickBlog(this.getAttribute('data-id'))">
-                    <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 替换">
-                        <defs>
-                            <pattern id="imgId6" width="1" height="1">
-                                <image width="100%" height="100%" th:href="@{${blog.imageUrl}}"></image>
-                            </pattern>
-                            <filter id="filter" x="0" y="0"><feGaussianBlur stdDeviation="5" /><feOffset dx="5" dy="5" /></filter>
-                        </defs>
-                        <rect fill="grey" filter="url(#filter)" width="95%" height="95%"/><rect width="95%" height="95%" fill="url(#imgId6)" /></svg>
-                </div>
-            </div>
-
-            <div class="row featurette shadow p-3 mb-5 bg-white rounded" th:if="${stat.even}" >
-                <input th:value="${stat.index}" class="inp_display"/>
-                <div class="col-md-7 order-md-2">
-                    <h2 class="featurette-heading blog_head" th:text="${blog.title}" th:data-id="${blog.id}" onclick="clickBlog(this.getAttribute('data-id'))">标题错误</h2>
-                    <div class="badge_padding">
-                        <span class="badge badge-light" th:text="${#dates.format(blog.sCt, 'yyyy年MM月dd日 HH:mm:ss')}"></span>
-                        <span class="badge badge-light" th:text="${blog.authorName}"></span>
-                        <span class="badge badge-pill badge-primary iconfont icon-tag-o" th:text="' ' + ${blog.categoryName}"></span>
-                    </div>
-                    <p class="lead" th:text="${blog.outline}">内容未知.</p>
-                </div>
-                <div class="col-md-5 order-md-1 imghover" th:data-id="${blog.id}" onclick="clickBlog(this.getAttribute('data-id'))">
-                    <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 替换">
-                        <defs>
-                            <pattern id="imgId7" width="1" height="1">
-                                <image width="100%" height="100%" th:href="@{${blog.imageUrl}}"></image>
-                            </pattern>
-                            <filter id="filter" x="0" y="0"><feGaussianBlur stdDeviation="5" /><feOffset dx="5" dy="5" /></filter>
-                        </defs><rect fill="grey" filter="url(#filter)" width="95%" height="95%"/><rect width="95%" height="95%" fill="url(#imgId7)" /></svg>
-                </div>
-            </div>
-
-        </div>
+        <input class="featurette inp_display" value="0"/>
     </div>
   <!-- 加载loading -->
-  <div id="load_div1" class="load_div load_no_active">
-	<image th:src="@{/image/loading2.gif}" class="load_status1" />
-  </div>
+    <div id="load_div1" class="load_div load_no_active">
+        <image th:src="@{/image/loading2.gif}" class="load_status1" />
+    </div>
     <!-- click加载loading -->
-  <div id="load_div2" class="load_div load_active" th:onclick="'clickLoading()'">
-	<span style="color:#777;">点击加载</span>
-	<span><image th:src="@{/image/point2.jpg}" class="load_status2" /></span>
-  </div>
+    <div id="load_div2" class="load_div load_active" th:onclick="'clickLoading()'">
+        <input id="pageIndex_inp" value="1" style="display:none;"/>
+        <span style="color:#777;">点击加载</span>
+        <span><image th:src="@{/image/point2.jpg}" class="load_status2" /></span>
+    </div>
+    <!-- 已经加载到最后 -->
+    <div id="load_div3" class="load_div load_no_active">
+        <span style="color:#777;">已经没有可加载的了...</span>
+    </div>
   <!-- FOOTER -->
   <footer class="container">
-    <p class="float-right"><a href="#">Back to top</a></p>
-    <p>&copy; 2017-2018 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      <p class="float-right"><a href="#">Back to top</a></p>
+      <p class="p_center">&copy; 2019 LmOrange 蜀ICP备19015312号</p>
   </footer>
 
 </main>
@@ -214,6 +169,7 @@
 <script type="text/javascript" th:inline="javascript">
 	$(document).ready(function(){
 		$("#myCarousel").carousel('pause');
+        imageBlogMore();
 	});
 	// 获取页面被卷起来的高度
 	function scrollTop(){
@@ -238,7 +194,7 @@
 		//console.log("各个高度" + scrollTop() +"和"+ windowHeight() +"和"+ documentHeight());
 		//if(scrollTop() + windowHeight() >= (documentHeight() + 50)){
 			//$("#load_div").addClass('load_active');
-			//setTimeout('loadingData()',1000); 
+			//setTimeout('loadingData()',1000);
 		//}
 	//});
 	// 加载数据
@@ -249,19 +205,20 @@
                 "<input value='"+ ((+index) + 1) +"' class='inp_display'/>" +
                 "<div class='col-md-7'>"+
                 "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'>"+ obj.title +"</h2>"+
-                "<div class='badge_padding'>"+
-                "<span class='badge badge-light'>"+ obj.sCt +"</span>"+
+                "<div class='badge_padding badge_tag'>"+
+                "<span class='badge badge-light'>" + dateFormat(obj.sCt) + "</span>"+
                 "<span class='badge badge-light'>"+ obj.authorName +"</span>"+
-                "<span class='badge badge-pill badge-primary iconfont icon-tag-o'>&nbsp"+ obj.categoryName +"</span>"+
+                "<span class='badge badge-primary iconfont icon-06tags'>&nbsp"+ obj.parentCategoryName +"</span>"+
+                "<span class='badge badge-pill badge-info iconfont icon-tag-o'>&nbsp"+ obj.categoryName +"</span>"+
                 "</div>"+
                 "<p class='lead'>"+ obj.outline +"</p>"+
                 "</div>"+
                 "<div class='col-md-5 imghover' onclick='clickBlog(\"" + obj.id + "\")'>"+
                 "<svg class='bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto' width='500' height='500' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid slice' focusable='false' role='img' aria-label='Placeholder: 替换'>" +
-                "<defs><pattern id='imgId2' width='1' height='1'>" +
-                "<image width='100%' height='100%' xlink:href='"+obj.imageUrl+"'></image>" +
+                "<defs><pattern id='imgId"+ index +"' width='1' height='1'>" +
+                "<image width='100%' height='100%' href=\"" + obj.imageUrl + "\"></image>" +
                 "</pattern><filter id='filter' x='0' y='0'><feGaussianBlur stdDeviation='5' /><feOffset dx='5' dy='5' /></filter>" +
-                "</defs><rect fill='grey' filter='url(#filter)' width='95%' height='95%'/><rect width='95%' height='95%' fill='url(#imgId2)' /></svg>"+
+                "</defs><rect fill='grey' filter='url(#filter)' width='95%' height='95%'/><rect width='95%' height='95%' fill='url(#imgId"+ index +")' /></svg>"+
                 "</div>"+
                 "</div>");
         }else{
@@ -269,19 +226,19 @@
                 "<input value='"+ ((+index) + 1) +"' class='inp_display'/>" +
                 "<div class='col-md-7 order-md-2'>"+
                 "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'>"+ obj.title +"</h2>"+
-                "<div class='badge_padding'>"+
-                "<span class='badge badge-light'>"+ obj.sCt +"</span>"+
+                "<div class='badge_padding badge_tag'>"+
+                "<span class='badge badge-light'>" + dateFormat(obj.sCt) + "</span>"+
                 "<span class='badge badge-light'>"+ obj.authorName +"</span>"+
-                "<span class='badge badge-pill badge-primary iconfont icon-tag-o'>&nbsp"+ obj.categoryName +"</span>"+
-                "</div>"+
+                "<span class='badge badge-primary iconfont icon-06tags'>&nbsp"+ obj.parentCategoryName +"</span>"+
+                "<span class='badge badge-pill badge-info iconfont icon-tag-o'>&nbsp"+ obj.categoryName +"</span>"+                "</div>"+
                 "<p class='lead'>"+ obj.outline +"</p>"+
                 "</div>"+
                 "<div class='col-md-5 order-md-1 imghover' onclick='clickBlog(\"" + obj.id + "\")'>"+
                 "<svg class='bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto' width='500' height='500' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid slice' focusable='false' role='img' aria-label='Placeholder: 替换'>" +
-                "<defs><pattern id='imgId2' width='1' height='1'>" +
-                "<image width='100%' height='100%' xlink:href='"+obj.imageUrl+"'></image>" +
+                "<defs><pattern id='imgId"+ index +"' width='1' height='1'>" +
+                "<image width='100%' height='100%' href=\"" + obj.imageUrl + "\"></image>" +
                 "</pattern><filter id='filter' x='0' y='0'><feGaussianBlur stdDeviation='5' /><feOffset dx='5' dy='5' /></filter>" +
-                "</defs><rect fill='grey' filter='url(#filter)' width='95%' height='95%'/><rect width='95%' height='95%' fill='url(#imgId2)' /></svg>"+
+                "</defs><rect fill='grey' filter='url(#filter)' width='95%' height='95%'/><rect width='95%' height='95%' fill='url(#imgId"+ index +")' /></svg>"+
                 "</div>"+
                 "</div>");
         }
@@ -308,18 +265,65 @@
     }
     // 得到更多
     function imageBlogMore(){
+	    var pageIndex = $("#pageIndex_inp").val();
         $.ajax({
             type:"POST",
-            url:"http://127.0.0.1:8888/index/indexBlogsMore",
+            url:"/index/indexBlogsMore/" + pageIndex + "/5",
             success:function(data){
-                if(!$.isEmptyObject(data)){
-                    var obj = data.data;
+                var obj = data.data;
+                if(!$.isEmptyObject(data) && obj.length > 0){
                     for(var i=0; i< obj.length; i++){
                         loadingData(obj[i]);
                     }
+                    pageIndex = (+pageIndex) + 1;
+                    $("#pageIndex_inp").val(pageIndex);
+                }else{
+                    $("#load_div1").removeClass('load_active');
+                    $("#load_div1").addClass('load_no_active');
+                    $("#load_div3").removeClass('load_no_active');
+                    $("#load_div3").addClass('load_active');
                 }
             }
         });
+    }
+    // 时间格式化处理
+    function dateFormat(d){
+        var date= new Date(Date.parse(d));
+        var fmt = "yyyy年MM月dd日 hh:mm:ss";
+        var o = {
+            'M+': date.getMonth() + 1, //月份
+            'd+': date.getDate(), //日
+            'h+': date.getHours(), //小时
+            'm+': date.getMinutes(), //分
+            's+': date.getSeconds(), //秒
+            'q+': Math.floor((date.getMonth() + 3) / 3), //季度
+            'S': date.getMilliseconds() //毫秒
+        };
+        if(!isNotEmpty(fmt)){
+            fmt = 'yyyy-MM-dd hh:mm:ss';
+        }
+        if (/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+        }
+        for (var k in o) {
+            if (new RegExp('(' + k + ')').test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
+            }
+        }
+        return fmt;
+    }
+
+    /**
+     * 是否为空
+     * @param str
+     * @returns {boolean}
+     */
+    function isNotEmpty(str) {
+        if (str != '' && str != null && typeof str != 'undefined') {
+            return true;
+        }
+        console.warn('argument format is wrong');
+        return false;
     }
 </script>
 </html>

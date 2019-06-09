@@ -13,9 +13,9 @@
 	<script>window.jQuery || document.write('<script th:src="@{/js/bootstrap.bundle.min.js}"><\/script>')</script>
     <link rel="shortcut icon" type="image/x-iccnpmon" th:href="@{/image/favicon.ico}">
     <link th:href="@{/css/common.css}" rel="styleSheet" type="text/css">
-	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
-	<link th:href="@{/css/markdown.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/iconfont.css}" rel="styleSheet" type="text/css"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+	<link th:href="@{/css/markdown.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/idea.css}" rel="styleSheet" type="text/css">
     <title th:text="${blog.title}"></title>
   </head>
@@ -71,7 +71,8 @@
     <div>
       <span class="badge badge-light" th:text="${#dates.format(blog.sCt, 'yyyy年MM月dd日 HH:mm:ss')}"></span>
       <span class="badge badge-light" th:text="${blog.authorName}"></span>
-      <span class="badge badge-pill badge-primary iconfont icon-tag-o" th:text="${blog.categoryName}"></span>
+      <span class="badge badge-primary iconfont icon-06tags" th:text="' ' +${blog.parentCategoryName}"></span>
+      <span class="badge badge-pill badge-info iconfont icon-tag-o" th:text="' ' +${blog.categoryName}"></span>
     </div>
     <hr style="border-bottom: 1px solid #ddd;">
   <div class="container marketing" th:utext="${blog.content}">
@@ -79,8 +80,8 @@
   </div><!-- /.container -->
   <!-- FOOTER -->
   <footer class="container">
-  	<p class="float-right" ><a href="#">Back to top</a></p>
-	<p class="float-left">&copy; 2017-2018 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    <p class="float-right"><a href="#">Back to top</a></p>
+    <p class="p_center">&copy; 2019 LmOrange 蜀ICP备19015312号</p>
   </footer>
 </main>
 		

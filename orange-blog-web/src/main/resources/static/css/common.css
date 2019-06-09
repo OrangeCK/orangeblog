@@ -12,6 +12,12 @@
 .badge_padding{
     padding-bottom:1rem;
 }
+.badge_tag span{
+    margin-right:5px;
+}
 .inp_display{
     display:none;
+}
+.p_center{
+    text-align:center;
 }
