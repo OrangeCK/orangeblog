@@ -15,5 +15,5 @@ public interface ImageBlogService extends IService<ImageBlogPo> {
     ResultData deleteImageBlog(ImageBlogVo imageBlogVo);
 
     ResultData updateImageBlogStatus(FndUserPo currentUser, String id);
-
+    
 }

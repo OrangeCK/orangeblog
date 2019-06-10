@@ -99,7 +99,7 @@
     <div class="carousel-inner">
       <div class="carousel-item active">
         <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" >
-            <defs><pattern id="bgId3" width="1" height="1"><image width="100%" height="100%" xlink:href="/image/bg3.jpg"></image></pattern>
+            <defs><pattern id="bgId1" width="1" height="1"><image width="100%" height="100%" xlink:href="/image/bg3.jpg"></image></pattern>
             </defs><rect width="100%" height="100%" fill="#eee"/><image width="100%" height="100%" xlink:href="/image/bg3.jpg"></image></svg>
         <div class="container">			
           <div class="carousel-caption text-left">
@@ -169,7 +169,11 @@
 <script type="text/javascript" th:inline="javascript">
 	$(document).ready(function(){
 		$("#myCarousel").carousel('pause');
-        imageBlogMore();
+        $("#load_div1").removeClass('load_no_active');
+        $("#load_div1").addClass('load_active');
+        $("#load_div2").removeClass('load_active');
+        $("#load_div2").addClass('load_no_active');
+        setTimeout('imageBlogMore()',3000);
 	});
 	// 获取页面被卷起来的高度
 	function scrollTop(){
@@ -206,7 +210,7 @@
                 "<div class='col-md-7'>"+
                 "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'>"+ obj.title +"</h2>"+
                 "<div class='badge_padding badge_tag'>"+
-                "<span class='badge badge-light'>" + dateFormat(obj.sCt) + "</span>"+
+                "<span class='badge badge-light'>" + obj.sCt + "</span>"+
                 "<span class='badge badge-light'>"+ obj.authorName +"</span>"+
                 "<span class='badge badge-primary iconfont icon-06tags'>&nbsp"+ obj.parentCategoryName +"</span>"+
                 "<span class='badge badge-pill badge-info iconfont icon-tag-o'>&nbsp"+ obj.categoryName +"</span>"+
@@ -214,11 +218,9 @@
                 "<p class='lead'>"+ obj.outline +"</p>"+
                 "</div>"+
                 "<div class='col-md-5 imghover' onclick='clickBlog(\"" + obj.id + "\")'>"+
-                "<svg class='bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto' width='500' height='500' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid slice' focusable='false' role='img' aria-label='Placeholder: 替换'>" +
-                "<defs><pattern id='imgId"+ index +"' width='1' height='1'>" +
-                "<image width='100%' height='100%' href=\"" + obj.imageUrl + "\"></image>" +
-                "</pattern><filter id='filter' x='0' y='0'><feGaussianBlur stdDeviation='5' /><feOffset dx='5' dy='5' /></filter>" +
-                "</defs><rect fill='grey' filter='url(#filter)' width='95%' height='95%'/><rect width='95%' height='95%' fill='url(#imgId"+ index +")' /></svg>"+
+                "<div class='img_padding0'>"+
+                "<img src=\"" + obj.imageUrl + "\" alt=\"" + obj.imageUrl + "\" class='img-fluid0 lm-shadow0' >"+
+                "</div>"+
                 "</div>"+
                 "</div>");
         }else{
@@ -227,18 +229,16 @@
                 "<div class='col-md-7 order-md-2'>"+
                 "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'>"+ obj.title +"</h2>"+
                 "<div class='badge_padding badge_tag'>"+
-                "<span class='badge badge-light'>" + dateFormat(obj.sCt) + "</span>"+
+                "<span class='badge badge-light'>" + obj.sCt + "</span>"+
                 "<span class='badge badge-light'>"+ obj.authorName +"</span>"+
                 "<span class='badge badge-primary iconfont icon-06tags'>&nbsp"+ obj.parentCategoryName +"</span>"+
                 "<span class='badge badge-pill badge-info iconfont icon-tag-o'>&nbsp"+ obj.categoryName +"</span>"+                "</div>"+
                 "<p class='lead'>"+ obj.outline +"</p>"+
                 "</div>"+
                 "<div class='col-md-5 order-md-1 imghover' onclick='clickBlog(\"" + obj.id + "\")'>"+
-                "<svg class='bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto' width='500' height='500' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid slice' focusable='false' role='img' aria-label='Placeholder: 替换'>" +
-                "<defs><pattern id='imgId"+ index +"' width='1' height='1'>" +
-                "<image width='100%' height='100%' href=\"" + obj.imageUrl + "\"></image>" +
-                "</pattern><filter id='filter' x='0' y='0'><feGaussianBlur stdDeviation='5' /><feOffset dx='5' dy='5' /></filter>" +
-                "</defs><rect fill='grey' filter='url(#filter)' width='95%' height='95%'/><rect width='95%' height='95%' fill='url(#imgId"+ index +")' /></svg>"+
+                "<div class='img_padding0'>"+
+                "<img src=\"" + obj.imageUrl + "\" alt=\"" + obj.imageUrl + "\" class='img-fluid0 lm-shadow0' >"+
+                "</div>"+
                 "</div>"+
                 "</div>");
         }

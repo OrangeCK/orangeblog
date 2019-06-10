@@ -21,3 +21,15 @@
 .p_center{
     text-align:center;
 }
+.lm-shadow0{
+    -moz-box-shadow: 7px 7px 12px grey;
+    -webkit-box-shadow: 7px 7px 12px grey;
+    box-shadow:7px 7px 12px grey;
+}
+.img-fluid0{
+    max-width: 95%;
+    height: auto;
+}
+.img_padding0{
+    padding:0 0.5rem 1rem 0
+}

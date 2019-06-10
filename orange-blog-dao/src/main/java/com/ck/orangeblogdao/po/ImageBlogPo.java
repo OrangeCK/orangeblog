@@ -1,8 +1,8 @@
 package com.ck.orangeblogdao.po;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ck.orangeblogdao.pojo.BasePo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
@@ -49,7 +49,7 @@ public class ImageBlogPo extends BasePo {
     private String sCid;
 
 	/*  */
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm:ss", timezone = "GMT+8")
     private Date sCt;
 
 	/*  */
