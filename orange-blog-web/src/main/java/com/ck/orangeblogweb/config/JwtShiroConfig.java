@@ -59,10 +59,6 @@ public class JwtShiroConfig {
         filterChainDefinitionMap.put("/v2/api-docs", "anon");
         filterChainDefinitionMap.put("/webjars/springfox-swagger-ui/**", "anon");
         filterChainDefinitionMap.put("/orangeblog/**", "myAuthc,myAuthz");
-        filterChainDefinitionMap.put("/**", "authc");
-        // 未授权界面;
-        shiroFilterFactoryBean.setUnauthorizedUrl("/login/unAuthorization");
-//        shiroFilterFactoryBean.setLoginUrl("/login/unAuthorization");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

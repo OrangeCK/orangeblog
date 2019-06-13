@@ -129,28 +129,6 @@ public class LoginController {
         return  ResultData.ok();
     }
 
-    /**
-     * 测试
-     */
-    @RequestMapping(value = "/testCompnanyRedis", method = RequestMethod.POST)
-    public JSONObject testCompnanyRedis(HttpServletRequest request){
-        try {
-            BufferedReader br = request.getReader();
-            String str, wholeStr = "";
-            while((str = br.readLine()) != null){
-                wholeStr += str;
-            }
-            logger.info("接收到的字符串:" + wholeStr);
-            JSONArray jsonArray = JSON.parseArray(wholeStr);
-            System.out.println("JSONArray转换:" + jsonArray.toJSONString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("success","false");
-        return jsonObject;
-    }
-
     @RequestMapping(value = "/unAuthorization", method = RequestMethod.POST)
     public ResultData unAuthorization(){
         return ResultData.error("登录身份验证错误");

@@ -41,6 +41,14 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
         if(StringUtils.isNotBlank(imageBlogVo.getCategoryId())){
             imageBlogPoQueryWrapper.lambda().eq(ImageBlogPo::getCategoryId, imageBlogVo.getCategoryId());
         }
+        IPage<ImageBlogPo> ipage = imageBlogMapper.selectPage(page, imageBlogPoQueryWrapper);
+        return ResultData.ok(ipage);
+    }
+
+    @Override
+    public ResultData blogsPageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize) {
+        Page<ImageBlogPo> page = new Page<>(pageIndex, pageSize);
+        QueryWrapper<ImageBlogPo> imageBlogPoQueryWrapper = new QueryWrapper<>();
         // 设置需要查询的字段
         imageBlogPoQueryWrapper.lambda().select(ImageBlogPo::getTitle,ImageBlogPo::getOutline,ImageBlogPo::getAuthorName,ImageBlogPo::getCategoryName,
                 ImageBlogPo::getParentCategoryName,ImageBlogPo::getImageUrl,ImageBlogPo::getStatusName,ImageBlogPo::getsCt,ImageBlogPo::getId);

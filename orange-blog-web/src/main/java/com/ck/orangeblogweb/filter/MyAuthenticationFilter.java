@@ -1,5 +1,6 @@
 package com.ck.orangeblogweb.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.ck.orangeblogcommon.constant.LmEnum;
 import com.ck.orangeblogcommon.utils.JwtUtil;
 import com.ck.orangeblogcommon.utils.RedisUtil;
@@ -11,6 +12,7 @@ import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -27,6 +29,10 @@ public class MyAuthenticationFilter extends AccessControlFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        // 允许跨域的OPTIONS请求访问
+        if(httpServletRequest.getMethod().toUpperCase().equals(RequestMethod.OPTIONS.name())){
+            return true;
+        }
         // 得到header中的token
         String token = httpServletRequest.getHeader(LmEnum.AUTHORIZATION.getName());
         // 如果存在token,就进入executeLogin方法检查token是否正确
@@ -67,6 +73,11 @@ public class MyAuthenticationFilter extends AccessControlFilter {
         }
         // 如果没有抛出异常则代表登入成功，返回true
         return true;
+    }
+
+    @Override
+    public void setLoginUrl(String loginUrl) {
+        super.setLoginUrl(loginUrl);
     }
 
     @Override

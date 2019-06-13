@@ -12,6 +12,7 @@ import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 
 import javax.servlet.ServletRequest;
@@ -29,6 +30,10 @@ public class MyAuthorizaionFilter extends AccessControlFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        // 允许跨域的OPTIONS请求访问
+        if(httpServletRequest.getMethod().toUpperCase().equals(RequestMethod.OPTIONS.name())){
+            return true;
+        }
         if(redisUtil == null){
             redisUtil = (RedisUtil)SpringContextUtil.getBean("redisUtil");
         }

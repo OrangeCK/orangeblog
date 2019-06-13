@@ -36,7 +36,7 @@ public class IndexController {
     @RequestMapping(value = "/indexBlogs", method = RequestMethod.GET)
     public ModelAndView imagePageList(){
         ImageBlogVo imageBlogVo = new ImageBlogVo();
-        ResultData resultData = imageBlogService.imagePageList(imageBlogVo, 1, 5);
+        ResultData resultData = imageBlogService.blogsPageList(imageBlogVo, 1, 5);
         ModelAndView mv = new ModelAndView("lmindex");
         mv.addObject("rows", ((IPage)resultData.getData()).getRecords());
         mv.addObject("total", ((IPage)resultData.getData()).getTotal());
@@ -48,7 +48,7 @@ public class IndexController {
     @ResponseBody
     public ResultData indexBlogsMore(@PathVariable("pageIndex") int pIndex, @PathVariable("pageSize") int pSize){
         ImageBlogVo imageBlogVo = new ImageBlogVo();
-        ResultData resultData = imageBlogService.imagePageList(imageBlogVo, pIndex, pSize);
+        ResultData resultData = imageBlogService.blogsPageList(imageBlogVo, pIndex, pSize);
         return ResultData.ok(((IPage)resultData.getData()).getRecords());
     }
 }

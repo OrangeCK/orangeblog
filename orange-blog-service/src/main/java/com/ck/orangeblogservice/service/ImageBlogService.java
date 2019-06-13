@@ -10,10 +10,12 @@ public interface ImageBlogService extends IService<ImageBlogPo> {
 
     ResultData imagePageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize);
 
+    ResultData blogsPageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize);
+
     ResultData saveImageBlog(ImageBlogVo imageBlogVo, FndUserPo currentUser);
 
     ResultData deleteImageBlog(ImageBlogVo imageBlogVo);
 
     ResultData updateImageBlogStatus(FndUserPo currentUser, String id);
-    
+
 }
