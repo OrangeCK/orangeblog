@@ -17,6 +17,9 @@ public class LoginVo {
     @ApiModelProperty(value = "登录密码", example = "123456")
     private String password;
 
+    @ApiModelProperty(value = "验证码", example = "15Ds")
+    private String validateCode;
+
     public String getLoginName() {
         return loginName;
     }
@@ -31,5 +34,13 @@ public class LoginVo {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getValidateCode() {
+        return validateCode;
+    }
+
+    public void setValidateCode(String validateCode) {
+        this.validateCode = validateCode;
     }
 }

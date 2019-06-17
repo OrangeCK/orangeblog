@@ -1,7 +1,8 @@
 package com.ck.orangeblogservice.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.CircleCaptcha;
+import cn.hutool.captcha.LineCaptcha;
 import com.alibaba.fastjson.JSONObject;
 import com.ck.orangeblogcommon.constant.CommonConstant;
 import com.ck.orangeblogcommon.constant.LmEnum;
@@ -22,8 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -49,11 +49,17 @@ public class LoginController {
     @ApiOperation(value = "登录接口", notes = "登录接口", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @ApiImplicitParam(name = "loginVo", value = "用户信息的json字符串",paramType = CommonConstant.PARAM_TYPE_BODY, dataType = "LoginVo")
     @RequestMapping(value = "/goLogin", method = RequestMethod.POST)
-    public ResultData login(@RequestBody LoginVo loginVo){
+    public ResultData login(@RequestBody LoginVo loginVo, HttpSession session){
         // 登录名
         String loginName = loginVo.getLoginName();
         // 登录密码
         String password = loginVo.getPassword();
+        // 验证码
+        String validateCode = loginVo.getValidateCode().toLowerCase();
+        String sessionCode = (String) session.getAttribute("code");
+        if(!validateCode.equals(sessionCode)){
+            return ResultData.error("验证码有误");
+        }
         FndUserPo employee = fndUserService.loginAccountByLoginName(loginName);
         if(employee == null){
             return ResultData.error("用户名错误");
@@ -126,7 +132,21 @@ public class LoginController {
         if(!employeeExist){
             return ResultData.error("请重新登录");
         }
-        return  ResultData.ok();
+        return ResultData.ok();
+    }
+
+    /**
+     * 生成验证码
+     */
+    @ApiOperation(value = "生成验证码", notes = "生成验证码", httpMethod = CommonConstant.HTTP_METHOD_GET)
+    @RequestMapping(value = "/validateCode", method = RequestMethod.GET)
+    public ResultData validateCode(HttpSession httpSession){
+        httpSession.removeAttribute("code");
+        //定义图形验证码 宽、验证码字符数、干扰元素个数
+        CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(100, 30, 4, 10);
+        String imageBase64 = "data:image/jpeg;base64," + captcha.getImageBase64();
+        httpSession.setAttribute("code", captcha.getCode());
+        return ResultData.ok(imageBase64);
     }
 
     @RequestMapping(value = "/unAuthorization", method = RequestMethod.POST)
