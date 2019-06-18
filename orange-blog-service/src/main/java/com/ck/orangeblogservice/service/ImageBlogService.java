@@ -10,7 +10,7 @@ public interface ImageBlogService extends IService<ImageBlogPo> {
 
     ResultData imagePageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize);
 
-    ResultData blogsPageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize);
+    ResultData blogsPageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize, boolean searchFlag);
 
     ResultData saveImageBlog(ImageBlogVo imageBlogVo, FndUserPo currentUser);
 

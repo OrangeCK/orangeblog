@@ -52,10 +52,9 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
     }
 
     @Override
-    public ResultData blogsPageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize) {
+    public ResultData blogsPageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize, boolean searchFlag) {
         Page<ImageBlogPo> page = new Page<>(pageIndex, pageSize);
         QueryWrapper<ImageBlogPo> imageBlogPoQueryWrapper = new QueryWrapper<>();
-        boolean searchFlag = false;
         IPage<ImageBlogPo> ipage;
         if(searchFlag){
             // 设置需要查询的字段
