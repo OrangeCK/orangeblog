@@ -18,4 +18,6 @@ public interface ImageBlogService extends IService<ImageBlogPo> {
 
     ResultData updateImageBlogStatus(FndUserPo currentUser, String id);
 
+    void cacheImageBlogs();
+
 }

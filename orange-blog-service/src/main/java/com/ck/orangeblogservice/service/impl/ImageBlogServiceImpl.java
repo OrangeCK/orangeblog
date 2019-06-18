@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ck.orangeblogcommon.constant.CommonConstant;
 import com.ck.orangeblogcommon.constant.LmEnum;
+import com.ck.orangeblogcommon.utils.RedisUtil;
 import com.ck.orangeblogdao.mapper.FndUserMapper;
 import com.ck.orangeblogdao.mapper.FndUserRoleMapper;
 import com.ck.orangeblogdao.mapper.ImageBlogMapper;
@@ -21,6 +23,7 @@ import com.ck.orangeblogservice.service.ImageBlogService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +33,8 @@ import java.util.Date;
 public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlogPo> implements ImageBlogService {
     @Autowired
     private ImageBlogMapper imageBlogMapper;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     public ResultData imagePageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize) {
@@ -41,6 +46,7 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
         if(StringUtils.isNotBlank(imageBlogVo.getCategoryId())){
             imageBlogPoQueryWrapper.lambda().eq(ImageBlogPo::getCategoryId, imageBlogVo.getCategoryId());
         }
+        imageBlogPoQueryWrapper.lambda().orderByDesc(ImageBlogPo::getsCt);
         IPage<ImageBlogPo> ipage = imageBlogMapper.selectPage(page, imageBlogPoQueryWrapper);
         return ResultData.ok(ipage);
     }
@@ -49,10 +55,16 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
     public ResultData blogsPageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize) {
         Page<ImageBlogPo> page = new Page<>(pageIndex, pageSize);
         QueryWrapper<ImageBlogPo> imageBlogPoQueryWrapper = new QueryWrapper<>();
-        // 设置需要查询的字段
-        imageBlogPoQueryWrapper.lambda().select(ImageBlogPo::getTitle,ImageBlogPo::getOutline,ImageBlogPo::getAuthorName,ImageBlogPo::getCategoryName,
-                ImageBlogPo::getParentCategoryName,ImageBlogPo::getImageUrl,ImageBlogPo::getStatusName,ImageBlogPo::getsCt,ImageBlogPo::getId);
-        IPage<ImageBlogPo> ipage = imageBlogMapper.selectPage(page, imageBlogPoQueryWrapper);
+        boolean searchFlag = false;
+        IPage<ImageBlogPo> ipage;
+        if(searchFlag){
+            // 设置需要查询的字段
+            imageBlogPoQueryWrapper.lambda().select(ImageBlogPo::getTitle,ImageBlogPo::getOutline,ImageBlogPo::getAuthorName,ImageBlogPo::getCategoryName,
+                    ImageBlogPo::getParentCategoryName,ImageBlogPo::getImageUrl,ImageBlogPo::getStatusName,ImageBlogPo::getsCt,ImageBlogPo::getId);
+            ipage = imageBlogMapper.selectPage(page, imageBlogPoQueryWrapper);
+        }else{
+            ipage = (IPage<ImageBlogPo>) redisUtil.get(LmEnum.INDEX_BLOGS.getName());
+        }
         return ResultData.ok(ipage);
     }
 
@@ -98,5 +110,18 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
         }else{
             return ResultData.error("更新失败");
         }
+    }
+
+    @Scheduled(cron = "0 0 * * * ?")
+    @Override
+    public void cacheImageBlogs() {
+        Page<ImageBlogPo> page = new Page<>(Integer.parseInt(CommonConstant.DEFAULT_PAGE_INDEX), Integer.parseInt(CommonConstant.DEFAULT_PAGE_SIZE));
+        QueryWrapper<ImageBlogPo> imageBlogPoQueryWrapper = new QueryWrapper<>();
+        imageBlogPoQueryWrapper.lambda()
+                .orderByDesc(ImageBlogPo::getsCt)
+                .select(ImageBlogPo::getTitle,ImageBlogPo::getOutline,ImageBlogPo::getAuthorName,ImageBlogPo::getCategoryName,
+                ImageBlogPo::getParentCategoryName,ImageBlogPo::getImageUrl,ImageBlogPo::getStatusName,ImageBlogPo::getsCt,ImageBlogPo::getId);
+        IPage<ImageBlogPo> ipage = imageBlogMapper.selectPage(page, imageBlogPoQueryWrapper);
+        redisUtil.set(LmEnum.INDEX_BLOGS.getName(), ipage);
     }
 }

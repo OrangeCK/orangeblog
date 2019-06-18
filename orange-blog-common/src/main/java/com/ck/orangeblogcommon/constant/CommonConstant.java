@@ -10,5 +10,9 @@ public class CommonConstant {
     public static final String DATA_TYPE_INT = "int";
     public static final String STRING_0 = "0";
     public static final String STRING_1 = "1";
+    // 默认查看当前页
+    public static final String DEFAULT_PAGE_INDEX = "1";
+    // 默认每页显示条数
+    public static final String DEFAULT_PAGE_SIZE = "10";
 
 }

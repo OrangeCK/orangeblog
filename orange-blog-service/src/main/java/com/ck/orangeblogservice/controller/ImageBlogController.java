@@ -29,8 +29,8 @@ public class ImageBlogController {
     })
     @ResponseBody
     public ResultData pageList(@RequestBody ImageBlogVo imageBlogVo,
-                               @RequestParam(value = "pageIndex",defaultValue = "1") int pageIndex,
-                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+                               @RequestParam(value = "pageIndex",defaultValue = CommonConstant.DEFAULT_PAGE_INDEX) int pageIndex,
+                               @RequestParam(value = "pageSize", defaultValue = CommonConstant.DEFAULT_PAGE_SIZE) int pageSize) {
         return imageBlogService.imagePageList(imageBlogVo, pageIndex, pageSize);
     }
 

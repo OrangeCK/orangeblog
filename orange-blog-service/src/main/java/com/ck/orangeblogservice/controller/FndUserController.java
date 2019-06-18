@@ -31,8 +31,8 @@ public class FndUserController {
     })
     @ResponseBody
     public ResultData pageList(@RequestBody UserVo userVo,
-                               @RequestParam(value = "pageIndex",defaultValue = "1") int pageIndex,
-                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+                               @RequestParam(value = "pageIndex",defaultValue = CommonConstant.DEFAULT_PAGE_INDEX) int pageIndex,
+                               @RequestParam(value = "pageSize", defaultValue = CommonConstant.DEFAULT_PAGE_SIZE) int pageSize) {
         return fndUserService.getUserPage(userVo, pageIndex, pageSize);
     }
 
