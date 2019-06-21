@@ -59,7 +59,9 @@
     .blog_head{
          cursor: pointer;
      }
-
+    .back-to-top{
+      font-size: 4rem;
+    }
   </style>
   <body>
     <header>
@@ -98,9 +100,7 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" >
-            <defs><pattern id="bgId1" width="1" height="1"><image width="100%" height="100%" xlink:href="/image/bg3.jpg"></image></pattern>
-            </defs><rect width="100%" height="100%" fill="#eee"/><image width="100%" height="100%" xlink:href="/image/bg3.jpg"></image></svg>
+        <img class="img-carousel" th:src="@{/image/bg1.jpg}" />
         <div class="container">			
           <div class="carousel-caption text-left">
             <h1>示例1号</h1>
@@ -109,9 +109,7 @@
         </div>
       </div>
       <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" >
-            <defs><pattern id="bgId2" width="1" height="1"><image width="100%" height="100%" xlink:href="/image/bg3.jpg"></image></pattern></defs>
-            <rect width="100%" height="100%" fill="#777"/><image width="100%" height="100%" xlink:href="/image/bg3.jpg"></image></svg>
+        <img class="img-carousel" th:src="@{/image/bg2.jpg}" />
         <div class="container">
           <div class="carousel-caption">
             <h1>实例二号</h1>
@@ -120,9 +118,7 @@
         </div>
       </div>
       <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" >
-            <defs><pattern id="bgId3" width="1" height="1"><image width="100%" height="100%" th:href="@{/image/image3.jpg}"></image></pattern></defs>
-            <rect width="100%" height="100%" fill="#777"/><image width="100%" height="100%" th:href="@{/image/bg3.jpg}"></image></svg>
+        <img class="img-carousel" th:src="@{/image/bg3.jpg}" />
         <div class="container">
           <div class="carousel-caption text-right">
             <h1>还有一个示例</h1>
@@ -151,8 +147,9 @@
     <!-- click加载loading -->
     <div id="load_div2" class="load_div load_active" th:onclick="'clickLoading()'">
         <input id="pageIndex_inp" value="1" style="display:none;"/>
-        <span style="color:#777;">点击加载</span>
-        <span><image th:src="@{/image/point2.jpg}" class="load_status2" /></span>
+      <span class="iconfont icon-zhankai5" style="font-size:2rem; color:#777"></span>
+      <!--<span style="color:#777;">点击加载</span>-->
+        <!--<span><image th:src="@{/image/point2.jpg}" class="load_status2" /></span>-->
     </div>
     <!-- 已经加载到最后 -->
     <div id="load_div3" class="load_div load_no_active">
@@ -160,8 +157,8 @@
     </div>
   <!-- FOOTER -->
   <footer class="container">
-      <p class="float-right"><a href="#">Back to top</a></p>
-      <p class="p_center">&copy; 2019 LmOrange 蜀ICP备19015312号</p>
+    <span id="toTop" onclick="backToTop()" class="iconfont icon-icon-test back-to-top float-right-p"></span>
+    <p class="p_center">&copy; 2019 LmOrange 蜀ICP备19015312号</p>
   </footer>
 
 </main>
@@ -175,6 +172,10 @@
         $("#load_div2").addClass('load_no_active');
         setTimeout('imageBlogMore()',3000);
 	});
+    // 回到顶部
+    function backToTop(){
+        $('body,html').animate({scrollTop:0},500);
+    }
 	// 获取页面被卷起来的高度
 	function scrollTop(){
 		return Math.max(

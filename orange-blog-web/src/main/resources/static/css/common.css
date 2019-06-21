@@ -20,6 +20,7 @@
 }
 .p_center{
     text-align:center;
+    font-size:8px;
 }
 .lm-shadow0{
     -moz-box-shadow: 7px 7px 12px grey;
@@ -32,4 +33,21 @@
 }
 .img_padding0{
     padding:0 0.5rem 1rem 0
+}
+.img-carousel{
+    width: 100%;
+    height: auto;
+}
+.float-right-p{
+    position: fixed;
+    z-index:99;
+    right:0.5rem;
+    bottom:6rem;
+    opacity:0.2;
+
+}
+.float-right-p:hover{
+    color: blue;
+    opacity:0.9;
+    cursor: pointer;
 }
