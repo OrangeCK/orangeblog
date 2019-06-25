@@ -21,6 +21,8 @@
 .p_center{
     text-align:center;
     font-size:8px;
+    margin-bottom:0;
+    padding-bottom:1rem;
 }
 .lm-shadow0{
     -moz-box-shadow: 7px 7px 12px grey;
