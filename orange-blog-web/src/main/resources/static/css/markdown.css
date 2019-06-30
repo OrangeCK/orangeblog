@@ -30,7 +30,7 @@ background:rgba(214, 247, 241, 0.4);
 /* BODY
 =============================================================================*/
 
-body {
+#main{
   font-family: Helvetica, arial, freesans, clean, sans-serif;
   font-size: 16px;
   line-height:1.5;

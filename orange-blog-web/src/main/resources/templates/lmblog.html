@@ -63,8 +63,8 @@
     </div>
   </nav>
 </header>
-
-<main role="main" class="lm-shadow">
+<canvas id="bubbles"></canvas>
+<main role="main" id="main" class="lm-shadow" style="padding: 60px 1em 1em 1em;">
     <div style="margin:0em 0.1em 0em 0.5em;">
         <h1 th:text="${blog.title}"></h1>
     </div>
@@ -78,15 +78,33 @@
   <div class="container marketing" th:utext="${blog.content}">
 
   </div><!-- /.container -->
-  <!-- FOOTER -->
-  <footer class="container">
-    <p class="float-right"><a href="#">Back to top</a></p>
-    <p class="p_center">&copy; 2019 LmOrange 蜀ICP备19015312号</p>
-  </footer>
 </main>
-		
+    <!-- FOOTER -->
+    <footer class="footer_div" style="background: url(/image/qunzi.png) no-repeat 50%;">
+      <span id="toTop" onclick="backToTop()" class="iconfont icon-icon-test back-to-top float-right-p"></span>
+    </footer>
+    <div class="p_center">
+      <ul>
+        <li>&copy; 2019 LmOrange 蜀ICP备19015312号</li>
+      </ul>
+      <ul>
+        <li>
+          <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+          document.write(unescape("%3Cspan id='cnzz_stat_icon_1277763152'%3E%3C/span%3E%3Cscript src='" +
+                  cnzz_protocol + "s23.cnzz.com/z_stat.php%3Fid%3D1277763152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+        </li>
+      </ul>
+      <ul>
+        <li>友情链接：</li>
+        <li><a href="https://www.baidu.com" target="_blank">百度</a></li>
+        <li>阿里云</li>
+        <li>淘宝</li>
+        <li>凤凰网</li>
+      </ul>
+    </div>
 </body>
-<script type="text/javascript" th:inline="javascript">
+  <script type="text/javascript" th:src="@{/js/canvas-bubbles.js}"></script>
+  <script type="text/javascript" th:inline="javascript">
 	$(document).ready(function(){
 		$("#myCarousel").carousel('pause');
         $('pre code').each(function(i, block) {

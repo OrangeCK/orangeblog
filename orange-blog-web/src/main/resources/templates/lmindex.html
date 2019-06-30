@@ -44,12 +44,6 @@
         text-align:center;
         cursor: pointer;
      }
-    .load_div .load_status1{
-        height:8em;
-     }
-    .load_div .load_status2{
-        height:3em;
-     }
     .load_active{
         display:block;
      }
@@ -59,9 +53,7 @@
     .blog_head{
          cursor: pointer;
      }
-    .back-to-top{
-      font-size: 4rem;
-    }
+
   </style>
   <body>
     <header>
@@ -90,7 +82,8 @@
   </nav>
 </header>
 
-<main role="main" style="background:url(/image/rebg3.jpg) repeat-y;background-size:100%">
+<canvas id="bubbles"></canvas>
+<main role="main">
 
   <div id="myCarousel" class="carousel slide" style="margin-bottom:2em;">
     <ol class="carousel-indicators">
@@ -136,33 +129,48 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
-
-    <div class="container marketing" style="background:#fff;">
-        <input class="featurette inp_display" value="0"/>
-    </div>
+  <div class="container marketing" style="background:#fff;">
+      <input class="featurette inp_display" value="0"/>
+  </div>
   <!-- FOOTER -->
-  <footer>
+  <footer class="footer_div" style="background: url(/image/qunzi.png) no-repeat 50%;">
     <!-- 加载loading -->
     <div id="load_div1" class="load_div load_no_active">
-      <image th:src="@{/image/loading2.gif}" class="load_status1" />
+      <image th:src="@{/image/loading0.gif}" />
     </div>
     <!-- click加载loading -->
     <div id="load_div2" class="load_div load_active" th:onclick="'clickLoading()'">
       <input id="pageIndex_inp" value="1" style="display:none;"/>
       <span class="iconfont icon-zhankai5" style="font-size:2rem; color:#777"></span>
-      <!--<span style="color:#777;">点击加载</span>-->
-      <!--<span><image th:src="@{/image/point2.jpg}" class="load_status2" /></span>-->
     </div>
     <!-- 已经加载到最后 -->
     <div id="load_div3" class="load_div load_no_active">
       <span style="color:#777;">已经没有可加载的了...</span>
     </div>
     <span id="toTop" onclick="backToTop()" class="iconfont icon-icon-test back-to-top float-right-p"></span>
-    <p class="p_center">&copy; 2019 LmOrange 蜀ICP备19015312号</p>
   </footer>
-
+  <div class="p_center">
+    <ul>
+      <li>&copy; 2019 LmOrange 蜀ICP备19015312号</li>
+    </ul>
+    <ul>
+      <li>
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+         document.write(unescape("%3Cspan id='cnzz_stat_icon_1277763152'%3E%3C/span%3E%3Cscript src='" +
+         cnzz_protocol + "s23.cnzz.com/z_stat.php%3Fid%3D1277763152%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+      </li>
+    </ul>
+    <ul>
+      <li>友情链接：</li>
+      <li><a href="https://www.baidu.com" target="_blank">百度</a></li>
+      <li>阿里云</li>
+      <li>淘宝</li>
+      <li>凤凰网</li>
+    </ul>
+  </div>
 </main>
 </body>
+<script type="text/javascript" th:src="@{/js/canvas-bubbles.js}"></script>
 <script type="text/javascript" th:inline="javascript">
 	$(document).ready(function(){
 		$("#myCarousel").carousel('pause');
@@ -170,7 +178,7 @@
         $("#load_div1").addClass('load_active');
         $("#load_div2").removeClass('load_active');
         $("#load_div2").addClass('load_no_active');
-        setTimeout('imageBlogMore()',3000);
+        setTimeout('imageBlogMore()',1000);
 	});
     // 回到顶部
     function backToTop(){
@@ -206,7 +214,7 @@
 	function loadingData(obj){
         var index = $(".inp_display:last").val();
         if(evenOrOdd(index)){
-            $(".featurette:last").after("<div class='row featurette shadow p-3 mb-5 bg-white rounded' style='margin:0'>"+
+            $(".featurette:last").after("<div class='row featurette shadow p-3 mb-5 bg-white rounded' >"+
                 "<input value='"+ ((+index) + 1) +"' class='inp_display'/>" +
                 "<div class='col-md-7'>"+
                 "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'>"+ obj.title +"</h2>"+
@@ -225,7 +233,7 @@
                 "</div>"+
                 "</div>");
         }else{
-            $(".featurette:last").after("<div class='row featurette shadow p-3 mb-5 bg-white rounded' style='margin:0'>"+
+            $(".featurette:last").after("<div class='row featurette shadow p-3 mb-5 bg-white rounded' >"+
                 "<input value='"+ ((+index) + 1) +"' class='inp_display'/>" +
                 "<div class='col-md-7 order-md-2'>"+
                 "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'>"+ obj.title +"</h2>"+

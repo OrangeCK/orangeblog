@@ -21,8 +21,17 @@
 .p_center{
     text-align:center;
     font-size:8px;
-    margin-bottom:0;
-    padding-bottom:1rem;
+    color: #cccccc;
+    background: #111;
+    margin-top: -3rem;
+    padding-bottom:2rem;
+}
+.p_center ul{
+    list-style:none;
+    margin:0;
+}
+.p_center ul li{
+    display: inline-block;
 }
 .lm-shadow0{
     -moz-box-shadow: 7px 7px 12px grey;
@@ -52,4 +61,20 @@
     color: blue;
     opacity:0.9;
     cursor: pointer;
+}
+.back-to-top{
+    font-size: 4rem;
+}
+.footer_div{
+    height: 20rem;
+    position: relative;
+}
+#cnzz_stat_icon_1277763152 a{
+    color: #cccccc;
+}
+#bubbles{
+    position: fixed;
+    background: #fff;
+    overflow: auto;
+    z-index: -1;
 }
