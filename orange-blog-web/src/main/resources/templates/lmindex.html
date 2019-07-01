@@ -68,10 +68,10 @@
           <a class="nav-link disabled" href="#">橙子的个人生活</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#">栗子厨房</a>
+          <a class="nav-link " href="javascript:void(0);queryImageBlogs('2','lzcf')">栗子厨房</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#">Java</a>
+          <a class="nav-link " href="javascript:void(0);queryImageBlogs('2','java')">Java</a>
         </li>
       </ul>
       <form class="form-inline mt-2 mt-md-0">
@@ -82,7 +82,7 @@
   </nav>
 </header>
 
-<canvas id="bubbles"></canvas>
+<!--<canvas id="bubbles"></canvas>-->
 <main role="main">
 
   <div id="myCarousel" class="carousel slide" style="margin-bottom:2em;">
@@ -133,7 +133,7 @@
       <input class="featurette inp_display" value="0"/>
   </div>
   <!-- FOOTER -->
-  <footer class="footer_div" style="background: url(/image/qunzi.png) no-repeat 50%;">
+  <footer class="footer_div">
     <!-- 加载loading -->
     <div id="load_div1" class="load_div load_no_active">
       <image th:src="@{/image/loading0.gif}" />
@@ -172,13 +172,15 @@
 </body>
 <script type="text/javascript" th:src="@{/js/canvas-bubbles.js}"></script>
 <script type="text/javascript" th:inline="javascript">
+    var categoryId = "";
+    var parentCategoryId = "";
 	$(document).ready(function(){
 		$("#myCarousel").carousel('pause');
         $("#load_div1").removeClass('load_no_active');
         $("#load_div1").addClass('load_active');
         $("#load_div2").removeClass('load_active');
         $("#load_div2").addClass('load_no_active');
-        setTimeout('imageBlogMore()',1000);
+        setTimeout('queryMoreImageBlogs()',1000);
 	});
     // 回到顶部
     function backToTop(){
@@ -214,56 +216,67 @@
 	function loadingData(obj){
         var index = $(".inp_display:last").val();
         if(evenOrOdd(index)){
-            $(".featurette:last").after("<div class='row featurette shadow p-3 mb-5 bg-white rounded' >"+
-                "<input value='"+ ((+index) + 1) +"' class='inp_display'/>" +
-                "<div class='col-md-7'>"+
-                "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'>"+ obj.title +"</h2>"+
-                "<div class='badge_padding badge_tag'>"+
-                "<span class='badge badge-light'>" + obj.sCt + "</span>"+
-                "<span class='badge badge-light'>"+ obj.authorName +"</span>"+
-                "<span class='badge badge-primary iconfont icon-06tags'>&nbsp"+ obj.parentCategoryName +"</span>"+
-                "<span class='badge badge-pill badge-info iconfont icon-tag-o'>&nbsp"+ obj.categoryName +"</span>"+
-                "</div>"+
-                "<p class='lead'>"+ obj.outline +"</p>"+
-                "</div>"+
-                "<div class='col-md-5 imghover' onclick='clickBlog(\"" + obj.id + "\")'>"+
-                "<div class='img_padding0'>"+
-                "<img src=\"" + obj.imageUrl + "\" alt=\"" + obj.imageUrl + "\" class='img-fluid0 lm-shadow0' >"+
-                "</div>"+
-                "</div>"+
-                "</div>");
+            evenData(obj, index);
         }else{
-            $(".featurette:last").after("<div class='row featurette shadow p-3 mb-5 bg-white rounded' >"+
-                "<input value='"+ ((+index) + 1) +"' class='inp_display'/>" +
-                "<div class='col-md-7 order-md-2'>"+
-                "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'>"+ obj.title +"</h2>"+
-                "<div class='badge_padding badge_tag'>"+
-                "<span class='badge badge-light'>" + obj.sCt + "</span>"+
-                "<span class='badge badge-light'>"+ obj.authorName +"</span>"+
-                "<span class='badge badge-primary iconfont icon-06tags'>&nbsp"+ obj.parentCategoryName +"</span>"+
-                "<span class='badge badge-pill badge-info iconfont icon-tag-o'>&nbsp"+ obj.categoryName +"</span>"+
-                "</div>"+
-                "<p class='lead'>"+ obj.outline +"</p>"+
-                "</div>"+
-                "<div class='col-md-5 order-md-1 imghover' onclick='clickBlog(\"" + obj.id + "\")'>"+
-                "<div class='img_padding0'>"+
-                "<img src=\"" + obj.imageUrl + "\" alt=\"" + obj.imageUrl + "\" class='img-fluid0 lm-shadow0' >"+
-                "</div>"+
-                "</div>"+
-                "</div>");
+            oddData(obj, index);
         }
 		$("#load_div1").removeClass('load_active');
 		$("#load_div1").addClass('load_no_active');
 		$("#load_div2").removeClass('load_no_active');
 		$("#load_div2").addClass('load_active');
 	}
+
+	// 偶数行数据
+	var evenData = function(obj, index){
+        $(".featurette:last").after("<div class='row featurette shadow p-3 mb-5 bg-white rounded' >"+
+            "<input value='"+ ((+index) + 1) +"' class='inp_display'/>" +
+            "<div class='col-md-7'>"+
+            "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'>"+ obj.title +"</h2>"+
+            "<div class='badge_padding badge_tag'>"+
+            "<span class='badge badge-light'>" + obj.sCt + "</span>"+
+            "<span class='badge badge-light'>"+ obj.authorName +"</span>"+
+            "<span class='badge badge-primary iconfont icon-06tags'>&nbsp"+ obj.parentCategoryName +"</span>"+
+            "<span class='badge badge-pill badge-info iconfont icon-tag-o'>&nbsp"+ obj.categoryName +"</span>"+
+            "</div>"+
+            "<p class='lead'>"+ obj.outline +"</p>"+
+            "</div>"+
+            "<div class='col-md-5 imghover' onclick='clickBlog(\"" + obj.id + "\")'>"+
+            "<div class='img_padding0'>"+
+            "<img src=\"" + obj.imageUrl + "\" alt=\"" + obj.imageUrl + "\" class='img-fluid0 lm-shadow0' >"+
+            "</div>"+
+            "</div>"+
+            "</div>");
+    }
+
+    // 奇数行数据
+    var oddData = function(obj, index){
+        $(".featurette:last").after("<div class='row featurette shadow p-3 mb-5 bg-white rounded' >"+
+            "<input value='"+ ((+index) + 1) +"' class='inp_display'/>" +
+            "<div class='col-md-7 order-md-2'>"+
+            "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'>"+ obj.title +"</h2>"+
+            "<div class='badge_padding badge_tag'>"+
+            "<span class='badge badge-light'>" + obj.sCt + "</span>"+
+            "<span class='badge badge-light'>"+ obj.authorName +"</span>"+
+            "<span class='badge badge-primary iconfont icon-06tags'>&nbsp"+ obj.parentCategoryName +"</span>"+
+            "<span class='badge badge-pill badge-info iconfont icon-tag-o'>&nbsp"+ obj.categoryName +"</span>"+
+            "</div>"+
+            "<p class='lead'>"+ obj.outline +"</p>"+
+            "</div>"+
+            "<div class='col-md-5 order-md-1 imghover' onclick='clickBlog(\"" + obj.id + "\")'>"+
+            "<div class='img_padding0'>"+
+            "<img src=\"" + obj.imageUrl + "\" alt=\"" + obj.imageUrl + "\" class='img-fluid0 lm-shadow0' >"+
+            "</div>"+
+            "</div>"+
+            "</div>");
+    }
+
 	// 点击加载
 	function clickLoading(){
 		$("#load_div1").removeClass('load_no_active');
 		$("#load_div1").addClass('load_active');
 		$("#load_div2").removeClass('load_active');
 		$("#load_div2").addClass('load_no_active');
-		setTimeout('imageBlogMore()',1000);
+		setTimeout('queryMoreImageBlogs()',1000);
 	}
     // 判断是奇数还是偶数
     function evenOrOdd(index){
@@ -273,12 +286,34 @@
     function clickBlog(blogId){
         window.open("/blog/blogDetail/"+blogId, "陈康博客")
     }
+    // 重新查询
+    function queryImageBlogs(type, value){
+        $(".rounded").remove();
+        $("#load_div3").addClass('load_no_active');
+        $("#load_div3").removeClass('load_active');
+        $("#load_div2").addClass('load_no_active');
+        $("#load_div2").removeClass('load_active');
+        $("#pageIndex_inp").val("1");
+        imageBlogMore(type, value, $("#pageIndex_inp").val());
+    }
+    // 查询更多
+    function queryMoreImageBlogs(type, value){
+        var pageIndex = $("#pageIndex_inp").val();
+        imageBlogMore(type, value, pageIndex);
+    }
     // 得到更多
-    function imageBlogMore(){
-	    var pageIndex = $("#pageIndex_inp").val();
+    function imageBlogMore(type, value, pageIndex){
+        switch (type){
+            case "1": parentCategoryId = value;break;
+            case "2": categoryId = value;break;
+        }
+        var param = JSON.stringify({"categoryId":categoryId, "parentCategoryId":parentCategoryId, "pageIndex":pageIndex, "pageSize":10});
         $.ajax({
             type:"POST",
-            url:"/index/indexBlogsMore/" + pageIndex + "/5",
+            dataType:"json",
+            url:"/index/indexBlogsMore",
+            data: param,
+            contentType: "application/json",
             success:function(data){
                 var obj = data.data;
                 if(!$.isEmptyObject(data) && obj.length > 0){

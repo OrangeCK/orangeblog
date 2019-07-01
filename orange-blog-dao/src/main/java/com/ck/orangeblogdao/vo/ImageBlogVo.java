@@ -49,6 +49,10 @@ public class ImageBlogVo{
 	/*  */
     private String enableFlag;
 
+    private int pageIndex;
+
+    private int pageSize;
+
 	/*  */
     private String sCid;
 
@@ -65,6 +69,22 @@ public class ImageBlogVo{
     private String parentCategoryId;
 
     private String parentCategoryName;
+
+    public int getPageIndex() {
+        return pageIndex;
+    }
+
+    public void setPageIndex(int pageIndex) {
+        this.pageIndex = pageIndex;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
     public String getParentCategoryId() {
         return parentCategoryId;

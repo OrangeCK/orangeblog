@@ -9,10 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -45,11 +42,10 @@ public class IndexController {
     }
 
     @ApiOperation(value = "得到更多的blogs", notes = "得到更多的blogs", httpMethod = CommonConstant.HTTP_METHOD_POST)
-    @RequestMapping(value = "/indexBlogsMore/{pageIndex}/{pageSize}", method = RequestMethod.POST)
+    @RequestMapping(value = "/indexBlogsMore", method = RequestMethod.POST)
     @ResponseBody
-    public ResultData indexBlogsMore(@PathVariable("pageIndex") int pIndex, @PathVariable("pageSize") int pSize){
-        ImageBlogVo imageBlogVo = new ImageBlogVo();
-        ResultData resultData = imageBlogService.blogsPageList(imageBlogVo, pIndex, pSize, true);
+    public ResultData indexBlogsMore(@RequestBody ImageBlogVo imageBlogVo){
+        ResultData resultData = imageBlogService.blogsPageList(imageBlogVo, imageBlogVo.getPageIndex(), imageBlogVo.getPageSize(), true);
         return ResultData.ok(((IPage)resultData.getData()).getRecords());
     }
 }

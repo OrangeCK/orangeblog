@@ -45,6 +45,8 @@ public class ImageBlogPo extends BasePo {
 	/*  */
     private String enableFlag;
 
+    private String priorityNum;
+
 	/*  */
     private String sCid;
 
@@ -58,6 +60,14 @@ public class ImageBlogPo extends BasePo {
 	/*  */
     private Date sUt;
 
+
+    public String getPriorityNum() {
+        return priorityNum;
+    }
+
+    public void setPriorityNum(String priorityNum) {
+        this.priorityNum = priorityNum;
+    }
 
     public String getParentCategoryId() {
         return parentCategoryId;

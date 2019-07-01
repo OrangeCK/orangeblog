@@ -68,6 +68,7 @@
 .footer_div{
     height: 20rem;
     position: relative;
+    background: url(../image/qunzi.png) no-repeat 50%;
 }
 #cnzz_stat_icon_1277763152 a{
     color: #cccccc;

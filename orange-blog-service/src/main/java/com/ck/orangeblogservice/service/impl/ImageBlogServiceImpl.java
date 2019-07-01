@@ -40,23 +40,21 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
     public ResultData imagePageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize) {
         Page<ImageBlogPo> page = new Page<>(pageIndex, pageSize);
         QueryWrapper<ImageBlogPo> imageBlogPoQueryWrapper = new QueryWrapper<>();
-        if(StringUtils.isNotBlank(imageBlogVo.getTitle())){
-            imageBlogPoQueryWrapper.lambda().likeRight(ImageBlogPo::getTitle, imageBlogVo.getTitle());
-        }
-        if(StringUtils.isNotBlank(imageBlogVo.getCategoryId())){
-            imageBlogPoQueryWrapper.lambda().eq(ImageBlogPo::getCategoryId, imageBlogVo.getCategoryId());
-        }
-        imageBlogPoQueryWrapper.lambda().orderByDesc(ImageBlogPo::getsCt);
+        // 初始化查询条件
+        this.initParameter(imageBlogVo, imageBlogPoQueryWrapper);
+        imageBlogPoQueryWrapper.lambda().orderByDesc(ImageBlogPo::getsCt, ImageBlogPo::getPriorityNum);
         IPage<ImageBlogPo> ipage = imageBlogMapper.selectPage(page, imageBlogPoQueryWrapper);
         return ResultData.ok(ipage);
     }
 
     @Override
     public ResultData blogsPageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize, boolean searchFlag) {
-        Page<ImageBlogPo> page = new Page<>(pageIndex, pageSize);
-        QueryWrapper<ImageBlogPo> imageBlogPoQueryWrapper = new QueryWrapper<>();
         IPage<ImageBlogPo> ipage;
         if(searchFlag){
+            Page<ImageBlogPo> page = new Page<>(pageIndex, pageSize);
+            QueryWrapper<ImageBlogPo> imageBlogPoQueryWrapper = new QueryWrapper<>();
+            // 初始化查询条件
+            this.initParameter(imageBlogVo, imageBlogPoQueryWrapper);
             // 设置需要查询的字段
             imageBlogPoQueryWrapper.lambda().select(ImageBlogPo::getTitle,ImageBlogPo::getOutline,ImageBlogPo::getAuthorName,ImageBlogPo::getCategoryName,
                     ImageBlogPo::getParentCategoryName,ImageBlogPo::getImageUrl,ImageBlogPo::getStatusName,ImageBlogPo::getsCt,ImageBlogPo::getId);
@@ -65,6 +63,18 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
             ipage = (IPage<ImageBlogPo>) redisUtil.get(LmEnum.INDEX_BLOGS.getName());
         }
         return ResultData.ok(ipage);
+    }
+
+    private void initParameter(ImageBlogVo imageBlogVo, QueryWrapper<ImageBlogPo> imageBlogPoQueryWrapper){
+        if(StringUtils.isNotBlank(imageBlogVo.getTitle())){
+            imageBlogPoQueryWrapper.lambda().likeRight(ImageBlogPo::getTitle, imageBlogVo.getTitle());
+        }
+        if(StringUtils.isNotBlank(imageBlogVo.getCategoryId())){
+            imageBlogPoQueryWrapper.lambda().eq(ImageBlogPo::getCategoryId, imageBlogVo.getCategoryId());
+        }
+        if(StringUtils.isNotBlank(imageBlogVo.getParentCategoryId())){
+            imageBlogPoQueryWrapper.lambda().eq(ImageBlogPo::getParentCategoryId, imageBlogVo.getParentCategoryId());
+        }
     }
 
     @Override
