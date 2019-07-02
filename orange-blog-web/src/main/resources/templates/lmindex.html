@@ -56,32 +56,31 @@
 
   </style>
   <body>
-    <header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="background:linear-gradient(to bottom right,#524E4D, #626063, #898989, #CBD0D3)!important">
-    <a class="navbar-brand" href="#"><span>首页</span></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link disabled" href="#">橙子的个人生活</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="javascript:void(0);queryImageBlogs('2','lzcf')">栗子厨房</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="javascript:void(0);queryImageBlogs('2','java')">Java</a>
-        </li>
-      </ul>
-      <form class="form-inline mt-2 mt-md-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="color:#fff;border-color:orange;">Search</button>
-      </form>
-    </div>
-  </nav>
-</header>
-
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="background:linear-gradient(to bottom right,#524E4D, #626063, #898989, #CBD0D3)!important">
+      <a class="navbar-brand" href="/index/indexBlogs"><span>首页</span></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link disabled" href="#">橙子的个人生活</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/index/indexBlogs?parentCategoryId=lz">栗子生活</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/index/indexBlogs?parentCategoryId=back">后端</a>
+          </li>
+        </ul>
+        <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="color:#fff;border-color:orange;">Search</button>
+        </form>
+      </div>
+    </nav>
+  </header>
 <!--<canvas id="bubbles"></canvas>-->
 <main role="main">
 
@@ -180,8 +179,24 @@
         $("#load_div1").addClass('load_active');
         $("#load_div2").removeClass('load_active');
         $("#load_div2").addClass('load_no_active');
+        var obj = getRequest();
+        categoryId = obj.categoryId;
+        parentCategoryId = obj.parentCategoryId;
         setTimeout('queryMoreImageBlogs()',1000);
 	});
+	// 解析url后面的参数
+    function getRequest(){
+        var url = window.location.search;
+        var theRequest = new Object();
+        if(url.indexOf("?") != -1){
+            var str = url.substr(1);
+            var strs = str.split("&");
+            for(var i = 0; i < strs.length; i ++) {
+                theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
     // 回到顶部
     function backToTop(){
         $('body,html').animate({scrollTop:0},500);
