@@ -25,9 +25,17 @@
         text-anchor: middle;
       }
     @media (min-width: 768px) {
-		.bd-placeholder-img-lg {
-		  font-size: 3.5rem;
-		}
+      ul li img{
+        width:50%;
+        /*width:768px;*/
+        /*height:384px;*/
+        /*left:50%;*/
+        /*margin-left:-384px;*/
+        /*position:relative;*/
+      }
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
 	  }
 	 .my-sm-0:hover{
 		background-color:orange;
@@ -39,13 +47,13 @@
   </style>
   <body>
   <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="background:linear-gradient(to bottom right,#524E4D, #626063, #898989, #CBD0D3)!important">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="background:linear-gradient(to bottom right,#3B7B9A, #0085c5, #00141d, #A5DEF1)!important">
       <a class="navbar-brand" href="/index/indexBlogs"><span>首页</span></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto" style="margin:0">
           <li class="nav-item active">
             <a class="nav-link disabled" href="#">橙子的个人生活</a>
           </li>
@@ -63,7 +71,7 @@
       </div>
     </nav>
   </header>
-<canvas id="bubbles"></canvas>
+<!--<canvas id="bubbles"></canvas>-->
 <main role="main" id="main" class="lm-shadow" style="padding: 60px 1em 1em 1em;">
     <div style="margin:0em 0.1em 0em 0.5em;">
         <h1 th:text="${blog.title}"></h1>
