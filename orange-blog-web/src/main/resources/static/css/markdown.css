@@ -82,7 +82,7 @@ h2 {
   font-size: 1.6em;
   color: #fff;
   border: 1px solid rgb(193, 193, 193);
-  background: linear-gradient(to top right,#524E4D, #626063, #898989, #CBD0D3)!important;
+  background: linear-gradient(to top right,#1F9CE4, #1F9CE4, #1F9CE4, #1F9CE4)!important;
   border-radius: 5px;
   padding: 0.2em 0.5em;
 }
@@ -140,7 +140,7 @@ a:visited {
 =============================================================================*/
 
 ul, ol {
-  padding-left: 15px;
+  padding-left: 25px;
 }
 
 ul li > :first-child, 
