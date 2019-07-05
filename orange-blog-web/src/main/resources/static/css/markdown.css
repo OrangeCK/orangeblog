@@ -75,14 +75,15 @@ h6 {
   color: #000000;
 }
 h1 {
-  font-size: 2.0em;
+  font-size: 1.6em;
   color: #000000;
 }
 h2 {
-  font-size: 1.6em;
+  font-size: 1.3em;
   color: #fff;
   border: 1px solid rgb(193, 193, 193);
-  background: linear-gradient(to top right,#1F9CE4, #1F9CE4, #1F9CE4, #1F9CE4)!important;
+  background: linear-gradient(to top right,#2689c1, #2689c1, #2689c1, #2689c1)!important;
+  background-color: rgb(0, 127, 189);
   border-radius: 5px;
   padding: 0.2em 0.5em;
 }
