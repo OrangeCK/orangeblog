@@ -1,6 +1,7 @@
 package com.ck.orangeblogservice.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.ck.orangeblogcommon.annotation.RecordBlogView;
 import com.ck.orangeblogcommon.constant.CommonConstant;
 import com.ck.orangeblogdao.pojo.ResultData;
 import com.ck.orangeblogdao.vo.ImageBlogVo;

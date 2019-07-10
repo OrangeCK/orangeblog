@@ -25,7 +25,7 @@ public enum LmEnum {
     /**
      * Redis的key常量
      */
-    MODULE_EMPLOYEE("LM:employee"),INDEX_BLOGS("indexBLogs"),
+    MODULE_EMPLOYEE("LM:employee"),INDEX_BLOGS("indexBLogs"),BLOG_RECORDS_VIEW("blogRecordsView"),
     /**
      * Redis的缓存时间
      */

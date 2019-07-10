@@ -47,6 +47,8 @@ public class ImageBlogPo extends BasePo {
 
     private String priorityNum;
 
+    private Long blogView;
+
 	/*  */
     private String sCid;
 
@@ -60,6 +62,14 @@ public class ImageBlogPo extends BasePo {
 	/*  */
     private Date sUt;
 
+
+    public Long getBlogView() {
+        return blogView;
+    }
+
+    public void setBlogView(Long blogView) {
+        this.blogView = blogView;
+    }
 
     public String getPriorityNum() {
         return priorityNum;
