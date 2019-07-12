@@ -79,3 +79,15 @@
     overflow: auto;
     z-index: -1;
 }
+.mg_bottom{
+    margin-bottom: 1rem;
+}
+.float-right{
+    float: right;
+}
+.mg_bottom .p-record{
+    display:inline-block;
+    padding-left:5px;
+    color:grey;
+    margin:0;
+}

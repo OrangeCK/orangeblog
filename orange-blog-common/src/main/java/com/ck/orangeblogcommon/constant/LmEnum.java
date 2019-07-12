@@ -25,11 +25,11 @@ public enum LmEnum {
     /**
      * Redis的key常量
      */
-    MODULE_EMPLOYEE("LM:employee"),INDEX_BLOGS("indexBLogs"),BLOG_RECORDS_VIEW("blogRecordsView"),
+    MODULE_EMPLOYEE("LM:employee"),INDEX_BLOGS("indexBLogs"),BLOG_RECORDS_VIEW("blogRecordsView"),BLOG_IP_PREFIX("blogIpPrefix_"),IP_EXPIRE_TIME("ipExpireTime"),
     /**
      * Redis的缓存时间
      */
-    LOGIN_INFO_EXPIRE(300),LOGIN_EXPIRE(3600),
+    LOGIN_INFO_EXPIRE(300),LOGIN_EXPIRE(3600),IP_EXPIRE(60*60),
     /**
      * 请求类型
      */

@@ -1,6 +1,7 @@
 package com.ck.orangeblogservice.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.ck.orangeblogcommon.annotation.RecordBlogView;
 import com.ck.orangeblogdao.po.ImageBlogPo;
 import com.ck.orangeblogservice.service.ImageBlogService;
 import io.swagger.annotations.Api;
@@ -28,6 +29,7 @@ public class BlogController {
      * 主页的blogs展示
      * @return
      */
+    @RecordBlogView
     @GetMapping(value = "/blogDetail/{blogId}")
     public ModelAndView blogDetail(@PathVariable("blogId") String id){
         ImageBlogPo imageBlogPo = imageBlogService.getById(id);

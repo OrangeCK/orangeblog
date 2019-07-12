@@ -62,6 +62,12 @@ public class ImageBlogPo extends BasePo {
 	/*  */
     private Date sUt;
 
+    public ImageBlogPo(){}
+
+    public ImageBlogPo(String id, Long blogView){
+        this.id = id;
+        this.blogView = blogView;
+    }
 
     public Long getBlogView() {
         return blogView;

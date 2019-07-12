@@ -81,10 +81,33 @@ body {
   .featurette-heading {
     font-size: 2.5rem;
   }
+
+  .featurette-heading .iconfont{
+    font-size: 2.5rem;
+    color: red;
+  }
+  .mg_bottom .iconfont{
+    font-size: 1rem;
+    margin-right: 1rem;
+    color: grey;
+  }
+}
+
+@media (max-width: 39em) {
+  /* Bump up size of carousel content */
+  .featurette-heading .iconfont{
+    font-size: 2rem;
+    color: red;
+  }
+  .mg_bottom .iconfont{
+    font-size: 1rem;
+    margin-right: 1rem;
+    color: grey;
+  }
 }
 
 @media (min-width: 62em) {
   .featurette-heading {
-    margin-top: 3rem;
+    margin-top: 1rem;
   }
 }

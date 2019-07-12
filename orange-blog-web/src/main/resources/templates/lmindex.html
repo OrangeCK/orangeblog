@@ -246,7 +246,7 @@
         $(".featurette:last").after("<div class='row featurette shadow p-3 mb-5 bg-white rounded' >"+
             "<input value='"+ ((+index) + 1) +"' class='inp_display'/>" +
             "<div class='col-md-7'>"+
-            "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'>"+ obj.title +"</h2>"+
+            "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'><span class='iconfont icon-zhiding1'></span>"+ obj.title +"</h2>"+
             "<div class='badge_padding badge_tag'>"+
             "<span class='badge badge-light'>" + obj.sCt + "</span>"+
             "<span class='badge badge-light'>"+ obj.authorName +"</span>"+
@@ -254,7 +254,10 @@
             "<span class='badge badge-pill badge-info iconfont icon-tag-o'>&nbsp"+ obj.categoryName +"</span>"+
             "</div>"+
             "<p class='lead'>"+ obj.outline +"</p>"+
-            "</div>"+
+            "<div class='mg_bottom float-right' >" +
+            "<span class='iconfont icon-eye2 float-right'><p class='p-record'>1230256</p></span>" +
+            "<span class='iconfont icon-xihuan4 float-right'><p class='p-record'>30256</p></span>" +
+            "</div>"+            "</div>"+
             "<div class='col-md-5 imghover' onclick='clickBlog(\"" + obj.id + "\")'>"+
             "<div class='img_padding0'>"+
             "<img src=\"" + obj.imageUrl + "\" alt=\"" + obj.imageUrl + "\" class='img-fluid0 lm-shadow0' >"+
@@ -268,7 +271,7 @@
         $(".featurette:last").after("<div class='row featurette shadow p-3 mb-5 bg-white rounded' >"+
             "<input value='"+ ((+index) + 1) +"' class='inp_display'/>" +
             "<div class='col-md-7 order-md-2'>"+
-            "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'>"+ obj.title +"</h2>"+
+            "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'><span class='iconfont icon-zhiding1'></span>"+ obj.title +"</h2>"+
             "<div class='badge_padding badge_tag'>"+
             "<span class='badge badge-light'>" + obj.sCt + "</span>"+
             "<span class='badge badge-light'>"+ obj.authorName +"</span>"+
@@ -276,6 +279,10 @@
             "<span class='badge badge-pill badge-info iconfont icon-tag-o'>&nbsp"+ obj.categoryName +"</span>"+
             "</div>"+
             "<p class='lead'>"+ obj.outline +"</p>"+
+            "<div class='mg_bottom float-right' >" +
+            "<span class='iconfont icon-eye2 float-right'><p class='p-record'>1230256</p></span>" +
+            "<span class='iconfont icon-xihuan4 float-right'><p class='p-record'>30256</p></span>" +
+            "</div>"+
             "</div>"+
             "<div class='col-md-5 order-md-1 imghover' onclick='clickBlog(\"" + obj.id + "\")'>"+
             "<div class='img_padding0'>"+

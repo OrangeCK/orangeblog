@@ -18,5 +18,7 @@ public class MyApplicationRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         // 缓存主页
         imageBlogService.cacheImageBlogs();
+        // 缓存blog的阅读量
+        imageBlogService.cacheBlogsRecordView();
     }
 }

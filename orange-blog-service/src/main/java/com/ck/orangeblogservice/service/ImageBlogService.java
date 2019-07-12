@@ -20,4 +20,8 @@ public interface ImageBlogService extends IService<ImageBlogPo> {
 
     void cacheImageBlogs();
 
+    void cacheBlogsRecordView();
+
+    void updateBlogsRecordView();
+
 }
