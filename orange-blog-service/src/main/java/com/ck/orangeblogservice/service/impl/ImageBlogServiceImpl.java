@@ -62,7 +62,8 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
             this.initParameter(imageBlogVo, imageBlogPoQueryWrapper);
             // 设置需要查询的字段
             imageBlogPoQueryWrapper.lambda().select(ImageBlogPo::getTitle,ImageBlogPo::getOutline,ImageBlogPo::getAuthorName,ImageBlogPo::getCategoryName,
-                    ImageBlogPo::getParentCategoryName,ImageBlogPo::getImageUrl,ImageBlogPo::getStatusName,ImageBlogPo::getsCt,ImageBlogPo::getId);
+                    ImageBlogPo::getParentCategoryName,ImageBlogPo::getImageUrl,ImageBlogPo::getStatusName,ImageBlogPo::getsCt,ImageBlogPo::getId,
+                    ImageBlogPo::getBlogView, ImageBlogPo::getPraiseNum);
             ipage = imageBlogMapper.selectPage(page, imageBlogPoQueryWrapper);
         }else{
             ipage = (IPage<ImageBlogPo>) redisUtil.get(LmEnum.INDEX_BLOGS.getName());

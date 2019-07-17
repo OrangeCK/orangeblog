@@ -49,6 +49,8 @@ public class ImageBlogPo extends BasePo {
 
     private Long blogView;
 
+    private Long praiseNum;
+
 	/*  */
     private String sCid;
 
@@ -67,6 +69,14 @@ public class ImageBlogPo extends BasePo {
     public ImageBlogPo(String id, Long blogView){
         this.id = id;
         this.blogView = blogView;
+    }
+
+    public Long getPraiseNum() {
+        return praiseNum;
+    }
+
+    public void setPraiseNum(Long praiseNum) {
+        this.praiseNum = praiseNum;
     }
 
     public Long getBlogView() {

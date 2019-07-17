@@ -12,8 +12,8 @@
     <script th:src="@{/js/highlight.pack.js}" ></script>
 	<script>window.jQuery || document.write('<script th:src="@{/js/bootstrap.bundle.min.js}"><\/script>')</script>
     <link rel="shortcut icon" type="image/x-iccnpmon" th:href="@{/image/favicon.ico}">
-    <link th:href="@{/css/common.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/iconfont.css}" rel="styleSheet" type="text/css"/>
+    <link th:href="@{/css/common.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
 	<link th:href="@{/css/markdown.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/idea.css}" rel="styleSheet" type="text/css">
@@ -71,7 +71,7 @@
       </div>
     </nav>
   </header>
-<!--<canvas id="bubbles"></canvas>-->
+<canvas id="bubbles"></canvas>
 <main role="main" id="main" class="lm-shadow" style="padding: 60px 1em 1em 1em;">
     <div style="margin:0em 0.1em 0em 0.5em;">
         <h1 th:text="${blog.title}"></h1>
@@ -81,15 +81,29 @@
       <span class="badge badge-light" th:text="${blog.authorName}"></span>
       <span class="badge badge-primary iconfont icon-06tags" th:text="' ' +${blog.parentCategoryName}"></span>
       <span class="badge badge-pill badge-info iconfont icon-tag-o" th:text="' ' +${blog.categoryName}"></span>
+      <div class="float-right">
+        <span class="iconfont icon-xihuan4 "><p class="p-record" th:text="${blog.praiseNum}">0</p></span>
+        <span class="iconfont icon-eye2 "><p class="p-record" th:text="${blog.blogView}">0</p></span>
+      </div>
     </div>
     <hr style="border-bottom: 1px solid #ddd;">
   <div class="container marketing" th:utext="${blog.content}" style="padding: 0;">
 
-  </div><!-- /.container -->
+  </div>
+  <div class="blog-bottom-btn">
+    <button type="button" class="btn btn-danger iconfont icon-xihuan4">&nbsp喜欢</button>
+    <button type="button" class="btn btn-primary iconfont icon-qian1">&nbsp打赏</button>
+  </div>
 </main>
+  <div class="float-right-p">
+    <button type="button" class="btn btn-link float-btn"><div style="width:44px;height:44px;background: url(/image/zonghelogo.png) -68px -24px no-repeat;"></div></button>
+    <button type="button" class="btn btn-link float-btn"><div style="width:44px;height:44px;background: url(/image/zonghelogo.png) -318px -24px no-repeat;"></div></button>
+    <button type="button" class="btn btn-link float-btn"><div style="width:44px;height:44px;background: url(/image/zonghelogo.png) -484px -24px no-repeat;"></div></button>
+    <button type="button" class="btn btn-link float-btn"><div style="width:44px;height:44px;background: url(/image/zonghelogo.png) -234px -24px no-repeat;"></div></button>
+    <button type="button" class="btn btn-link float-btn" style="text-decoration:none;"><span id="toTop" onclick="backToTop()"  class="iconfont icon-icon-test back-to-top"></span></button>
+  </div>
     <!-- FOOTER -->
     <footer class="footer_div">
-      <span id="toTop" onclick="backToTop()" class="iconfont icon-icon-test back-to-top float-right-p"></span>
     </footer>
     <div class="p_center">
       <ul>
@@ -118,5 +132,17 @@
             hljs.highlightBlock(block);
         });
 	});
+    // 回到顶部
+    function backToTop(){
+      $('body,html').animate({scrollTop:0},500);
+    }
+    // 获取页面被卷起来的高度
+    function scrollTop(){
+      return Math.max(
+              //chrome
+              document.body.scrollTop,
+              //firefox/IE
+              document.documentElement.scrollTop);
+    }
 </script>
 </html>
