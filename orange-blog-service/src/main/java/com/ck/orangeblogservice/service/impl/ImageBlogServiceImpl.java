@@ -1,6 +1,7 @@
 package com.ck.orangeblogservice.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -160,6 +161,7 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
         Iterator i = set.iterator();
         while (i.hasNext()){
             String id = (String)i.next();
+            JSONObject object = (JSONObject) viewMap.get(id);
             ImageBlogPo imageBlogPo = new ImageBlogPo(id, Long.valueOf(String.valueOf(viewMap.get(id))).longValue());
             baseMapper.updateById(imageBlogPo);
         }
