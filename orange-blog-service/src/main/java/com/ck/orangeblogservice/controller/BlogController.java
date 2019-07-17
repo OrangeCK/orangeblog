@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Administrator
  * @date 2019/5/22 0022
@@ -45,7 +47,7 @@ public class BlogController {
     @ApiOperation(value = "赞", notes = "赞", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @RequestMapping("/praiseBlog/{blogId}")
     @ResponseBody
-    public ResultData praiseBlog(@PathVariable("blogId") String id){
-        return imageBlogService.praiseBlog(id);
+    public ResultData praiseBlog(@PathVariable("blogId") String id, HttpServletRequest request){
+        return imageBlogService.praiseBlog(id, request);
     }
 }

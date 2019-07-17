@@ -2,12 +2,14 @@ package com.ck.orangeblogservice.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ck.orangeblogcommon.constant.CommonConstant;
 import com.ck.orangeblogcommon.constant.LmEnum;
+import com.ck.orangeblogcommon.utils.IpUtil;
 import com.ck.orangeblogcommon.utils.RedisUtil;
 import com.ck.orangeblogdao.mapper.FndUserMapper;
 import com.ck.orangeblogdao.mapper.FndUserRoleMapper;
@@ -32,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Service
@@ -207,9 +210,27 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
     }
 
     @Override
-    public ResultData praiseBlog(String id) {
-        JSONObject jsonObject = (JSONObject)redisUtil.hget(LmEnum.BLOG_RECORDS_VIEW.getName(), id);
-        if(!ObjectUtils.isEmpty(jsonObject)){
+    public ResultData praiseBlog(String id, HttpServletRequest request) {
+        String ip = IpUtil.getRealIp(request);
+        long nowTime = System.currentTimeMillis();
+        // 此ip是否在限制时间内访问过
+        if(redisUtil.hHasKey(id, LmEnum.BLOG_IP_PREFIX.getName() + ip)){
+            JSONObject jsonObject = (JSONObject)redisUtil.hget(id, LmEnum.BLOG_IP_PREFIX.getName() + ip);
+            long expireTime = jsonObject.getLongValue(LmEnum.IP_PRAISE_EXPIRE_TIME.getName());
+            if((nowTime-expireTime) > LmEnum.IP_EXPIRE.getNum()*1000){
+                jsonObject.put(LmEnum.IP_PRAISE_EXPIRE_TIME.getName(), nowTime);
+                redisUtil.hset(id, LmEnum.BLOG_IP_PREFIX.getName() + ip, jsonObject);
+            }else{
+                return ResultData.error("你已经赞过了哟");
+            }
+        }else{
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put(LmEnum.IP_PRAISE_EXPIRE_TIME.getName(), nowTime);
+            redisUtil.hset(id, LmEnum.BLOG_IP_PREFIX.getName() + ip, jsonObject);
+        }
+        // 浏览量加1
+        if(redisUtil.hHasKey(LmEnum.BLOG_RECORDS_VIEW.getName(), id)){
+            JSONObject jsonObject = (JSONObject)redisUtil.hget(LmEnum.BLOG_RECORDS_VIEW.getName(), id);
             // 赞的数量
             long praiseNum = jsonObject.getLongValue(LmEnum.PRAISE_NUM.getName());
             jsonObject.put(LmEnum.PRAISE_NUM.getName(), ++praiseNum);
