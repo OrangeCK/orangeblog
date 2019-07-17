@@ -33,12 +33,12 @@ public class IndexController {
     @ApiOperation(value = "主页展示信息", notes = "主页展示信息", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @RequestMapping(value = "/indexBlogs", method = RequestMethod.GET)
     public ModelAndView imagePageList(){
-        ImageBlogVo imageBlogVo = new ImageBlogVo();
-        ResultData resultData = imageBlogService.blogsPageList(imageBlogVo, Integer.parseInt(CommonConstant.DEFAULT_PAGE_INDEX),
-                Integer.parseInt(CommonConstant.DEFAULT_PAGE_INDEX), false);
+//        ImageBlogVo imageBlogVo = new ImageBlogVo();
+//        ResultData resultData = imageBlogService.blogsPageList(imageBlogVo, Integer.parseInt(CommonConstant.DEFAULT_PAGE_INDEX),
+//                Integer.parseInt(CommonConstant.DEFAULT_PAGE_INDEX), false);
         ModelAndView mv = new ModelAndView("lmindex");
-        mv.addObject("rows", ((IPage)resultData.getData()).getRecords());
-        mv.addObject("total", ((IPage)resultData.getData()).getTotal());
+//        mv.addObject("rows", ((IPage)resultData.getData()).getRecords());
+//        mv.addObject("total", ((IPage)resultData.getData()).getTotal());
         return mv;
     }
 
@@ -46,7 +46,12 @@ public class IndexController {
     @RequestMapping(value = "/indexBlogsMore", method = RequestMethod.POST)
     @ResponseBody
     public ResultData indexBlogsMore(@RequestBody ImageBlogVo imageBlogVo){
-        ResultData resultData = imageBlogService.blogsPageList(imageBlogVo, imageBlogVo.getPageIndex(), imageBlogVo.getPageSize(), true);
+        ResultData resultData;
+        if(imageBlogVo.getPageIndex() == 1){
+            resultData = imageBlogService.blogsPageList(imageBlogVo, imageBlogVo.getPageIndex(), imageBlogVo.getPageSize(), false);
+        }else{
+            resultData = imageBlogService.blogsPageList(imageBlogVo, imageBlogVo.getPageIndex(), imageBlogVo.getPageSize(), true);
+        }
         return ResultData.ok(((IPage)resultData.getData()).getRecords());
     }
 }

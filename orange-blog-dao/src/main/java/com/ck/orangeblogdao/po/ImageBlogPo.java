@@ -66,9 +66,10 @@ public class ImageBlogPo extends BasePo {
 
     public ImageBlogPo(){}
 
-    public ImageBlogPo(String id, Long blogView){
+    public ImageBlogPo(String id, Long blogView, Long praiseNum){
         this.id = id;
         this.blogView = blogView;
+        this.praiseNum = praiseNum;
     }
 
     public Long getPraiseNum() {

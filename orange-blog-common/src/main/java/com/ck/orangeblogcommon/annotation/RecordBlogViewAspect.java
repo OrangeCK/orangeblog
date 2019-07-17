@@ -59,13 +59,10 @@ public class RecordBlogViewAspect {
             }
             // 浏览量加1
             if(incrViewTime && redisUtil.hHasKey(LmEnum.BLOG_RECORDS_VIEW.getName(), id)){
-                Object viewCount = redisUtil.hget(LmEnum.BLOG_RECORDS_VIEW.getName(), id);
-                if(viewCount == null){
-                    redisUtil.hset(LmEnum.BLOG_RECORDS_VIEW.getName(),id, 1L);
-                }else{
-                    long count = Long.valueOf(String.valueOf(viewCount)).longValue();
-                    redisUtil.hset(LmEnum.BLOG_RECORDS_VIEW.getName(),id, ++count);
-                }
+                JSONObject jsonObject = (JSONObject)redisUtil.hget(LmEnum.BLOG_RECORDS_VIEW.getName(), id);
+                long viewCount = jsonObject.getLongValue(LmEnum.BLOG_VIEW.getName());
+                jsonObject.put(LmEnum.BLOG_VIEW.getName(), ++viewCount);
+                redisUtil.hset(LmEnum.BLOG_RECORDS_VIEW.getName(),id, jsonObject);
             }
         } catch (Exception e) {
             e.printStackTrace();

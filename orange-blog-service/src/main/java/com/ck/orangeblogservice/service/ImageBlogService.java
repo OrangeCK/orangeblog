@@ -24,4 +24,7 @@ public interface ImageBlogService extends IService<ImageBlogPo> {
 
     void updateBlogsRecordView();
 
+    ResultData praiseBlog(String id);
+
+    ImageBlogPo getBlogDetailById(String id);
 }

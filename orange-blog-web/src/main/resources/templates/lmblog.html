@@ -10,6 +10,7 @@
 	<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 	<script th:src="@{/js/bootstrap.min.js}" ></script>
     <script th:src="@{/js/highlight.pack.js}" ></script>
+    <script th:src="@{/js/lm-toast.js}" ></script>
 	<script>window.jQuery || document.write('<script th:src="@{/js/bootstrap.bundle.min.js}"><\/script>')</script>
     <link rel="shortcut icon" type="image/x-iccnpmon" th:href="@{/image/favicon.ico}">
     <link th:href="@{/css/iconfont.css}" rel="styleSheet" type="text/css"/>
@@ -17,6 +18,7 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
 	<link th:href="@{/css/markdown.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/idea.css}" rel="styleSheet" type="text/css">
+    <link th:href="@{/css/lm-toast.css}" rel="styleSheet" type="text/css">
     <title th:text="${blog.title}"></title>
   </head>
   <style type="text/css">
@@ -90,9 +92,23 @@
   <div class="container marketing" th:utext="${blog.content}" style="padding: 0;">
 
   </div>
+  <!--modal start-->
+  <div class="modal fade" id="rewardAuthor" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="padding:4px;">
+          <h5 class="modal-title" style="margin:0;">微信</h5>
+        </div>
+        <div class="modal-body">
+          <img src="http://2019-2-16-ck.oss-cn-beijing.aliyuncs.com/lmsystem/20171103113806104.png" alt="史努比" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--modal end-->
   <div class="blog-bottom-btn">
-    <button type="button" class="btn btn-danger iconfont icon-xihuan4">&nbsp喜欢</button>
-    <button type="button" class="btn btn-primary iconfont icon-qian1">&nbsp打赏</button>
+    <button type="button" class="btn btn-danger iconfont icon-xihuan4" th:data-id="${blog.id}" onclick="praiseBlog(this.getAttribute('data-id'))">&nbsp喜欢</button>
+    <button type="button" class="btn btn-primary iconfont icon-qian1" data-toggle="modal" data-target="#rewardAuthor">&nbsp打赏</button>
   </div>
 </main>
   <div class="float-right-p">
@@ -143,6 +159,29 @@
               document.body.scrollTop,
               //firefox/IE
               document.documentElement.scrollTop);
+    }
+    // 点赞
+    function praiseBlog(id){
+        $.ajax({
+            type:"POST",
+            url:"/blog/praiseBlog/" + id,
+            success:function(data){
+                var obj = data;
+                if(!$.isEmptyObject(obj) && obj.success){
+                    toast({
+                        message: "谢谢您",
+                        time:1000
+                    });
+                    $(".blog-bottom-btn .icon-xihuan4").css("display", "none");
+                }else{
+                    toast({
+                        message: obj.msg,
+                        time:1000
+                    });
+                }
+            }
+        });
+
     }
 </script>
 </html>

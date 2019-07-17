@@ -46,6 +46,6 @@ public class BlogController {
     @RequestMapping("/praiseBlog/{blogId}")
     @ResponseBody
     public ResultData praiseBlog(@PathVariable("blogId") String id){
-        return ResultData.ok();
+        return imageBlogService.praiseBlog(id);
     }
 }
