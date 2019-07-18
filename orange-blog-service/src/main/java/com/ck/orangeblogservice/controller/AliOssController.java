@@ -39,27 +39,33 @@ public class AliOssController {
     @RequestMapping(value = "/uploadToOss", method = RequestMethod.POST)
     @ResponseBody
     public ResultData uploadOss(@RequestParam("multipartFile") MultipartFile multipartFile, HttpServletRequest request){
-        if(multipartFile.isEmpty() || StringUtils.isBlank(multipartFile.getOriginalFilename())){
+        if(multipartFile.isEmpty()){
             return ResultData.error("上传文件NULL");
         }
         String contentType = multipartFile.getContentType();
         if(!contentType.contains("")){
             return ResultData.error("上传文件格式错误");
         }
-        String rootFileName = multipartFile.getOriginalFilename();
-        logger.info("上传图片：name={},type={}",rootFileName, contentType);
+        String originalFilename = multipartFile.getOriginalFilename();
+        if(StringUtils.isBlank(originalFilename)){
+            return ResultData.error("上传文件名字NULL");
+        }
+        // 后缀
+        String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
+        // 获取时间戳
+        long currTimestamp = System.currentTimeMillis();
+        String fileName = UUID.randomUUID().toString().replaceAll("-", "") + currTimestamp + suffix;
+        logger.info("上传图片：name={},type={}",fileName, contentType);
         try {
-            // 获取时间戳
-            long currTimestamp = System.currentTimeMillis();
-            String fileName = UUID.randomUUID().toString().replaceAll("-", "") + currTimestamp;
-            AliyunOssClientUtil.invokeOssUpload(multipartFile);
+
+            AliyunOssClientUtil.invokeOssUpload(multipartFile, fileName);
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
             e.printStackTrace(new PrintWriter(sw, true));
             logger.error("文件上传失败" + sw.toString());
             return ResultData.error("上传失败");
         }
-        return ResultData.ok("http://" + LmEnum.BACKET_NAME.getName() + "." + LmEnum.ENDPOINT.getName() + "/" + LmEnum.FOLDER.getName() + rootFileName);
+        return ResultData.ok("http://" + LmEnum.BACKET_NAME.getName() + "." + LmEnum.ENDPOINT.getName() + "/" + LmEnum.FOLDER.getName() + fileName);
     }
 
     @RequestMapping(value = "/deleteFromOss", method = RequestMethod.POST)
