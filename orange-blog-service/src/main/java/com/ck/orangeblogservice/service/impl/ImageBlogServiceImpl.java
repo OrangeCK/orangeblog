@@ -204,7 +204,7 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
             long praiseNum = object.getLongValue(LmEnum.PRAISE_NUM.getName());
             // 浏览量
             long blogView = object.getLongValue(LmEnum.BLOG_VIEW.getName());
-            ImageBlogPo imageBlogPo = new ImageBlogPo(id, praiseNum, blogView);
+            ImageBlogPo imageBlogPo = new ImageBlogPo(id, blogView, praiseNum);
             baseMapper.updateById(imageBlogPo);
         }
     }
