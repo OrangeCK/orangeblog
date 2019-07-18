@@ -16,9 +16,9 @@ public class MyApplicationRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        // 缓存主页
-        imageBlogService.cacheImageBlogs();
         // 缓存blog的阅读量
         imageBlogService.cacheBlogsRecordView();
+        // 缓存主页
+        imageBlogService.cacheImageBlogs();
     }
 }

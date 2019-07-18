@@ -6,6 +6,8 @@ import com.ck.orangeblogdao.po.ImageBlogPo;
 import com.ck.orangeblogdao.pojo.ResultData;
 import com.ck.orangeblogdao.vo.ImageBlogVo;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface ImageBlogService extends IService<ImageBlogPo> {
 
     ResultData imagePageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize);
@@ -24,7 +26,7 @@ public interface ImageBlogService extends IService<ImageBlogPo> {
 
     void updateBlogsRecordView();
 
-    ResultData praiseBlog(String id);
+    ResultData praiseBlog(String id, HttpServletRequest request);
 
     ImageBlogPo getBlogDetailById(String id);
 }

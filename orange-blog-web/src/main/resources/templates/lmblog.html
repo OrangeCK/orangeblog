@@ -65,11 +65,11 @@
             <a class="nav-link " href="/index/indexBlogs?parentCategoryId=lz">栗子生活</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="/index/indexBlogs?parentCategoryId=back">后端</a>
+            <a class="nav-link " href="/index/indexBlogs?parentCategoryId=back">Java</a>
           </li>
         </ul>
         <form class="form-inline mt-2 mt-md-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <input class="form-control mr-sm-2" type="text" placeholder="开发ing、请期待" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="color:#fff;border-color:orange;">Search</button>
         </form>
       </div>
@@ -99,10 +99,10 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header" style="padding:4px;">
-          <h5 class="modal-title" style="margin:0;">微信</h5>
+          <div style="width:44px;height:44px;background: url(/image/zonghelogo.png) -68px -24px no-repeat;margin:0"></div>
         </div>
-        <div class="modal-body">
-          <img src="http://2019-2-16-ck.oss-cn-beijing.aliyuncs.com/lmsystem/20171103113806104.png" alt="史努比" />
+        <div class="modal-body" >
+          <img th:src="@{/image/zanshangma.png}" />
         </div>
       </div>
     </div>
@@ -115,9 +115,9 @@
 </main>
   <div class="float-right-p">
     <button type="button" class="btn btn-link float-btn"><div style="width:44px;height:44px;background: url(/image/zonghelogo.png) -68px -24px no-repeat;"></div></button>
-    <button type="button" class="btn btn-link float-btn"><div style="width:44px;height:44px;background: url(/image/zonghelogo.png) -318px -24px no-repeat;"></div></button>
+<!--    <button type="button" class="btn btn-link float-btn"><div style="width:44px;height:44px;background: url(/image/zonghelogo.png) -318px -24px no-repeat;"></div></button>-->
     <button type="button" class="btn btn-link float-btn"><div style="width:44px;height:44px;background: url(/image/zonghelogo.png) -484px -24px no-repeat;"></div></button>
-    <button type="button" class="btn btn-link float-btn"><div style="width:44px;height:44px;background: url(/image/zonghelogo.png) -234px -24px no-repeat;"></div></button>
+<!--    <button type="button" class="btn btn-link float-btn"><div style="width:44px;height:44px;background: url(/image/zonghelogo.png) -234px -24px no-repeat;"></div></button>-->
     <button type="button" class="btn btn-link float-btn" style="text-decoration:none;"><span id="toTop" onclick="backToTop()"  class="iconfont icon-icon-test back-to-top"></span></button>
   </div>
     <!-- FOOTER -->
@@ -176,13 +176,13 @@
                         message: "谢谢您",
                         time:1000
                     });
-                    $(".blog-bottom-btn .icon-xihuan4").css("display", "none");
                 }else{
                     toast({
                         message: obj.msg,
                         time:1000
                     });
                 }
+              $(".blog-bottom-btn .icon-xihuan4").css("display", "none");
             }
         });
 
