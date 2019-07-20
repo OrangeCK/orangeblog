@@ -34,11 +34,11 @@ public class ReflectBean {
     //mysql jdbc的java包驱动字符串  
     private String driverClassName = "com.mysql.cj.jdbc.Driver";
     //数据库中的表名  
-    String table = "image_blog";
+    String table = "m_fnd_dictionary_value";
     //生成的实体类名类名
-    String nameOfClass = "ImageBlogPo";
-    String entityPrefixPath = "D:/github/ideaproject/orangeblog/orange-blog-dao/src/main/java/";
-//    String entityPrefixPath = "D:/git/orangeblog/orange-blog-dao/src/main/java/";
+    String nameOfClass = "FndDictionaryValuePo";
+//    String entityPrefixPath = "D:/github/ideaproject/orangeblog/orange-blog-dao/src/main/java/";
+    String entityPrefixPath = "D:/git/orangeblog/orange-blog-dao/src/main/java/";
     String entityPackagePath = "com/ck/orangeblogdao/po/";
     //数据库的列名称  
     private String[] colnames; // 列名数组  

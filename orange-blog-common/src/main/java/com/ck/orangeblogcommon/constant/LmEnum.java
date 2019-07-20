@@ -17,7 +17,7 @@ public enum LmEnum {
     /**
      * 状态
      */
-    BLOG_STATUS_0("草稿", "0"),BLOG_STATUS_1("已发布", "1"),
+    BLOG_STATUS_0("草稿", "0"),BLOG_STATUS_1("已发布", "1"),STATUS_0("已失效", "0"),STATUS_1("已激活", "1"),
     /**
      * 返回json的code
      */
