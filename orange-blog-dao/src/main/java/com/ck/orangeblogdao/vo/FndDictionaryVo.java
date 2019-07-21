@@ -29,11 +29,22 @@ public class FndDictionaryVo {
     @NotBlank(message = "字典描述不能为空")
     private String dicDesc;
 
+    @ApiModelProperty(value = "字典类型", example = "")
+    private String dicType;
+
     @ApiModelProperty(value = "当前页数", example = "1")
     private int pageIndex;
 
     @ApiModelProperty(value = "每页显示条数", example = "10")
     private int pageSize;
+
+    public String getDicType() {
+        return dicType;
+    }
+
+    public void setDicType(String dicType) {
+        this.dicType = dicType;
+    }
 
     public int getPageIndex() {
         return pageIndex;

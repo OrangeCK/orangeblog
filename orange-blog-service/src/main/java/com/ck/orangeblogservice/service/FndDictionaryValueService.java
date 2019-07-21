@@ -19,4 +19,5 @@ public interface FndDictionaryValueService extends IService<FndDictionaryValuePo
     ResultData dictionaryValuePageList(FndDictionaryValueVo fndDictionaryValueVo);
 
     ResultData deleteDictionaryValue(String id);
+
 }

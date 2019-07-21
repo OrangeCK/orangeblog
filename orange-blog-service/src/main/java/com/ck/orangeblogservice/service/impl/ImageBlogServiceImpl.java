@@ -1,6 +1,7 @@
 package com.ck.orangeblogservice.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -14,13 +15,12 @@ import com.ck.orangeblogcommon.utils.RedisUtil;
 import com.ck.orangeblogdao.mapper.FndUserMapper;
 import com.ck.orangeblogdao.mapper.FndUserRoleMapper;
 import com.ck.orangeblogdao.mapper.ImageBlogMapper;
-import com.ck.orangeblogdao.po.FndRolePo;
-import com.ck.orangeblogdao.po.FndUserPo;
-import com.ck.orangeblogdao.po.FndUserRolePo;
-import com.ck.orangeblogdao.po.ImageBlogPo;
+import com.ck.orangeblogdao.po.*;
 import com.ck.orangeblogdao.pojo.ResultData;
 import com.ck.orangeblogdao.vo.ImageBlogVo;
 import com.ck.orangeblogdao.vo.UserVo;
+import com.ck.orangeblogservice.service.FndDictionaryService;
+import com.ck.orangeblogservice.service.FndDictionaryValueService;
 import com.ck.orangeblogservice.service.FndUserService;
 import com.ck.orangeblogservice.service.ImageBlogService;
 import org.apache.commons.lang3.StringUtils;
@@ -36,6 +36,7 @@ import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlogPo> implements ImageBlogService {
@@ -43,6 +44,10 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
 
     @Autowired
     private ImageBlogMapper imageBlogMapper;
+    @Autowired
+    private FndDictionaryService fndDictionaryService;
+    @Autowired
+    private FndDictionaryValueService fndDictionaryValueService;
     @Autowired
     private RedisUtil redisUtil;
 
@@ -250,5 +255,28 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
             imageBlogPo.setPraiseNum(praiseNum);
         }
         return imageBlogPo;
+    }
+
+    @Override
+    public JSONArray blogCategoryList() {
+        JSONArray jsonArray = new JSONArray();
+        List<FndDictionaryPo> fndDictionaryPoList = fndDictionaryService.getDictionaryListByType("parentCategory");
+        for (int i = 0; i < fndDictionaryPoList.size(); i++) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("label", fndDictionaryPoList.get(i).getDicValue());
+            jsonObject.put("value", fndDictionaryPoList.get(i).getDicCode());
+            List<FndDictionaryValuePo> fndDictionaryValuePoList = fndDictionaryValueService.getDictionaryValueListByCode(fndDictionaryPoList.get(i).getDicCode());
+            List<JSONObject> jsonObjectList = fndDictionaryValuePoList.parallelStream()
+                    .map(v -> {
+                        JSONObject object = new JSONObject();
+                        object.put("label", v.getDicValValue());
+                        object.put("value", v.getDicValCode());
+                        return object;
+                    })
+                    .collect(Collectors.toList());
+            jsonObject.put("children", jsonObjectList);
+            jsonArray.add(jsonObject);
+        }
+        return jsonArray;
     }
 }

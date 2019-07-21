@@ -62,4 +62,11 @@ public class ImageBlogController {
     public ResultData updateImageBlogStatus(@ApiParam(hidden = true) @CurrentUser FndUserPo currentUser, @RequestParam String id) {
         return imageBlogService.updateImageBlogStatus(currentUser, id);
     }
+
+    @RequestMapping(value = "/blogCategoryList", method = RequestMethod.POST)
+    @ApiOperation(value = "博客类别list", notes = "博客类别list", httpMethod = CommonConstant.HTTP_METHOD_POST)
+    @ResponseBody
+    public ResultData blogCategoryList() {
+        return ResultData.ok(imageBlogService.blogCategoryList());
+    }
 }
