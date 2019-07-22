@@ -8,6 +8,7 @@ import com.ck.orangeblogdao.vo.ImageBlogVo;
 import com.ck.orangeblogservice.service.ImageBlogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -46,12 +47,17 @@ public class IndexController {
     @RequestMapping(value = "/indexBlogsMore", method = RequestMethod.POST)
     @ResponseBody
     public ResultData indexBlogsMore(@RequestBody ImageBlogVo imageBlogVo){
-        ResultData resultData;
-        if(imageBlogVo.getPageIndex() == 1){
-            resultData = imageBlogService.blogsPageList(imageBlogVo, imageBlogVo.getPageIndex(), imageBlogVo.getPageSize(), false);
-        }else{
-            resultData = imageBlogService.blogsPageList(imageBlogVo, imageBlogVo.getPageIndex(), imageBlogVo.getPageSize(), true);
+        boolean searchFlag = true;
+        if(StringUtils.isNotBlank(imageBlogVo.getParentCategoryId())){
+            searchFlag = false;
         }
-        return ResultData.ok(((IPage)resultData.getData()).getRecords());
+        if(StringUtils.isNotBlank(imageBlogVo.getCategoryId())){
+            searchFlag = false;
+        }
+        if(imageBlogVo.getPageIndex() == 1 && searchFlag){
+            return imageBlogService.blogsPageList(imageBlogVo, imageBlogVo.getPageIndex(), imageBlogVo.getPageSize(), false);
+        }else{
+            return imageBlogService.blogsPageList(imageBlogVo, imageBlogVo.getPageIndex(), imageBlogVo.getPageSize(), true);
+        }
     }
 }

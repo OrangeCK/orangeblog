@@ -157,7 +157,11 @@
   </footer>
   <div class="p_center">
     <ul>
-      <li>&copy; 2019 LmOrange 蜀ICP备19015312号</li>
+      <li>&copy; 2019 lmorange 蜀ICP备19015312号</li>
+    </ul>
+    <ul>
+      <li><img src="/image/beiantubiao.png"></li>
+      <li>川公网安备 51010502010903号</li>
     </ul>
     <ul>
       <li>
@@ -169,9 +173,6 @@
     <ul>
       <li>友情链接：</li>
       <li><a href="https://www.baidu.com" target="_blank">百度</a></li>
-      <li>阿里云</li>
-      <li>淘宝</li>
-      <li>凤凰网</li>
     </ul>
   </div>
 </main>
@@ -255,10 +256,14 @@
 
 	// 偶数行数据
 	var evenData = function(obj, index){
-        $(".featurette:last").after("<div class='row featurette shadow p-3 mb-5 bg-white rounded' >"+
+        var html = "<div class='row featurette shadow p-3 mb-5 bg-white rounded' >"+
             "<input value='"+ ((+index) + 1) +"' class='inp_display'/>" +
             "<div class='col-md-7'>"+
-            "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'><span class='iconfont icon-zhiding1'></span>"+ obj.title +"</h2>"+
+            "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'>";
+        if(obj.priorityNum > 0){
+            html = html + "<span class='iconfont icon-zhiding1'></span>";
+        }
+        html = html + ""+ obj.title +"</h2>"+
             "<div class='badge_padding badge_tag'>"+
             "<span class='badge badge-light'>" + obj.sCt + "</span>"+
             "<span class='badge badge-light'>"+ obj.authorName +"</span>"+
@@ -275,15 +280,20 @@
             "<img src='/image/loading7.gif' data-echo=\"" + obj.imageUrl + "\" alt=\"" + obj.imageUrl + "\" class='img-fluid0 lm-shadow0' >"+
             "</div>"+
             "</div>"+
-            "</div>");
+            "</div>";
+        $(".featurette:last").after(html);
     }
 
     // 奇数行数据
     var oddData = function(obj, index){
-        $(".featurette:last").after("<div class='row featurette shadow p-3 mb-5 bg-white rounded' >"+
+        var html = "<div class='row featurette shadow p-3 mb-5 bg-white rounded' >"+
             "<input value='"+ ((+index) + 1) +"' class='inp_display'/>" +
             "<div class='col-md-7 order-md-2'>"+
-            "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'><span class='iconfont icon-zhiding1'></span>"+ obj.title +"</h2>"+
+            "<h2 class='featurette-heading blog_head' onclick='clickBlog(\"" + obj.id + "\")'>";
+        if(obj.priorityNum > 0){
+            html = html + "<span class='iconfont icon-zhiding1'></span>";
+        }
+        html = html + ""+ obj.title +"</h2>"+
             "<div class='badge_padding badge_tag'>"+
             "<span class='badge badge-light'>" + obj.sCt + "</span>"+
             "<span class='badge badge-light'>"+ obj.authorName +"</span>"+
@@ -301,7 +311,8 @@
             "<img src='/image/loading7.gif' data-echo=\"" + obj.imageUrl + "\" alt=\"" + obj.imageUrl + "\" class='img-fluid0 lm-shadow0' >"+
             "</div>"+
             "</div>"+
-            "</div>");
+            "</div>";
+        $(".featurette:last").after(html);
     }
 
 	// 点击加载

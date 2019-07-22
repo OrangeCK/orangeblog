@@ -71,22 +71,26 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
                     .orderByDesc(ImageBlogPo::getPriorityNum, ImageBlogPo::getsCt)
                     .select(ImageBlogPo::getTitle,ImageBlogPo::getOutline,ImageBlogPo::getAuthorName,ImageBlogPo::getCategoryName,
                     ImageBlogPo::getParentCategoryName,ImageBlogPo::getImageUrl,ImageBlogPo::getStatusName,ImageBlogPo::getsCt,ImageBlogPo::getId,
-                    ImageBlogPo::getBlogView, ImageBlogPo::getPraiseNum);
+                    ImageBlogPo::getBlogView, ImageBlogPo::getPraiseNum, ImageBlogPo::getPriorityNum);
             ipage = imageBlogMapper.selectPage(page, imageBlogPoQueryWrapper);
-            setBlogRecordView(ipage.getRecords());
         }else{
             ipage = (IPage<ImageBlogPo>) redisUtil.get(LmEnum.INDEX_BLOGS.getName());
         }
-        return ResultData.ok(ipage);
+        return ResultData.ok(ipage.getRecords());
     }
 
+    // blog的喜欢量和浏览量从缓存中取最新
     private void setBlogRecordView(List<ImageBlogPo> imageBlogPoList){
         if(!CollectionUtils.isEmpty(imageBlogPoList)){
             imageBlogPoList.parallelStream().forEach(r -> {
                 synchronized (redisUtil){
                     JSONObject object = (JSONObject)redisUtil.hget(LmEnum.BLOG_RECORDS_VIEW.getName(), r.getId());
-                    long praiseNum = object.getLongValue(LmEnum.PRAISE_NUM.getName());
-                    long blogView = object.getLongValue(LmEnum.BLOG_VIEW.getName());
+                    long praiseNum = 0L;
+                    long blogView = 0L;
+                    if(!ObjectUtils.isEmpty(object)){
+                        praiseNum = object.getLongValue(LmEnum.PRAISE_NUM.getName());
+                        blogView = object.getLongValue(LmEnum.BLOG_VIEW.getName());
+                    }
                     r.setBlogView(blogView);
                     r.setPraiseNum(praiseNum);
                 }
@@ -162,12 +166,12 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
         Page<ImageBlogPo> page = new Page<>(Integer.parseInt(CommonConstant.DEFAULT_PAGE_INDEX), Integer.parseInt(CommonConstant.DEFAULT_PAGE_SIZE));
         QueryWrapper<ImageBlogPo> imageBlogPoQueryWrapper = new QueryWrapper<>();
         imageBlogPoQueryWrapper.lambda()
-                .orderByDesc(ImageBlogPo::getsCt)
+                .orderByDesc(ImageBlogPo::getPriorityNum, ImageBlogPo::getsCt)
                 .eq(ImageBlogPo::getStatus, LmEnum.BLOG_STATUS_1.getCode())
                 .select(ImageBlogPo::getTitle,ImageBlogPo::getOutline,ImageBlogPo::getAuthorName,ImageBlogPo::getCategoryName, ImageBlogPo::getParentCategoryName,
-                        ImageBlogPo::getImageUrl,ImageBlogPo::getStatusName,ImageBlogPo::getsCt,ImageBlogPo::getId, ImageBlogPo::getBlogView, ImageBlogPo::getPraiseNum);
+                        ImageBlogPo::getImageUrl,ImageBlogPo::getStatusName,ImageBlogPo::getsCt,ImageBlogPo::getId, ImageBlogPo::getBlogView,
+                        ImageBlogPo::getPraiseNum, ImageBlogPo::getPriorityNum);
         IPage<ImageBlogPo> ipage = imageBlogMapper.selectPage(page, imageBlogPoQueryWrapper);
-        setBlogRecordView(ipage.getRecords());
         redisUtil.set(LmEnum.INDEX_BLOGS.getName(), ipage);
     }
 
@@ -190,7 +194,7 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @Scheduled(cron = "0 0 1 * * ?")
+    @Scheduled(cron = "0 0/30 * * * ?")
     @Override
     public void updateBlogsRecordView() {
         Map<Object, Object> viewMap = redisUtil.hmget(LmEnum.BLOG_RECORDS_VIEW.getName());
