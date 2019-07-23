@@ -44,6 +44,13 @@ public class FndDictionaryValueController {
         return fndDictionaryValueService.dictionaryValuePageList(fndDictionaryValueVo);
     }
 
+    @RequestMapping(value = "/getDictionaryTypeList", method = RequestMethod.POST)
+    @ApiOperation(value = "得到所有的字典的类型", notes = "得到所有的字典的类型", httpMethod = CommonConstant.HTTP_METHOD_POST)
+    @ResponseBody
+    public ResultData getDictionaryTypeList() {
+        return ResultData.ok(fndDictionaryValueService.getDictionaryValueListByCode("dic_type"));
+    }
+
     @RequestMapping(value = "/deleteDictionaryValue", method = RequestMethod.POST)
     @ApiOperation(value = "删除字典值", notes = "删除字典值", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @ApiImplicitParam(name = "id", value = "字典值id",paramType = CommonConstant.PARAM_TYPE_QUERY, dataType = "String")

@@ -16,5 +16,8 @@ public interface FndDictionaryService extends IService<FndDictionaryPo> {
 
     List<FndDictionaryPo> getAllDictionaryList();
 
+    List<FndDictionaryPo> getDictionaryListByType(String dicType);
+
     ResultData deleteDictionary(String id);
+
 }

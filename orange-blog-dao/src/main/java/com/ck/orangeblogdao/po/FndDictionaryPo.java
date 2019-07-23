@@ -16,6 +16,11 @@ public class FndDictionaryPo extends BasePo {
 	/*  */
     private String dicDesc;
 
+    /**
+     * 字典类型
+     */
+    private String dicType;
+
 	/*  */
     private String status;
 
@@ -30,6 +35,14 @@ public class FndDictionaryPo extends BasePo {
 
 	/*  */
     private Date sUt;
+
+    public String getDicType() {
+        return dicType;
+    }
+
+    public void setDicType(String dicType) {
+        this.dicType = dicType;
+    }
 
     public String getDicCode(){
 

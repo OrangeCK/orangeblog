@@ -48,12 +48,22 @@ public class FndDictionaryServiceImpl extends ServiceImpl<FndDictionaryMapper, F
     }
 
     @Override
+    public List<FndDictionaryPo> getDictionaryListByType(String dicType) {
+        QueryWrapper<FndDictionaryPo> fndDictionaryPoQueryWrapper = new QueryWrapper<>();
+        fndDictionaryPoQueryWrapper.lambda()
+                .eq(FndDictionaryPo::getDicType, dicType)
+                .eq(FndDictionaryPo::getStatus, LmEnum.STATUS_1.getCode());
+        return baseMapper.selectList(fndDictionaryPoQueryWrapper);
+    }
+
+    @Override
     public ResultData saveDictionary(FndUserPo currentUser, FndDictionaryVo fndDictionaryVo) {
         Date date = DateUtil.date();
         FndDictionaryPo fndDictionaryPo = new FndDictionaryPo();
         fndDictionaryPo.setDicCode(fndDictionaryVo.getDicCode());
         fndDictionaryPo.setDicValue(fndDictionaryVo.getDicValue());
         fndDictionaryPo.setDicDesc(fndDictionaryVo.getDicDesc());
+        fndDictionaryPo.setDicType(fndDictionaryVo.getDicType());
         if(StringUtils.isNotBlank(fndDictionaryVo.getId())){
             fndDictionaryPo.setId(fndDictionaryVo.getId());
             fndDictionaryPo.setSUid(currentUser.getId());
