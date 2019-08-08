@@ -52,6 +52,19 @@ spring:
         max-idle: 8
         min-idle: 0
     timeout: 1000
+  # Elasticsearch
+  data:
+    elasticsearch:
+      cluster-name: my-application
+      cluster-nodes: localhost:9300
+
+#elasticsearch
+elasticSearch:
+  host: localhost
+  port: 9200
+  client:
+    connectNum: 10
+    connectPerRoute: 50
 
 # mybatis plus插件
 mybatis-plus:
