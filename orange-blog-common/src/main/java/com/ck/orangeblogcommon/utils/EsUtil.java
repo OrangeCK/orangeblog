@@ -1,16 +1,24 @@
 package com.ck.orangeblogcommon.utils;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 //import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
+import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Response;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,13 +70,11 @@ public class EsUtil {
      * @param index
      * @param type
      * @param object
-     * @return
+     * @return String
      */
     public String addData(String index,String type,String id,JSONObject object) {
         IndexRequest indexRequest = new IndexRequest(index, type, id);
         try {
-//            ObjectMapper mapper = new ObjectMapper();
-//            indexRequest.source(mapper.writeValueAsString(object), XContentType.JSON);
             indexRequest.source(object.toJSONString(), XContentType.JSON);
             IndexResponse indexResponse = rhlClient.index(indexRequest);
             return indexResponse.getId();
@@ -76,6 +82,46 @@ public class EsUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 取得数据
+     * @param index
+     * @param type
+     * @param id
+     * @return String
+     */
+    public String getData(String index, String type, String id){
+        return null;
+    }
+
+    /**
+     * 查询数据
+     * @param index
+     * @param type
+     * @param id
+     * @return String
+     */
+    public JSONArray searchData(String index, String type, String id){
+        JSONArray jsonArray = new JSONArray();
+        SearchRequest searchRequest = new SearchRequest(index);
+        searchRequest.types(type);
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.termQuery("about", "rock"));
+        searchRequest.source(searchSourceBuilder);
+        try {
+            SearchResponse searchResponse = rhlClient.search(searchRequest);
+            SearchHits hits = searchResponse.getHits();
+            SearchHit[] searchHits = hits.getHits();
+            for (SearchHit hit : searchHits) {
+                String sourceAsString = hit.getSourceAsString();
+                jsonArray.add(JSONObject.parseObject(sourceAsString));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            LOGGER.info("查询ES数据出错");
+        }
+        return jsonArray;
     }
 
     /**

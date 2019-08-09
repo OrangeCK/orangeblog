@@ -158,11 +158,8 @@ public class LoginController {
     @ApiOperation(value = "测试Es", notes = "测试Es", httpMethod = CommonConstant.HTTP_METHOD_GET)
     @RequestMapping(value = "/testEs", method = RequestMethod.GET)
     public ResultData testEs(HttpSession httpSession){
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("xinming", "测试Es");
 //        esUtil.createIndex("testlim");
-        esUtil.addData("testEs","testEs","1", jsonObject);
-        return ResultData.ok();
+        return ResultData.ok(esUtil.searchData("megacorp","employee",""));
     }
 
     @RequestMapping(value = "/unAuthorization", method = RequestMethod.POST)
