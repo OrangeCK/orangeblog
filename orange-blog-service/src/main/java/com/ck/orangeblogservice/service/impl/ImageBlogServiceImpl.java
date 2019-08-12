@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ck.orangeblogcommon.constant.CommonConstant;
 import com.ck.orangeblogcommon.constant.LmEnum;
+import com.ck.orangeblogcommon.utils.EsUtil;
 import com.ck.orangeblogcommon.utils.IpUtil;
 import com.ck.orangeblogcommon.utils.RedisUtil;
 import com.ck.orangeblogdao.mapper.FndUserMapper;
@@ -50,6 +51,8 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
     private FndDictionaryValueService fndDictionaryValueService;
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private EsUtil esUtil;
 
     @Override
     public ResultData imagePageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize) {
@@ -196,6 +199,9 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
             }
         });
         logger.info("缓存的阅读量:{}", redisUtil.hmget(LmEnum.BLOG_RECORDS_VIEW.getName()));
+        // 同步到ES上
+        JSONArray jsonArray = JSONObject.parseArray(JSONArray.toJSONString(imageBlogPoList));
+        esUtil.bulkAddData("lmorange", "blog", jsonArray);
     }
 
     @Transactional(rollbackFor = Exception.class)

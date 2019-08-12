@@ -159,7 +159,9 @@ public class LoginController {
     @RequestMapping(value = "/testEs", method = RequestMethod.GET)
     public ResultData testEs(HttpSession httpSession){
 //        esUtil.createIndex("testlim");
-        return ResultData.ok(esUtil.searchData("megacorp","employee",""));
+//        String[] params= {"about","last_name"};
+        esUtil.deleteIndex("megacorp");
+        return ResultData.ok();
     }
 
     @RequestMapping(value = "/unAuthorization", method = RequestMethod.POST)

@@ -5,6 +5,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 //import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
@@ -14,8 +19,9 @@ import org.elasticsearch.client.Response;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexResponse;
+import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -85,6 +91,67 @@ public class EsUtil {
     }
 
     /**
+     * 批量添加数据
+     * @param index
+     * @param type
+     * @param jsonArray
+     * @return boolean
+     */
+    public boolean bulkAddData(String index, String type, JSONArray jsonArray){
+        BulkRequest request = new BulkRequest();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            IndexRequest indexRequest = new IndexRequest(index, type, jsonObject.getString("id"));
+            indexRequest.source(jsonObject.toJSONString(), XContentType.JSON);
+            request.add(indexRequest);
+        }
+        try {
+            BulkResponse bulkResponse = rhlClient.bulk(request);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 删除数据
+     * @param index
+     * @param type
+     * @param id
+     */
+    public boolean deleteData(String index,String type,String id){
+        DeleteRequest deleteRequest = new DeleteRequest();
+        deleteRequest.index(index);
+        deleteRequest.type(type);
+        deleteRequest.id(id);
+        try {
+            DeleteResponse deleteResponse = rhlClient.delete(deleteRequest);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 删除整个index
+     * @param index
+     * @return boolean
+     */
+    public boolean deleteIndex(String index){
+        DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest();
+        deleteIndexRequest.indices(index);
+        try {
+            rhlClient.indices().delete(deleteIndexRequest);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * 取得数据
      * @param index
      * @param type
@@ -99,15 +166,20 @@ public class EsUtil {
      * 查询数据
      * @param index
      * @param type
-     * @param id
-     * @return String
+     * @param params
+     * @param value
+     * @return JSONArray
      */
-    public JSONArray searchData(String index, String type, String id){
+    public JSONArray searchData(String index, String type, String[] params, String value){
         JSONArray jsonArray = new JSONArray();
         SearchRequest searchRequest = new SearchRequest(index);
         searchRequest.types(type);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.termQuery("about", "rock"));
+        MultiMatchQueryBuilder multiMatchQueryBuilder = new MultiMatchQueryBuilder(value, params);
+        multiMatchQueryBuilder.fuzziness(Fuzziness.AUTO);
+        multiMatchQueryBuilder.prefixLength(3);
+        multiMatchQueryBuilder.maxExpansions(10);
+        searchSourceBuilder.query(multiMatchQueryBuilder);
         searchRequest.source(searchSourceBuilder);
         try {
             SearchResponse searchResponse = rhlClient.search(searchRequest);
