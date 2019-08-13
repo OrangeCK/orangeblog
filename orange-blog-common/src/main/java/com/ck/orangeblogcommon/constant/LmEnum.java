@@ -32,6 +32,10 @@ public enum LmEnum {
      */
     LOGIN_INFO_EXPIRE(300),LOGIN_EXPIRE(3600),IP_EXPIRE(60*60),
     /**
+     * ES的常量
+     */
+    ES_INDEX_LMORANGE("lmorange"),ES_TYPE_BLOG("blog"),
+    /**
      * 请求类型
      */
     HTTP_METHOD_GET("GET"),HTTP_METHOD_POST("POST"),PARAM_TYPE_BODY("body"),PARAM_TYPE_QUERY("query"),DATA_TYPE_STRING("string"),

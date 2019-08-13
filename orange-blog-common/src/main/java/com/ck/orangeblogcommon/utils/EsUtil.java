@@ -97,11 +97,11 @@ public class EsUtil {
      * @param jsonArray
      * @return boolean
      */
-    public boolean bulkAddData(String index, String type, JSONArray jsonArray){
+    public boolean bulkAddData(String index, String type, JSONArray jsonArray, String id){
         BulkRequest request = new BulkRequest();
         for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-            IndexRequest indexRequest = new IndexRequest(index, type, jsonObject.getString("id"));
+            IndexRequest indexRequest = new IndexRequest(index, type, jsonObject.getString(id));
             indexRequest.source(jsonObject.toJSONString(), XContentType.JSON);
             request.add(indexRequest);
         }
@@ -170,12 +170,12 @@ public class EsUtil {
      * @param value
      * @return JSONArray
      */
-    public JSONArray searchData(String index, String type, String[] params, String value){
+    public JSONArray searchData(String index, String type, String[] fields, String value){
         JSONArray jsonArray = new JSONArray();
         SearchRequest searchRequest = new SearchRequest(index);
         searchRequest.types(type);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        MultiMatchQueryBuilder multiMatchQueryBuilder = new MultiMatchQueryBuilder(value, params);
+        MultiMatchQueryBuilder multiMatchQueryBuilder = new MultiMatchQueryBuilder(value, fields);
         multiMatchQueryBuilder.fuzziness(Fuzziness.AUTO);
         multiMatchQueryBuilder.prefixLength(3);
         multiMatchQueryBuilder.maxExpansions(10);

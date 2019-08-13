@@ -1,8 +1,11 @@
 package com.ck.orangeblogservice.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ck.orangeblogcommon.annotation.RecordBlogView;
 import com.ck.orangeblogcommon.constant.CommonConstant;
+import com.ck.orangeblogcommon.constant.LmEnum;
+import com.ck.orangeblogcommon.utils.EsUtil;
 import com.ck.orangeblogdao.pojo.ResultData;
 import com.ck.orangeblogdao.vo.ImageBlogVo;
 import com.ck.orangeblogservice.service.ImageBlogService;
@@ -26,6 +29,8 @@ public class IndexController {
 
     @Autowired
     private ImageBlogService imageBlogService;
+    @Autowired
+    private EsUtil esUtil;
 
     /**
      * 主页的blogs展示
@@ -59,5 +64,14 @@ public class IndexController {
         }else{
             return imageBlogService.blogsPageList(imageBlogVo, imageBlogVo.getPageIndex(), imageBlogVo.getPageSize(), true);
         }
+    }
+
+    @ApiOperation(value = "搜索Blogs", notes = "搜索Blogs", httpMethod = CommonConstant.HTTP_METHOD_POST)
+    @RequestMapping(value = "/searchBlogs", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultData searchBlogs(@RequestParam String searchStr){
+        String[] fields = {"title","outline","categoryName","markdownText"};
+        JSONArray jsonArray = esUtil.searchData(LmEnum.ES_INDEX_LMORANGE.getName(), LmEnum.ES_TYPE_BLOG.getName(), fields, searchStr);
+        return ResultData.ok(jsonArray);
     }
 }
