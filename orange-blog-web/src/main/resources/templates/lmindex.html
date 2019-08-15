@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="referrer" content="never">
     <meta name="keywords" content="">
@@ -75,10 +75,10 @@
             <a class="nav-link " href="/index/indexBlogs?parentCategoryId=back">Java</a>
           </li>
         </ul>
-        <form class="form-inline mt-2 mt-md-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="开发ing、请期待" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="color:#fff;border-color:orange;">Search</button>
-        </form>
+        <div class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="输入关键字" aria-label="Search" id="searchStr">
+          <button class="btn btn-outline-success my-2 my-sm-0" onclick="search()" style="color:#fff;border-color:orange;">Search</button>
+        </div>
       </div>
     </nav>
   </header>
@@ -160,7 +160,7 @@
       <li>&copy; 2019 lmorange 蜀ICP备19015312号</li>
     </ul>
     <ul>
-      <li><img src="/image/beiantubiao.png"></li>
+      <li><img src="/image/beiantubiao.png" style="width: 18px;height: 18px;"></li>
       <li>川公网安备 51010502010903号</li>
     </ul>
     <ul>
@@ -172,7 +172,7 @@
     </ul>
     <ul>
       <li>友情链接：</li>
-      <li><a href="https://www.baidu.com" target="_blank">百度</a></li>
+      <li><a href="https://www.baidu.com" target="_blank" style="color: #ffffff">百度</a></li>
     </ul>
   </div>
 </main>
@@ -181,6 +181,7 @@
 <script type="text/javascript" th:inline="javascript">
     var categoryId = "";
     var parentCategoryId = "";
+    var searchStr = "";
 	$(document).ready(function(){
 		$("#myCarousel").carousel('pause');
         $("#load_div1").removeClass('load_no_active');
@@ -190,7 +191,12 @@
         var obj = getRequest();
         categoryId = obj.categoryId;
         parentCategoryId = obj.parentCategoryId;
-        queryMoreImageBlogs();
+        if(isNotEmpty(obj.searchStr)){
+            searchStr = decodeURIComponent(obj.searchStr);
+            searchBlogs();
+        }else{
+            queryMoreImageBlogs();
+        }
         // 图片懒加载
         echo.init({
             offset: 100,
@@ -205,7 +211,7 @@
             var str = url.substr(1);
             var strs = str.split("&");
             for(var i = 0; i < strs.length; i ++) {
-                theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+                theRequest[strs[i].split("=")[0]]=decodeURI(strs[i].split("=")[1]);
             }
         }
         return theRequest;
@@ -248,10 +254,6 @@
         }else{
             oddData(obj, index);
         }
-		$("#load_div1").removeClass('load_active');
-		$("#load_div1").addClass('load_no_active');
-		$("#load_div2").removeClass('load_no_active');
-		$("#load_div2").addClass('load_active');
 	}
 
 	// 偶数行数据
@@ -324,6 +326,18 @@
 		// setTimeout('queryMoreImageBlogs()',1000);
         queryMoreImageBlogs()
 	}
+	// 搜索查询
+    function searchBlogs(){
+        if(!isNotEmpty(searchStr)){
+            return;
+        }
+        $(".rounded").remove();
+        $("#load_div3").addClass('load_no_active');
+        $("#load_div3").removeClass('load_active');
+        $("#load_div2").addClass('load_no_active');
+        $("#load_div2").removeClass('load_active');
+        searchBlogMore(searchStr);
+    }
     // 判断是奇数还是偶数
     function evenOrOdd(index){
         return (index%2 == 0) ? false : true;
@@ -331,6 +345,11 @@
     // 点击博客跳转
     function clickBlog(blogId){
         window.open("/blog/blogDetail/"+blogId, "陈康博客")
+    }
+    // 点击搜索跳转
+    function search(){
+        var searchValue = $("#searchStr").val();
+        window.open(encodeURI("/index/indexBlogs?searchStr="+ encodeURIComponent(searchValue)), "_self");
     }
     // 重新查询
     function queryImageBlogs(type, value){
@@ -356,9 +375,11 @@
         var param = JSON.stringify({"categoryId":categoryId, "parentCategoryId":parentCategoryId, "pageIndex":pageIndex, "pageSize":10});
         $.ajax({
             type:"POST",
+            // 告诉服务器，我想要的数据类型
             dataType:"json",
             url:"/index/indexBlogsMore",
             data: param,
+            // 告诉服务器，我想要传的数据类型
             contentType: "application/json",
             success:function(data){
                 var obj = data.data;
@@ -366,8 +387,35 @@
                     for(var i=0; i< obj.length; i++){
                         loadingData(obj[i]);
                     }
+                    $("#load_div1").removeClass('load_active');
+                    $("#load_div1").addClass('load_no_active');
+                    $("#load_div2").removeClass('load_no_active');
+                    $("#load_div2").addClass('load_active');
                     pageIndex = (+pageIndex) + 1;
                     $("#pageIndex_inp").val(pageIndex);
+                }else{
+                    $("#load_div1").removeClass('load_active');
+                    $("#load_div1").addClass('load_no_active');
+                    $("#load_div3").removeClass('load_no_active');
+                    $("#load_div3").addClass('load_active');
+                }
+            }
+        });
+    }
+    // 搜索查询
+    function searchBlogMore(value){
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            url:"/index/searchBlogs?searchStr=" + value,
+            success:function(data){
+                var obj = data.data;
+                if(!$.isEmptyObject(data) && obj.length > 0){
+                    for(var i=0; i< obj.length; i++){
+                        loadingData(obj[i]);
+                    }
+                    $("#load_div1").removeClass('load_active');
+                    $("#load_div1").addClass('load_no_active');
                 }else{
                     $("#load_div1").removeClass('load_active');
                     $("#load_div1").addClass('load_no_active');
@@ -410,10 +458,9 @@
      * @returns {boolean}
      */
     function isNotEmpty(str) {
-        if (str != '' && str != null && typeof str != 'undefined') {
+        if (str != '' && str != null && typeof str != 'undefined' && str.length > 0) {
             return true;
         }
-        console.warn('argument format is wrong');
         return false;
     }
 </script>
