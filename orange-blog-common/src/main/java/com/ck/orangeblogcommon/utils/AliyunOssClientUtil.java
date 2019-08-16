@@ -46,7 +46,7 @@ public class AliyunOssClientUtil {
      * 初始化属性
      */
     static{
-        ENDPOINT = LmEnum.ENDPOINT.getName();
+        ENDPOINT = LmEnum.ENDPOINT_INTERNAL.getName();
         ACCESS_KEY_ID = LmEnum.ACCESS_KEY_ID.getName();
         ACCESS_KEY_SECRET = LmEnum.ACCESS_KEY_SECRET.getName();
         BACKET_NAME = LmEnum.BACKET_NAME.getName();

@@ -32,6 +32,10 @@ public enum LmEnum {
      */
     LOGIN_INFO_EXPIRE(300),LOGIN_EXPIRE(3600),IP_EXPIRE(60*60),
     /**
+     * ES的常量
+     */
+    ES_INDEX_LMORANGE("lmorange"),ES_TYPE_BLOG("blog"),
+    /**
      * 请求类型
      */
     HTTP_METHOD_GET("GET"),HTTP_METHOD_POST("POST"),PARAM_TYPE_BODY("body"),PARAM_TYPE_QUERY("query"),DATA_TYPE_STRING("string"),
@@ -50,8 +54,8 @@ public enum LmEnum {
     /**
      * 阿里OSS访问域名
      */
-    ENDPOINT("oss-cn-beijing.aliyuncs.com"),ACCESS_KEY_ID("LTAIebGfCOUJ8IJp"),ACCESS_KEY_SECRET("R9E47aBiFQz98ywLrGG5tFT9o7O2hS"),BACKET_NAME("2019-2-16-ck"),FOLDER("lmsystem/")
-    ;
+    ENDPOINT("oss-cn-beijing.aliyuncs.com"),ACCESS_KEY_ID("LTAIebGfCOUJ8IJp"),ACCESS_KEY_SECRET("R9E47aBiFQz98ywLrGG5tFT9o7O2hS"),BACKET_NAME("2019-2-16-ck"),FOLDER("lmsystem/"),
+    ENDPOINT_INTERNAL("oss-cn-beijing-internal.aliyuncs.com");
     private Integer num;
     /**
      * name

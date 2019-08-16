@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="keywords" content="">
 	<meta name="description" content="" />
@@ -10,6 +10,7 @@
 	<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 	<script th:src="@{/js/bootstrap.min.js}" ></script>
     <script th:src="@{/js/highlight.pack.js}" ></script>
+    <script th:src="@{/js/highlightjs-line-numbers.min.js}" ></script>
     <script th:src="@{/js/lm-toast.js}" ></script>
     <script th:src="@{/js/zoomify.min.js}" ></script>
 	<script>window.jQuery || document.write('<script th:src="@{/js/bootstrap.bundle.min.js}"><\/script>')</script>
@@ -18,7 +19,7 @@
     <link th:href="@{/css/common.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
 	<link th:href="@{/css/markdown.css}" rel="styleSheet" type="text/css">
-    <link th:href="@{/css/idea.css}" rel="styleSheet" type="text/css">
+    <link th:href="@{/css/gruvbox-dark.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/lm-toast.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/zoomify.min.css}" rel="styleSheet" type="text/css">
     <title th:text="${blog.title}"></title>
@@ -68,10 +69,10 @@
             <a class="nav-link " href="/index/indexBlogs?parentCategoryId=back">Java</a>
           </li>
         </ul>
-        <form class="form-inline mt-2 mt-md-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="开发ing、请期待" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="color:#fff;border-color:orange;">Search</button>
-        </form>
+        <div class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="输入关键字" aria-label="Search" id="searchStr">
+          <button class="btn btn-outline-success my-2 my-sm-0" onclick="search()" style="color:#fff;border-color:orange;">Search</button>
+        </div>
       </div>
     </nav>
   </header>
@@ -128,7 +129,7 @@
         <li>&copy; 2019 LmOrange 蜀ICP备19015312号</li>
       </ul>
       <ul>
-        <li><img src="/image/beiantubiao.png"></li>
+        <li><img src="/image/beiantubiao.png" style="width: 18px;height: 18px;"></li>
         <li>川公网安备 51010502010903号</li>
       </ul>
       <ul>
@@ -140,7 +141,7 @@
       </ul>
       <ul>
         <li>友情链接：</li>
-        <li><a href="https://www.baidu.com" target="_blank">百度</a></li>
+        <li><a href="https://www.baidu.com" target="_blank" style="color: #ffffff">百度</a></li>
       </ul>
     </div>
 </body>
@@ -149,6 +150,7 @@
 	$(document).ready(function(){
         $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
+            hljs.initLineNumbersOnLoad();
         });
         $('ul li img').zoomify();
         $('p img').zoomify();
@@ -164,6 +166,11 @@
               document.body.scrollTop,
               //firefox/IE
               document.documentElement.scrollTop);
+    }
+    // 点击搜索跳转
+    function search(){
+        var searchValue = $("#searchStr").val();
+        window.open("/index/indexBlogs?searchStr="+ searchValue, "_self");
     }
     // 点赞
     function praiseBlog(id){

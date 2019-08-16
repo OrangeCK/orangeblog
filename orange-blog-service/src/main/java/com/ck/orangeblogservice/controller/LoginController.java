@@ -6,6 +6,7 @@ import cn.hutool.captcha.LineCaptcha;
 import com.alibaba.fastjson.JSONObject;
 import com.ck.orangeblogcommon.constant.CommonConstant;
 import com.ck.orangeblogcommon.constant.LmEnum;
+import com.ck.orangeblogcommon.utils.EsUtil;
 import com.ck.orangeblogcommon.utils.JwtUtil;
 import com.ck.orangeblogcommon.utils.RedisUtil;
 import com.ck.orangeblogdao.po.FndUserPo;
@@ -40,6 +41,8 @@ public class LoginController {
     private FndPermissionService fndPermissionService;
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private EsUtil esUtil;
 
     /**
      * 登录
@@ -147,6 +150,18 @@ public class LoginController {
         String imageBase64 = "data:image/jpeg;base64," + captcha.getImageBase64();
         httpSession.setAttribute("code", captcha.getCode());
         return ResultData.ok(imageBase64);
+    }
+
+    /**
+     * 生成验证码
+     */
+    @ApiOperation(value = "测试Es", notes = "测试Es", httpMethod = CommonConstant.HTTP_METHOD_GET)
+    @RequestMapping(value = "/testEs", method = RequestMethod.GET)
+    public ResultData testEs(HttpSession httpSession){
+//        esUtil.createIndex("testlim");
+//        String[] params= {"about","last_name"};
+        esUtil.deleteIndex("megacorp");
+        return ResultData.ok();
     }
 
     @RequestMapping(value = "/unAuthorization", method = RequestMethod.POST)

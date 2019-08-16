@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ck.orangeblogcommon.constant.CommonConstant;
 import com.ck.orangeblogcommon.constant.LmEnum;
+import com.ck.orangeblogcommon.utils.EsUtil;
 import com.ck.orangeblogcommon.utils.IpUtil;
 import com.ck.orangeblogcommon.utils.RedisUtil;
 import com.ck.orangeblogdao.mapper.FndUserMapper;
@@ -50,6 +51,8 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
     private FndDictionaryValueService fndDictionaryValueService;
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private EsUtil esUtil;
 
     @Override
     public ResultData imagePageList(ImageBlogVo imageBlogVo, int pageIndex, int pageSize) {
@@ -159,10 +162,13 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
             jsonObject.put(LmEnum.PRAISE_NUM.getName(), id);
             jsonObject.put(LmEnum.BLOG_VIEW.getName(), id);
             redisUtil.hset(LmEnum.BLOG_RECORDS_VIEW.getName(), id, jsonObject);
-            return ResultData.ok();
         }else{
             return ResultData.error("更新失败");
         }
+        ImageBlogPo blogPo = baseMapper.selectById(id);
+        blogPo.setContent(null);
+        esUtil.addData(LmEnum.ES_INDEX_LMORANGE.getName(), LmEnum.ES_TYPE_BLOG.getName(),id,JSONObject.parseObject(JSONObject.toJSONString(blogPo)));
+        return ResultData.ok();
     }
 
     @Scheduled(cron = "0 0 * * * ?")
@@ -193,9 +199,15 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
                 jsonObject.put(LmEnum.PRAISE_NUM.getName(), i.getPraiseNum());
                 jsonObject.put(LmEnum.BLOG_VIEW.getName(), i.getBlogView());
                 redisUtil.hset(LmEnum.BLOG_RECORDS_VIEW.getName(), i.getId(), jsonObject);
+                // 针对ES
+                i.setContent(null);
             }
         });
         logger.info("缓存的阅读量:{}", redisUtil.hmget(LmEnum.BLOG_RECORDS_VIEW.getName()));
+        // 同步ES
+        esUtil.deleteIndex(LmEnum.ES_INDEX_LMORANGE.getName());
+        JSONArray jsonArray = JSONObject.parseArray(JSONArray.toJSONString(imageBlogPoList));
+        esUtil.bulkAddData(LmEnum.ES_INDEX_LMORANGE.getName(), LmEnum.ES_TYPE_BLOG.getName(), jsonArray, "id");
     }
 
     @Transactional(rollbackFor = Exception.class)
