@@ -48,17 +48,6 @@ public class IndexController {
         return mv;
     }
 
-    /**
-     * 主页的blogs展示
-     * @return
-     */
-//    @ApiOperation(value = "搜索跳转", notes = "搜索跳转", httpMethod = CommonConstant.HTTP_METHOD_POST)
-//    @RequestMapping(value = "/indexSearch/{searchStr}", method = RequestMethod.GET)
-//    public ModelAndView indexSearch(@PathVariable("searchStr") String searchStr){
-//        ModelAndView mv = new ModelAndView("lmindex");
-//        return mv;
-//    }
-
     @ApiOperation(value = "得到更多的blogs", notes = "得到更多的blogs", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @RequestMapping(value = "/indexBlogsMore", method = RequestMethod.POST)
     @ResponseBody

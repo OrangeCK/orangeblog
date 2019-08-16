@@ -10,6 +10,7 @@
 	<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 	<script th:src="@{/js/bootstrap.min.js}" ></script>
     <script th:src="@{/js/highlight.pack.js}" ></script>
+    <script th:src="@{/js/highlightjs-line-numbers.min.js}" ></script>
     <script th:src="@{/js/lm-toast.js}" ></script>
     <script th:src="@{/js/zoomify.min.js}" ></script>
 	<script>window.jQuery || document.write('<script th:src="@{/js/bootstrap.bundle.min.js}"><\/script>')</script>
@@ -18,7 +19,7 @@
     <link th:href="@{/css/common.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
 	<link th:href="@{/css/markdown.css}" rel="styleSheet" type="text/css">
-    <link th:href="@{/css/idea.css}" rel="styleSheet" type="text/css">
+    <link th:href="@{/css/gruvbox-dark.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/lm-toast.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/zoomify.min.css}" rel="styleSheet" type="text/css">
     <title th:text="${blog.title}"></title>
@@ -149,6 +150,7 @@
 	$(document).ready(function(){
         $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
+            hljs.initLineNumbersOnLoad();
         });
         $('ul li img').zoomify();
         $('p img').zoomify();

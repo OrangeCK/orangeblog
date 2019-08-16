@@ -4,7 +4,7 @@
 
 html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -54,6 +54,10 @@ body>*:last-child {
 
 p, blockquote, ul, ol, dl, table, pre {
   margin: 15px 0;
+}
+
+pre table{
+  margin: 0;
 }
 
 /* HEADERS
@@ -262,7 +266,7 @@ hr {
 }
 
 /* TABLES
-=============================================================================*/
+=============================================================================
 table{
   margin: 0 auto;
 }
@@ -283,7 +287,7 @@ table tr {
 table tr:nth-child(2n) {
   background-color: #f8f8f8;
 }
-
+*/
 /* IMAGES
 =============================================================================*/
 
@@ -304,4 +308,30 @@ p{
 	bottom: 80px;
 	right: 15px;
   width: 220px;
+}
+
+/* hightlight的行号样式
+=============================================================================*/
+.hljs {
+  padding: 0;
+}
+.hljs-ln td {
+  padding: 0px 10px;
+}
+td.hljs-ln-numbers {
+  border-right: 1px solid grey;
+  text-align: center;
+  color: grey;
+  vertical-align: top;
+}
+td.hljs-ln-code {
+  padding-left: 5px;
+}
+
+.mark, mark {
+  padding: 5px;
+  font-size: 14px;
+  color: #ffffff;
+  border-radius: 5px;
+  background-color: #007fbd;
 }
