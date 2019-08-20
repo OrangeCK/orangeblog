@@ -1,5 +1,6 @@
 package com.ck.orangeblogdao.po;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ck.orangeblogdao.pojo.BasePo;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -56,6 +57,7 @@ public class ImageBlogPo extends BasePo {
 
 	/*  */
     @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm:ss", timezone = "GMT+8")
+    @JSONField(format = "yyyy年MM月dd日 HH:mm:ss")
     private Date sCt;
 
 	/*  */

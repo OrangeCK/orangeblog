@@ -266,28 +266,24 @@ hr {
 }
 
 /* TABLES
-=============================================================================
+=============================================================================*/
 table{
   margin: 0 auto;
 }
+
 table th {
   font-weight: bold;
+  border: 1px solid #282828;
+  color: #ffffff;
+  padding: 5px 10px;
+  background-color: #007fbd;
 }
 
 table th, table td {
-  border: 1px solid #ccc;
-  padding: 6px 13px;
+  border: 1px solid #282828;
+  padding: 5px 10px;
 }
 
-table tr {
-  border-top: 1px solid #ccc;
-  background-color: #fff;
-}
-
-table tr:nth-child(2n) {
-  background-color: #f8f8f8;
-}
-*/
 /* IMAGES
 =============================================================================*/
 

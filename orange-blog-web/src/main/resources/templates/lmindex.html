@@ -12,13 +12,13 @@
     <link th:href="@{/css/iconfont.css}" rel="styleSheet" type="text/css"/>
     <link th:href="@{/css/common.css}" rel="styleSheet" type="text/css"/>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
-    <link rel="shortcut icon" type="image/x-iccnpmon" th:href="@{/image/favicon.ico}">
+    <link rel="shortcut icon" type="image/x-iccnpmon" th:href="@{/image/lm_favicon.ico}">
     <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <script th:src="@{/js/lm.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}" ></script>
     <script th:src="@{/js/echo.min.js}" ></script>
 	<script>window.jQuery || document.write('<script th:src="@{/js/jquery-3.3.1.min.js}"><\/script>')</script>
-    <title>lmorange</title>
+    <title>橙子味的栗子</title>
   </head>
   <style type="text/css">
     .bd-placeholder-img {
@@ -66,7 +66,7 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link disabled" href="#">橙子的个人生活</a>
+            <a class="nav-link disabled" style="padding:0px;width:40px;height:40px;background: url(/image/lmlogo.png) -29px -35px no-repeat;" href="#"></a>
           </li>
           <li class="nav-item">
             <a class="nav-link " href="/index/indexBlogs?parentCategoryId=lz">栗子生活</a>
@@ -92,30 +92,29 @@
       <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol>
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img class="img-carousel" th:src="@{/image/bg1.jpg}" />
-        <div class="container">			
+      <div class="carousel-item active" style="background: url(/image/yunnanckbg.png) 50%;">
+        <div class="container">
           <div class="carousel-caption text-left">
-            <h1>示例1号</h1>
-            <p>内容未知.</p>
+            <h1>思.</h1>
+            <p>有时思考：生活、学习、工作、爱好等需要去平衡，以达到一种良好的循环；但其实并不好去把握，
+              因为人生在不同阶段的侧重点不同，还好对未知的好奇一直都在...
+            </p>
           </div>
         </div>
       </div>
-      <div class="carousel-item">
-        <img class="img-carousel" th:src="@{/image/bg2.jpg}" />
+      <div class="carousel-item" style="background: url(/image/lmaixinbg.png) 50%;">
         <div class="container">
           <div class="carousel-caption">
-            <h1>实例二号</h1>
-            <p>内容未知.</p>
+            <h1>先.</h1>
+            <p>给你比个心.</p>
           </div>
         </div>
       </div>
-      <div class="carousel-item">
-        <img class="img-carousel" th:src="@{/image/bg3.jpg}" />
+      <div class="carousel-item" style="background: url(/image/lmshouzhangbg.png) 50%;">
         <div class="container">
           <div class="carousel-caption text-right">
-            <h1>还有一个示例</h1>
-            <p>内容未知.</p>
+            <h1>再.</h1>
+            <p>给我五块.</p>
           </div>
         </div>
       </div>
@@ -160,7 +159,7 @@
       <li>&copy; 2019 lmorange 蜀ICP备19015312号</li>
     </ul>
     <ul>
-      <li><img src="/image/beiantubiao.png" style="width: 18px;height: 18px;"></li>
+      <li><img src="/image/beiantubiao.png" ></li>
       <li>川公网安备 51010502010903号</li>
     </ul>
     <ul>
