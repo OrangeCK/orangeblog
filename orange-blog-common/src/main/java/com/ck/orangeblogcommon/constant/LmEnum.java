@@ -17,7 +17,7 @@ public enum LmEnum {
     /**
      * 状态
      */
-    BLOG_STATUS_0("草稿", "0"),BLOG_STATUS_1("已发布", "1"),STATUS_0("已失效", "0"),STATUS_1("已激活", "1"),
+    BLOG_STATUS_0("草稿", "0"),BLOG_STATUS_1("已发布", "1"),STATUS_0("失效", "0"),STATUS_1("有效", "1"),
     /**
      * 返回json的code
      */
@@ -54,8 +54,8 @@ public enum LmEnum {
     /**
      * 阿里OSS访问域名
      */
-    ENDPOINT("oss-cn-beijing.aliyuncs.com"),ACCESS_KEY_ID("LTAIebGfCOUJ8IJp"),ACCESS_KEY_SECRET("R9E47aBiFQz98ywLrGG5tFT9o7O2hS"),BACKET_NAME("2019-2-16-ck"),FOLDER("lmsystem/"),
-    ENDPOINT_INTERNAL("oss-cn-beijing-internal.aliyuncs.com");
+    ENDPOINT("oss-cn-shanghai.aliyuncs.com"),ACCESS_KEY_ID("LTAIebGfCOUJ8IJp"),ACCESS_KEY_SECRET("R9E47aBiFQz98ywLrGG5tFT9o7O2hS"),BACKET_NAME("lm-oss-bucket"),FOLDER("lmsystem/"),
+    ENDPOINT_INTERNAL("oss-cn-shanghai-internal.aliyuncs.com");
     private Integer num;
     /**
      * name

@@ -2,6 +2,8 @@ package com.ck.orangeblogservice.service;
 
 import com.ck.orangeblogdao.po.BlogDiscussant;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ck.orangeblogdao.pojo.ResultData;
+import com.ck.orangeblogdao.vo.BlogDiscussantVo;
 
 /**
  * <p>
@@ -13,5 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IBlogDiscussantService extends IService<BlogDiscussant> {
 
+    ResultData saveBlogDiscussant(BlogDiscussantVo blogDiscussantVo);
 
+    ResultData blogDiscussantPageList(BlogDiscussantVo blogDiscussantVo);
 }

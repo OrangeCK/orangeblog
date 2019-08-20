@@ -4,6 +4,7 @@ import com.ck.orangeblogdao.pojo.BasePo;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -17,8 +18,11 @@ import lombok.experimental.Accessors;
  * @since 2019-08-16
  */
 @Data
+// 此注解会生成equals(Object other) 和 hashCode()方法(callSuper = true,表示可以调用父类中的方法)
 @EqualsAndHashCode(callSuper = true)
+// chain 一个布尔值。如果为真，产生的setter返回的this而不是void。默认是假。如果fluent=true，那么chain默认为真
 @Accessors(chain = true)
+@Builder
 public class BlogDiscussant extends BasePo {
 
     /**
