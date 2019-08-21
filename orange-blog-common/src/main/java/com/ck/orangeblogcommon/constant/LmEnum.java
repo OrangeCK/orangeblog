@@ -55,7 +55,7 @@ public enum LmEnum {
      * 阿里OSS访问域名
      */
     ENDPOINT("oss-cn-shanghai.aliyuncs.com"),ACCESS_KEY_ID("LTAIebGfCOUJ8IJp"),ACCESS_KEY_SECRET("R9E47aBiFQz98ywLrGG5tFT9o7O2hS"),BACKET_NAME("lm-oss-bucket"),FOLDER("lmsystem/"),
-    ENDPOINT_INTERNAL("oss-cn-shanghai-internal.aliyuncs.com");
+    ENDPOINT_INTERNAL("oss-cn-shanghai-internal.aliyuncs.com"),WEBSITE_LMORANGE("www.lmorange.com/oss-image");
     private Integer num;
     /**
      * name

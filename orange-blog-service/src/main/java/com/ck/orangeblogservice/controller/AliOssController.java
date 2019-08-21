@@ -65,7 +65,7 @@ public class AliOssController {
             logger.error("文件上传失败" + sw.toString());
             return ResultData.error("上传失败");
         }
-        return ResultData.ok("http://" + LmEnum.BACKET_NAME.getName() + "." + LmEnum.ENDPOINT_INTERNAL.getName() + "/" + LmEnum.FOLDER.getName() + fileName);
+        return ResultData.ok("https://" + LmEnum.WEBSITE_LMORANGE.getName() + "/" + LmEnum.FOLDER.getName() + fileName);
     }
 
     @RequestMapping(value = "/deleteFromOss", method = RequestMethod.POST)
