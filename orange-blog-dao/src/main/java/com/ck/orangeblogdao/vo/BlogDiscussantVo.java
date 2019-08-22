@@ -15,6 +15,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @ApiModel(value="BlogDiscussantVo",description="留言model")
 public class BlogDiscussantVo {
     /**

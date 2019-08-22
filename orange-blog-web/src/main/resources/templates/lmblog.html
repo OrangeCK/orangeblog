@@ -22,6 +22,7 @@
     <link th:href="@{/css/gruvbox-dark.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/lm-toast.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/viewer.min.css}" rel="styleSheet" type="text/css">
+    <link th:href="@{/css/icheck-bootstrap.min.css}" rel="styleSheet" type="text/css">
     <title th:text="${blog.title}"></title>
   </head>
   <style type="text/css">
@@ -82,6 +83,7 @@
         <h1 th:text="${blog.title}"></h1>
     </div>
     <div>
+      <input style="display: none;" id="blogId" th:value="${blog.id}"/>
       <span class="badge badge-light" th:text="${#dates.format(blog.sCt, 'yyyy年MM月dd日 HH:mm:ss')}"></span>
       <span class="badge badge-light" th:text="${blog.authorName}"></span>
       <span class="badge badge-primary iconfont icon-06tags" th:text="' ' +${blog.parentCategoryName}"></span>
@@ -93,8 +95,42 @@
     </div>
     <hr style="border-bottom: 1px solid #ddd;">
   <div id="content" class="container marketing" th:utext="${blog.content}" style="padding: 0;">
-
   </div>
+  <!--留言区-->
+  <form id="discussantForm" style="width:80%;padding-top:1rem;margin:20px auto 0 auto;" class="lm-shadow" >
+    <div class="form-group row">
+      <label for="discussant" class="col-sm-1 col-form-label">名称</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" name="discussant" id="discussant" placeholder="名称">
+      </div>
+      <label class="col-sm-1 col-form-label">性别</label>
+      <div class="col-sm-5">
+        <div class="icheck-info" style="display:inline-block;margin-right:2rem;">
+          <input type="radio" id="someRadioId1" name="discussantSex" value="1"/>
+          <label for="someRadioId1"><span class="iconfont icon-fuzeren"> 男</span></label>
+        </div>
+        <div class="icheck-danger" style="display:inline-block;">
+          <input type="radio" id="someRadioId2" name="discussantSex" value="0"/>
+          <label for="someRadioId2"><span class="iconfont icon-wode1"> 女</span></label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="discussantEmail" class="col-sm-1 col-form-label">Email</label>
+      <div class="col-sm-11">
+        <input type="email" class="form-control" id="discussantEmail" name="discussantEmail" placeholder="Email">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="discussantOpinion" class="col-sm-1 col-form-label">发言</label>
+      <div class="col-sm-11">
+        <textarea class="form-control" aria-label="With textarea" name="discussantOpinion" id="discussantOpinion" placeholder="您的意见..."></textarea>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <button onclick="submitDiscussantOption()" class="btn btn-primary" >Submit</button>
+    </div>
+  </form>
   <!--modal start-->
   <div class="modal fade" id="rewardAuthor" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -192,7 +228,44 @@
               $(".blog-bottom-btn .icon-xihuan4").css("display", "none");
             }
         });
-
+    }
+    // 提交留言
+    function submitDiscussantOption(){
+        var discussant = $("#discussant").val();
+        var discussantSex = $('input[name="discussantSex"]:checked').val();
+        var discussantEmail = $("#discussantEmail").val();
+        var discussantOpinion = $("#discussantOpinion").val();
+        var blogId = $("#blogId").val();
+        var param = {"discussant":discussant, "discussantSex":discussantSex, "discussantEmail":discussantEmail,
+            "discussantOpinion":discussantOpinion, "blogId":blogId};
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            url:"/blog/saveBlogDiscussant",
+            contentType:"application/json; charset=utf-8",
+            data:JSON.stringify(param),
+            success:function(data){
+                var obj = data;
+                if(!$.isEmptyObject(obj) && obj.success){
+                    toast({
+                        message: "提交成功",
+                        time:1000
+                    });
+                    $("#discussantForm").reset();
+                }else{
+                    toast({
+                        message: obj.msg,
+                        time:1000
+                    });
+                }
+            },
+            error:function(){
+                toast({
+                    message: "系统异常",
+                    time:1000
+                });
+            }
+        });
     }
 </script>
 </html>

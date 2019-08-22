@@ -5,15 +5,17 @@ import com.ck.orangeblogcommon.annotation.RecordBlogView;
 import com.ck.orangeblogcommon.constant.CommonConstant;
 import com.ck.orangeblogdao.po.ImageBlogPo;
 import com.ck.orangeblogdao.pojo.ResultData;
+import com.ck.orangeblogdao.vo.BlogDiscussantVo;
+import com.ck.orangeblogservice.service.IBlogDiscussantService;
 import com.ck.orangeblogservice.service.ImageBlogService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +32,8 @@ public class BlogController {
 
     @Autowired
     private ImageBlogService imageBlogService;
+    @Autowired
+    private IBlogDiscussantService iBlogDiscussantService;
 
     /**
      * 主页的blogs展示
@@ -49,5 +53,32 @@ public class BlogController {
     @ResponseBody
     public ResultData praiseBlog(@PathVariable("blogId") String id, HttpServletRequest request){
         return imageBlogService.praiseBlog(id, request);
+    }
+
+//    @RequestMapping(value = "/saveBlogDiscussant", method = RequestMethod.POST)
+//    @ApiOperation(value = "发表观点", notes = "发表观点", httpMethod = CommonConstant.HTTP_METHOD_POST)
+//    @ResponseBody
+//    public ResultData saveBlogDiscussant(@RequestParam String discussant, @RequestParam String discussantEmail, @RequestParam String discussantOpinion
+//            , @RequestParam String discussantSex, @RequestParam String blogId) {
+//        BlogDiscussantVo blogDiscussantVo = BlogDiscussantVo.builder()
+//                .discussant(discussant)
+//                .discussantEmail(discussantEmail)
+//                .discussantOpinion(discussantOpinion)
+//                .discussantSex(discussantSex)
+//                .blogId(blogId)
+//                .build();
+//        return iBlogDiscussantService.saveBlogDiscussant(blogDiscussantVo);
+//    }
+
+    @RequestMapping(value = "/saveBlogDiscussant", method = RequestMethod.POST)
+    @ApiOperation(value = "发表观点", notes = "发表观点", httpMethod = CommonConstant.HTTP_METHOD_POST)
+    @ApiImplicitParam(name = "blogDiscussantVo", value = "讨论信息",paramType = CommonConstant.PARAM_TYPE_BODY, dataType = "BlogDiscussantVo")
+    @ResponseBody
+    public ResultData saveBlogDiscussant(@Validated @RequestBody BlogDiscussantVo blogDiscussantVo,
+                                         BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return ResultData.error(bindingResult.getFieldError().getDefaultMessage());
+        }
+        return iBlogDiscussantService.saveBlogDiscussant(blogDiscussantVo);
     }
 }
