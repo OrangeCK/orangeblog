@@ -13,6 +13,8 @@
     <script th:src="@{/js/highlightjs-line-numbers.min.js}" ></script>
     <script th:src="@{/js/lm-toast.js}" ></script>
     <script th:src="@{/js/viewer.min.js}" ></script>
+    <script th:src="@{/js/spin.min.js}" ></script>
+    <script th:src="@{/js/ladda.min.js}" ></script>
 	<script>window.jQuery || document.write('<script th:src="@{/js/bootstrap.bundle.min.js}"><\/script>')</script>
     <link rel="shortcut icon" type="image/x-iccnpmon" th:href="@{/image/lm_favicon.ico}">
     <link th:href="@{/css/iconfont.css}" rel="styleSheet" type="text/css"/>
@@ -23,6 +25,7 @@
     <link th:href="@{/css/lm-toast.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/viewer.min.css}" rel="styleSheet" type="text/css">
     <link th:href="@{/css/icheck-bootstrap.min.css}" rel="styleSheet" type="text/css">
+    <link th:href="@{/css/ladda-themeless.min.css}" rel="styleSheet" type="text/css">
     <title th:text="${blog.title}"></title>
   </head>
   <style type="text/css">
@@ -45,8 +48,10 @@
 	  }
 	 .my-sm-0:hover{
 		background-color:orange;
-		
 	 }
+     #discussantForm .form-group{
+        margin-bottom: 0.2rem;
+     }
 	 .header-famliy{
 		font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 	 }
@@ -97,40 +102,45 @@
   <div id="content" class="container marketing" th:utext="${blog.content}" style="padding: 0;">
   </div>
   <!--留言区-->
-  <form id="discussantForm" style="width:80%;padding-top:1rem;margin:20px auto 0 auto;" class="lm-shadow" >
-    <div class="form-group row">
-      <label for="discussant" class="col-sm-1 col-form-label">名称</label>
-      <div class="col-sm-5">
-        <input type="text" class="form-control" name="discussant" id="discussant" placeholder="名称">
-      </div>
-      <label class="col-sm-1 col-form-label">性别</label>
-      <div class="col-sm-5">
-        <div class="icheck-info" style="display:inline-block;margin-right:2rem;">
-          <input type="radio" id="someRadioId1" name="discussantSex" value="1"/>
-          <label for="someRadioId1"><span class="iconfont icon-fuzeren"> 男</span></label>
+  <div class="lm-shadow discuss" >
+    <div id="discussantForm" >
+      <div class="form-group row">
+        <label for="discussant" class="col-sm-1 col-form-label">名称</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control form-control-sm" name="discussant" id="discussant" placeholder="名称">
         </div>
-        <div class="icheck-danger" style="display:inline-block;">
-          <input type="radio" id="someRadioId2" name="discussantSex" value="0"/>
-          <label for="someRadioId2"><span class="iconfont icon-wode1"> 女</span></label>
+        <label class="col-sm-1 col-form-label">性别</label>
+        <div class="col-sm-5">
+          <div class="icheck-info inblock" style="margin-right:2rem;">
+            <input type="radio" id="someRadioId1" name="discussantSex" value="1"/>
+            <label for="someRadioId1"><span class="iconfont icon-fuzeren"> 男</span></label>
+          </div>
+          <div class="icheck-danger inblock">
+            <input type="radio" id="someRadioId2" name="discussantSex" value="0"/>
+            <label for="someRadioId2"><span class="iconfont icon-wode1"> 女</span></label>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <label for="discussantEmail" class="col-sm-1 col-form-label">Email</label>
-      <div class="col-sm-11">
-        <input type="email" class="form-control" id="discussantEmail" name="discussantEmail" placeholder="Email">
+      <div class="form-group row">
+        <label for="discussantEmail" class="col-sm-1 col-form-label">Email</label>
+        <div class="col-sm-11">
+          <input type="email" class="form-control form-control-sm" id="discussantEmail" name="discussantEmail" placeholder="Email">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="discussantOpinion" class="col-sm-1 col-form-label">发言</label>
+        <div class="col-sm-11">
+          <textarea class="form-control form-control-sm" aria-label="With textarea" name="discussantOpinion" id="discussantOpinion" placeholder="您的意见..."></textarea>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <button class="btn btn-primary ladda-button" data-style="expand-right" onclick="submitDiscussantOption()">提交</button>
       </div>
     </div>
-    <div class="form-group row">
-      <label for="discussantOpinion" class="col-sm-1 col-form-label">发言</label>
-      <div class="col-sm-11">
-        <textarea class="form-control" aria-label="With textarea" name="discussantOpinion" id="discussantOpinion" placeholder="您的意见..."></textarea>
-      </div>
+    <div id="discussant-option">
+      <input class="featurette inp_display" id="pageIndex_inp" value="1"/>
     </div>
-    <div style="text-align:center;">
-      <button onclick="submitDiscussantOption()" class="btn btn-primary" >Submit</button>
-    </div>
-  </form>
+  </div>
   <!--modal start-->
   <div class="modal fade" id="rewardAuthor" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -189,6 +199,7 @@
             hljs.initLineNumbersOnLoad();
         });
         $('#content img').viewer({toolbar:false,navbar:false});
+        getDiscussOpintion();
 	});
     // 回到顶部
     function backToTop(){
@@ -229,15 +240,61 @@
             }
         });
     }
+    // 获取留言列表
+    function getDiscussOpintion(){
+        var pageIndex = $("#pageIndex_inp").val();
+        var blogId = $("#blogId").val();
+        var param = JSON.stringify({"blogId":blogId, "pageIndex":pageIndex, "pageSize":10});
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            url:"/blog/blogDiscussantPageList",
+            data: param,
+            contentType: "application/json; charset=utf-8",
+            success:function(data){
+                var obj = data.data.records;
+                if(!$.isEmptyObject(data) && obj.length > 0){
+                    for(var i=0; i< obj.length; i++){
+                        spliceDiscussOption(obj[i]);
+                    }
+                    pageIndex = (+pageIndex) + 1;
+                    $("#pageIndex_inp").val(pageIndex);
+                }
+            }
+        });
+    }
+
+    // 拼接留言代码
+    function spliceDiscussOption(obj){
+        var html = "<hr class='featurette-divider'>";
+        html = html + "<div style='display:table;width:100%;'>";
+        html = html + "<div class='discussant_option' style='display:table-cell;width:60px;padding:0;vertical-align:top;'>";
+        html = html + "<div style='width:47px;height:47px;background: url(/image/shangwuportrait200.png) -4px -21px no-repeat;'></div></div>";
+        html = html + "<div style='display:table-cell;padding:0;vertical-align:top;font: bold 14px 仿宋,黑体;'>";
+        html = html + "<p style='margin:0;'>"+ obj.discussantOpinion +"</p>";
+        html = html + "<ul style='list-style:none;margin:1rem 0 0 0;font: bold 12px 仿宋,黑体;color:grey;float:right;'>";
+        html = html + "<li style='display:inline-block;'>"+ obj.createTime +"</li>";
+        html = html + "<li style='display:inline-block;'>点赞("+ obj.praiseNum +")</li>";
+        html = html + "</ul></div></div>";
+        $("#discussant-option").append(html);
+    }
+
     // 提交留言
     function submitDiscussantOption(){
         var discussant = $("#discussant").val();
         var discussantSex = $('input[name="discussantSex"]:checked').val();
         var discussantEmail = $("#discussantEmail").val();
         var discussantOpinion = $("#discussantOpinion").val();
+        if(isNotEmpty(discussantOpinion) && isNotEmpty(discussantEmail) && isNotEmpty(discussantSex) && isNotEmpty(discussant)){
+        }else{
+            popupMessage("请把信息填写完整！");
+            return;
+        }
         var blogId = $("#blogId").val();
         var param = {"discussant":discussant, "discussantSex":discussantSex, "discussantEmail":discussantEmail,
             "discussantOpinion":discussantOpinion, "blogId":blogId};
+        var ladda = Ladda.create(document.querySelector( '.ladda-button' ));
+        ladda.start();
         $.ajax({
             type:"POST",
             dataType:"json",
@@ -247,25 +304,44 @@
             success:function(data){
                 var obj = data;
                 if(!$.isEmptyObject(obj) && obj.success){
-                    toast({
-                        message: "提交成功",
-                        time:1000
-                    });
-                    $("#discussantForm").reset();
+                    popupMessage("提交成功");
+                    resetForm();
                 }else{
-                    toast({
-                        message: obj.msg,
-                        time:1000
-                    });
+                    popupMessage(obj.msg);
                 }
+                ladda.stop();
             },
             error:function(){
-                toast({
-                    message: "系统异常",
-                    time:1000
-                });
+                popupMessage("系统异常");
+                ladda.stop();
             }
         });
+    }
+
+    function resetForm(){
+        $("#discussant").val("");
+        $("#discussantEmail").val("");
+        $("#discussantOpinion").val("");
+    }
+
+    /**
+     * 弹出提示
+     */
+    function popupMessage(textMsg){
+        toast({
+            message: textMsg,
+            time:1000
+        });
+    }
+
+    /**
+     * 是否为空
+     */
+    function isNotEmpty(str) {
+        if (str != '' && str != null && typeof str != 'undefined' && str.length > 0) {
+            return true;
+        }
+        return false;
     }
 </script>
 </html>

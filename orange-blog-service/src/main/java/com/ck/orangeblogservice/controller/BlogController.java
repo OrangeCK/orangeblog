@@ -81,4 +81,12 @@ public class BlogController {
         }
         return iBlogDiscussantService.saveBlogDiscussant(blogDiscussantVo);
     }
+
+    @RequestMapping(value = "/blogDiscussantPageList", method = RequestMethod.POST)
+    @ApiOperation(value = "留言列表", notes = "留言列表", httpMethod = CommonConstant.HTTP_METHOD_POST)
+    @ApiImplicitParam(name = "blogDiscussantVo", value = "留言信息",paramType = CommonConstant.PARAM_TYPE_BODY, dataType = "BlogDiscussantVo")
+    @ResponseBody
+    public ResultData blogDiscussantPageList(@RequestBody BlogDiscussantVo blogDiscussantVo) {
+        return iBlogDiscussantService.blogDiscussantPageList(blogDiscussantVo);
+    }
 }

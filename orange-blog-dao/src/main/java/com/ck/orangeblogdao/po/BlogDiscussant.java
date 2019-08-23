@@ -4,9 +4,8 @@ import com.ck.orangeblogdao.pojo.BasePo;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
@@ -23,6 +22,8 @@ import lombok.experimental.Accessors;
 // chain 一个布尔值。如果为真，产生的setter返回的this而不是void。默认是假。如果fluent=true，那么chain默认为真
 @Accessors(chain = true)
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BlogDiscussant extends BasePo {
 
     /**
@@ -83,6 +84,7 @@ public class BlogDiscussant extends BasePo {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     /**

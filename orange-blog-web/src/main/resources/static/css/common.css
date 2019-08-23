@@ -134,3 +134,30 @@
     background-color:#DAA520;
     transform: scale(1.01);
 }
+.inblock{
+    display: inline-block;
+}
+.discuss{
+    width:90%;padding-top:1rem;margin:20px auto 0 auto;
+}
+.discuss .discuss-box{
+    display:table;width:100%;
+}
+.discuss .discussant_portrait{
+    display:table-cell;width:60px;padding:0;vertical-align:top;
+}
+.discuss .discussant_portrait .bg_img{
+    width:47px;height:47px;background: url(../image/shangwuportrait200.png) -4px -21px no-repeat;
+}
+.discuss .discussant_opt{
+    display:table-cell;padding:0;vertical-align:top;font: bold 14px 仿宋,黑体;
+}
+.discuss .discussant_opt p{
+    margin: 0;
+}
+.discuss .discussant_opt ul{
+    list-style:none;margin:1rem 0 0 0;font: bold 12px 仿宋,黑体;color:grey;float:right;
+}
+.discuss .discussant_opt ul li{
+    display:inline-block;
+}
