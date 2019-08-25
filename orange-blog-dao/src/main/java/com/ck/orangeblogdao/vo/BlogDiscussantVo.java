@@ -35,7 +35,7 @@ public class BlogDiscussantVo {
      * 讨论者邮箱
      */
     @ApiModelProperty(value = "讨论者邮箱", example = "457897@qq.com")
-    @NotBlank(message = "讨论者邮箱不能为空")
+    //@NotBlank(message = "讨论者邮箱不能为空")
     private String discussantEmail;
 
     /**

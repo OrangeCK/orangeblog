@@ -101,15 +101,19 @@
     <hr style="border-bottom: 1px solid #ddd;">
   <div id="content" class="container marketing" th:utext="${blog.content}" style="padding: 0;">
   </div>
+  <div class="blog-bottom-btn">
+    <button type="button" class="btn btn-danger iconfont icon-xihuan4" th:data-id="${blog.id}" onclick="praiseBlog(this.getAttribute('data-id'))">&nbsp喜欢</button>
+    <button type="button" class="btn btn-primary iconfont icon-qian1" data-toggle="modal" data-target="#rewardAuthor">&nbsp打赏</button>
+  </div
   <!--留言区-->
   <div class="lm-shadow discuss" >
     <div id="discussantForm" >
       <div class="form-group row">
-        <label for="discussant" class="col-sm-1 col-form-label">名称</label>
+        <label for="discussant" class="col-sm-1 col-form-label iconfont icon-mingcheng"></label>
         <div class="col-sm-5">
-          <input type="text" class="form-control form-control-sm" name="discussant" id="discussant" placeholder="名称">
+          <input type="text" class="form-control form-control-sm" name="discussant" id="discussant" placeholder="昵称">
         </div>
-        <label class="col-sm-1 col-form-label">性别</label>
+        <label class="col-sm-1 col-form-label iconfont icon-xingbie"></label>
         <div class="col-sm-5">
           <div class="icheck-info inblock" style="margin-right:2rem;">
             <input type="radio" id="someRadioId1" name="discussantSex" value="1"/>
@@ -122,23 +126,23 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="discussantEmail" class="col-sm-1 col-form-label">Email</label>
+        <label for="discussantEmail" class="col-sm-1 col-form-label iconfont icon-youxiang"></label>
         <div class="col-sm-11">
-          <input type="email" class="form-control form-control-sm" id="discussantEmail" name="discussantEmail" placeholder="Email">
+          <input type="email" class="form-control form-control-sm" id="discussantEmail" name="discussantEmail" placeholder="Email（保密个人信息，仅做联系方式---可不填）">
         </div>
       </div>
       <div class="form-group row">
-        <label for="discussantOpinion" class="col-sm-1 col-form-label">发言</label>
+        <label for="discussantOpinion" class="col-sm-1 col-form-label iconfont icon-fayan2"></label>
         <div class="col-sm-11">
-          <textarea class="form-control form-control-sm" aria-label="With textarea" name="discussantOpinion" id="discussantOpinion" placeholder="您的意见..."></textarea>
+          <textarea class="form-control form-control-sm" aria-label="With textarea" name="discussantOpinion" id="discussantOpinion" placeholder="您的留言..."></textarea>
         </div>
       </div>
       <div style="text-align:center;">
-        <button class="btn btn-primary ladda-button" data-style="expand-right" onclick="submitDiscussantOption()">提交</button>
+        <button class="btn btn-sm btn-success ladda-button" data-style="expand-right" onclick="submitDiscussantOption()">提交</button>
       </div>
     </div>
     <div id="discussant-option">
-      <input class="featurette inp_display" id="pageIndex_inp" value="1"/>
+      <input class="inp_display" id="pageIndex_inp" value="1"/>
     </div>
   </div>
   <!--modal start-->
@@ -155,10 +159,6 @@
     </div>
   </div>
   <!--modal end-->
-  <div class="blog-bottom-btn">
-    <button type="button" class="btn btn-danger iconfont icon-xihuan4" th:data-id="${blog.id}" onclick="praiseBlog(this.getAttribute('data-id'))">&nbsp喜欢</button>
-    <button type="button" class="btn btn-primary iconfont icon-qian1" data-toggle="modal" data-target="#rewardAuthor">&nbsp打赏</button>
-  </div>
 </main>
   <div class="float-right-p">
     <button type="button" class="btn btn-link float-btn"><div style="width:44px;height:44px;background: url(/image/zonghelogo.png) -68px -24px no-repeat;"></div></button>
@@ -198,7 +198,7 @@
             hljs.highlightBlock(block);
             hljs.initLineNumbersOnLoad();
         });
-        $('#content img').viewer({toolbar:false,navbar:false});
+        $('#content img').viewer({toolbar:false,navbar:false,movable:false});
         getDiscussOpintion();
 	});
     // 回到顶部
@@ -255,7 +255,8 @@
                 var obj = data.data.records;
                 if(!$.isEmptyObject(data) && obj.length > 0){
                     for(var i=0; i< obj.length; i++){
-                        spliceDiscussOption(obj[i]);
+                        var html = spliceDiscussOption(obj[i]);
+                        $("#discussant-option").append(html);
                     }
                     pageIndex = (+pageIndex) + 1;
                     $("#pageIndex_inp").val(pageIndex);
@@ -267,16 +268,16 @@
     // 拼接留言代码
     function spliceDiscussOption(obj){
         var html = "<hr class='featurette-divider'>";
-        html = html + "<div style='display:table;width:100%;'>";
-        html = html + "<div class='discussant_option' style='display:table-cell;width:60px;padding:0;vertical-align:top;'>";
-        html = html + "<div style='width:47px;height:47px;background: url(/image/shangwuportrait200.png) -4px -21px no-repeat;'></div></div>";
-        html = html + "<div style='display:table-cell;padding:0;vertical-align:top;font: bold 14px 仿宋,黑体;'>";
-        html = html + "<p style='margin:0;'>"+ obj.discussantOpinion +"</p>";
-        html = html + "<ul style='list-style:none;margin:1rem 0 0 0;font: bold 12px 仿宋,黑体;color:grey;float:right;'>";
-        html = html + "<li style='display:inline-block;'>"+ obj.createTime +"</li>";
-        html = html + "<li style='display:inline-block;'>点赞("+ obj.praiseNum +")</li>";
+        html = html + "<div class='discuss-box'>";
+        html = html + "<div class='discussant_portrait'>";
+        html = html + "<div class='bg_img"+obj.portrait+"'></div></div>";
+        html = html + "<div class='discussant_opt'>";
+        html = html + "<p><span class='discussant_name'>"+obj.discussant+"：</span>"+ obj.discussantOpinion +"</p>";
+        html = html + "<ul>";
+        html = html + "<li>"+ obj.createTime +"</li>";
+        html = html + "<li>&nbsp赞("+ obj.praiseNum +")</li>";
         html = html + "</ul></div></div>";
-        $("#discussant-option").append(html);
+        return html;
     }
 
     // 提交留言
@@ -285,7 +286,7 @@
         var discussantSex = $('input[name="discussantSex"]:checked').val();
         var discussantEmail = $("#discussantEmail").val();
         var discussantOpinion = $("#discussantOpinion").val();
-        if(isNotEmpty(discussantOpinion) && isNotEmpty(discussantEmail) && isNotEmpty(discussantSex) && isNotEmpty(discussant)){
+        if(isNotEmpty(discussantOpinion) && isNotEmpty(discussantSex) && isNotEmpty(discussant)){
         }else{
             popupMessage("请把信息填写完整！");
             return;
@@ -293,6 +294,7 @@
         var blogId = $("#blogId").val();
         var param = {"discussant":discussant, "discussantSex":discussantSex, "discussantEmail":discussantEmail,
             "discussantOpinion":discussantOpinion, "blogId":blogId};
+        param = JSON.stringify(param);
         var ladda = Ladda.create(document.querySelector( '.ladda-button' ));
         ladda.start();
         $.ajax({
@@ -300,11 +302,12 @@
             dataType:"json",
             url:"/blog/saveBlogDiscussant",
             contentType:"application/json; charset=utf-8",
-            data:JSON.stringify(param),
+            data:param,
             success:function(data){
                 var obj = data;
                 if(!$.isEmptyObject(obj) && obj.success){
                     popupMessage("提交成功");
+                    addDiscussantOptionHtml(param);
                     resetForm();
                 }else{
                     popupMessage(obj.msg);
@@ -316,6 +319,15 @@
                 ladda.stop();
             }
         });
+    }
+
+    function addDiscussantOptionHtml(obj){
+        obj = JSON.parse(obj);
+        obj["portrait"] = "0";
+        obj["createTime"] = new Date().format("yyyy-MM-dd hh:mm:ss");
+        obj["praiseNum"] = 0;
+        var html = spliceDiscussOption(obj);
+        $("#discussant-option").prepend(html);
     }
 
     function resetForm(){
@@ -342,6 +354,28 @@
             return true;
         }
         return false;
+    }
+
+    // 时间格式化处理
+    Date.prototype.format = function(fmt) {
+      var o = {
+        "M+" : this.getMonth()+1,                 //月份
+        "d+" : this.getDate(),                    //日
+        "h+" : this.getHours(),                   //小时
+        "m+" : this.getMinutes(),                 //分
+        "s+" : this.getSeconds(),                 //秒
+        "q+" : Math.floor((this.getMonth()+3)/3), //季度
+        "S"  : this.getMilliseconds()             //毫秒
+      };
+      if(/(y+)/.test(fmt)) {
+        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+      }
+      for(var k in o) {
+        if(new RegExp("("+ k +")").test(fmt)){
+          fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        }
+      }
+      return fmt;
     }
 </script>
 </html>

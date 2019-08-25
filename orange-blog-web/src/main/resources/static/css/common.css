@@ -138,26 +138,59 @@
     display: inline-block;
 }
 .discuss{
-    width:90%;padding-top:1rem;margin:20px auto 0 auto;
+    width:100%;padding-top:1rem;margin:20px auto 0 auto;
+}
+.discuss label{
+    padding:0 0 0 1rem;font-size:28px;
 }
 .discuss .discuss-box{
     display:table;width:100%;
 }
-.discuss .discussant_portrait{
+.discuss .discuss-box .discussant_portrait{
     display:table-cell;width:60px;padding:0;vertical-align:top;
 }
-.discuss .discussant_portrait .bg_img{
+.discuss .discuss-box .discussant_portrait .bg_img0{
     width:47px;height:47px;background: url(../image/shangwuportrait200.png) -4px -21px no-repeat;
 }
-.discuss .discussant_opt{
+.discuss .discuss-box .discussant_portrait .bg_img1{
+    width:47px;height:47px;background: url(../image/shangwuportrait200.png) -4px -78px no-repeat;
+}
+.discuss .discuss-box .discussant_portrait .bg_img2{
+    width:47px;height:47px;background: url(../image/shangwuportrait200.png) -4px -133px no-repeat;
+}
+.discuss .discuss-box .discussant_portrait .bg_img3{
+    width:47px;height:47px;background: url(../image/shangwuportrait200.png) -52px -23px no-repeat;
+}
+.discuss .discuss-box .discussant_portrait .bg_img4{
+    width:47px;height:47px;background: url(../image/shangwuportrait200.png) -99px -78px no-repeat;
+}
+.discuss .discuss-box .discussant_portrait .bg_img5{
+    width:47px;height:47px;background: url(../image/shangwuportrait200.png) -52px -133px no-repeat;
+}
+.discuss .discuss-box .discussant_portrait .bg_img6{
+    width:47px;height:47px;background: url(../image/shangwuportrait200.png) -100px -21px no-repeat;
+}
+.discuss .discuss-box .discussant_portrait .bg_img7{
+    width:47px;height:47px;background: url(../image/shangwuportrait200.png) -148px -78px no-repeat;
+}
+.discuss .discuss-box .discussant_portrait .bg_img8{
+    width:47px;height:47px;background: url(../image/shangwuportrait200.png) -100px -78px no-repeat;
+}
+.discuss .discuss-box .discussant_portrait .bg_img9{
+    width:47px;height:47px;background: url(../image/shangwuportrait200.png) -149px -21px no-repeat;
+}
+.discuss .discuss-box .discussant_opt{
     display:table-cell;padding:0;vertical-align:top;font: bold 14px 仿宋,黑体;
 }
-.discuss .discussant_opt p{
+.discuss .discuss-box .discussant_opt p{
     margin: 0;
 }
-.discuss .discussant_opt ul{
+.discuss .discuss-box .discussant_opt .discussant_name{
+    font: bold 16px 仿宋,黑体;color:grey;
+}
+.discuss .discuss-box .discussant_opt ul{
     list-style:none;margin:1rem 0 0 0;font: bold 12px 仿宋,黑体;color:grey;float:right;
 }
-.discuss .discussant_opt ul li{
+.discuss .discuss-box .discussant_opt ul li{
     display:inline-block;
 }

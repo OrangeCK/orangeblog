@@ -65,6 +65,10 @@ public class BlogDiscussantServiceImpl extends ServiceImpl<BlogDiscussantMapper,
         if(StringUtils.isNotBlank(blogDiscussantVo.getDiscussant())){
             blogDiscussantQueryWrapper.lambda().eq(BlogDiscussant::getDiscussant, blogDiscussantVo.getDiscussant());
         }
+        if(StringUtils.isNotBlank(blogDiscussantVo.getBlogId())){
+            blogDiscussantQueryWrapper.lambda().eq(BlogDiscussant::getBlogId, blogDiscussantVo.getBlogId());
+        }
+        blogDiscussantQueryWrapper.lambda().orderByDesc(BlogDiscussant::getCreateTime);
     }
 
 }
