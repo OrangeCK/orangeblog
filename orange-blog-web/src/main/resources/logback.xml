@@ -121,7 +121,7 @@
     </appender>
 
     <!--日志打印的包的范围，及分类日志文件存储 -->
-    <logger name="com.ck" additivity="true" level="DEBUG">
+    <logger name="com.ck" additivity="true" level="INFO">
         <appender-ref ref="ASYNC_DEBUG"/>
         <appender-ref ref="ASYNC_INFO"/>
         <appender-ref ref="ASYNC_WARN"/>
@@ -129,7 +129,7 @@
     </logger>
 
     <!-- 日志输出级别 -->
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

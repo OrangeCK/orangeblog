@@ -55,21 +55,6 @@ public class BlogController {
         return imageBlogService.praiseBlog(id, request);
     }
 
-//    @RequestMapping(value = "/saveBlogDiscussant", method = RequestMethod.POST)
-//    @ApiOperation(value = "发表观点", notes = "发表观点", httpMethod = CommonConstant.HTTP_METHOD_POST)
-//    @ResponseBody
-//    public ResultData saveBlogDiscussant(@RequestParam String discussant, @RequestParam String discussantEmail, @RequestParam String discussantOpinion
-//            , @RequestParam String discussantSex, @RequestParam String blogId) {
-//        BlogDiscussantVo blogDiscussantVo = BlogDiscussantVo.builder()
-//                .discussant(discussant)
-//                .discussantEmail(discussantEmail)
-//                .discussantOpinion(discussantOpinion)
-//                .discussantSex(discussantSex)
-//                .blogId(blogId)
-//                .build();
-//        return iBlogDiscussantService.saveBlogDiscussant(blogDiscussantVo);
-//    }
-
     @RequestMapping(value = "/saveBlogDiscussant", method = RequestMethod.POST)
     @ApiOperation(value = "发表观点", notes = "发表观点", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @ApiImplicitParam(name = "blogDiscussantVo", value = "讨论信息",paramType = CommonConstant.PARAM_TYPE_BODY, dataType = "BlogDiscussantVo")

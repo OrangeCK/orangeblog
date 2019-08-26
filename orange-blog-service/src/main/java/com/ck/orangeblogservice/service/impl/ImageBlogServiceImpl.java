@@ -157,10 +157,10 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
         imageBlogPo.setsUid(currentUser.getId());
         imageBlogPo.setsUt(DateUtil.date());
         int count = imageBlogMapper.updateById(imageBlogPo);
-        if(count > 0){
+        if(count > 0 && !redisUtil.hHasKey(LmEnum.BLOG_RECORDS_VIEW.getName(), id)){
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put(LmEnum.PRAISE_NUM.getName(), id);
-            jsonObject.put(LmEnum.BLOG_VIEW.getName(), id);
+            jsonObject.put(LmEnum.PRAISE_NUM.getName(), LmEnum.INT_0.getNum().longValue());
+            jsonObject.put(LmEnum.BLOG_VIEW.getName(), LmEnum.INT_0.getNum().longValue());
             redisUtil.hset(LmEnum.BLOG_RECORDS_VIEW.getName(), id, jsonObject);
         }else{
             return ResultData.error("更新失败");
