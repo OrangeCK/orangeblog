@@ -8,6 +8,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   margin: 0;
   padding: 0;
   border: 0;
+  /*解决html展示一长串数字、英文字母连在一起时不能自动换行*/
+  word-break:break-all;
+  word-wrap:break-word
 }
 
 ::-webkit-scrollbar {
