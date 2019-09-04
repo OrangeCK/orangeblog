@@ -15,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 /**
  * <p>
  * 博客讨论表 前端控制器
@@ -48,6 +50,24 @@ public class BlogDiscussantController {
     @ApiImplicitParam(name = "blogDiscussantVo", value = "讨论信息",paramType = CommonConstant.PARAM_TYPE_BODY, dataType = "BlogDiscussantVo")
     @ResponseBody
     public ResultData blogDiscussantPageList(@RequestBody BlogDiscussantVo blogDiscussantVo) {
+        if(blogDiscussantVo.getPageIndex() < 1){
+            blogDiscussantVo.setPageIndex(1);
+        }
+        if(blogDiscussantVo.getPageSize() < 1){
+            blogDiscussantVo.setPageSize(10);
+        }
+        return iBlogDiscussantService.blogDiscussantPageList(blogDiscussantVo);
+    }
+
+    @RequestMapping(value = "/blogDiscussantUpdate", method = RequestMethod.POST)
+    @ApiOperation(value = "讨论信息的更新", notes = "讨论信息的更新", httpMethod = CommonConstant.HTTP_METHOD_POST)
+    @ApiImplicitParam(name = "blogDiscussantVo", value = "讨论信息",paramType = CommonConstant.PARAM_TYPE_BODY, dataType = "BlogDiscussantVo")
+    @ResponseBody
+    public ResultData blogDiscussantUpdate(@Validated @RequestBody BlogDiscussantVo blogDiscussantVo,
+                                           BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return ResultData.error(bindingResult.getFieldError().getDefaultMessage());
+        }
         return iBlogDiscussantService.blogDiscussantPageList(blogDiscussantVo);
     }
 }

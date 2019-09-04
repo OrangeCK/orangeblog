@@ -53,6 +53,32 @@ public class BlogDiscussantServiceImpl extends ServiceImpl<BlogDiscussantMapper,
     }
 
     @Override
+    public ResultData updateBlogDiscussant(BlogDiscussantVo blogDiscussantVo) {
+        Date date = new Date();
+        if(StringUtils.isEmpty(blogDiscussantVo.getId())){
+            return ResultData.error("更新id不存在");
+        }
+        BlogDiscussant blogDiscussant = BlogDiscussant.builder()
+                .blogId(blogDiscussantVo.getBlogId())
+                .discussant(blogDiscussantVo.getDiscussant())
+                .discussantEmail(blogDiscussantVo.getDiscussantEmail())
+                .discussantOpinion(blogDiscussantVo.getDiscussantOpinion())
+                .discussantSex(blogDiscussantVo.getDiscussantSex())
+                .status(blogDiscussantVo.getStatus())
+                .blogDiscussantId(blogDiscussantVo.getBlogDiscussantId())
+                .portrait(blogDiscussantVo.getPortrait())
+                .updateTime(date)
+                .build();
+        blogDiscussant.setId(blogDiscussantVo.getId());
+        int count = baseMapper.updateById(blogDiscussant);
+        if(count > 0){
+            return ResultData.ok();
+        }else{
+            return ResultData.error("更新观点失败");
+        }
+    }
+
+    @Override
     public ResultData blogDiscussantPageList(BlogDiscussantVo blogDiscussantVo) {
         Page<BlogDiscussant> page = new Page(blogDiscussantVo.getPageIndex(), blogDiscussantVo.getPageSize());
         QueryWrapper<BlogDiscussant> blogDiscussantQueryWrapper = new QueryWrapper<>();
@@ -68,7 +94,9 @@ public class BlogDiscussantServiceImpl extends ServiceImpl<BlogDiscussantMapper,
         if(StringUtils.isNotBlank(blogDiscussantVo.getBlogId())){
             blogDiscussantQueryWrapper.lambda().eq(BlogDiscussant::getBlogId, blogDiscussantVo.getBlogId());
         }
-        blogDiscussantQueryWrapper.lambda().orderByDesc(BlogDiscussant::getCreateTime);
+        blogDiscussantQueryWrapper.lambda()
+                .eq(BlogDiscussant::getStatus, LmEnum.STATUS_1.getCode())
+                .orderByDesc(BlogDiscussant::getCreateTime);
     }
 
 }

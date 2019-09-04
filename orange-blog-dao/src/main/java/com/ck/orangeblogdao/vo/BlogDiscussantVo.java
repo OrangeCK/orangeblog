@@ -18,6 +18,8 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @ApiModel(value="BlogDiscussantVo",description="留言model")
 public class BlogDiscussantVo {
+    @ApiModelProperty(value = "自增id", example = "111")
+    private String id;
     /**
      * 博客id
      */

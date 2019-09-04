@@ -17,5 +17,7 @@ public interface IBlogDiscussantService extends IService<BlogDiscussant> {
 
     ResultData saveBlogDiscussant(BlogDiscussantVo blogDiscussantVo);
 
+    ResultData updateBlogDiscussant(BlogDiscussantVo blogDiscussantVo);
+
     ResultData blogDiscussantPageList(BlogDiscussantVo blogDiscussantVo);
 }
