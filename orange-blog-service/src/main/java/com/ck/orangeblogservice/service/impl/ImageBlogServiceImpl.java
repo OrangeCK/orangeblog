@@ -84,7 +84,7 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
         }else{
             ipage = (IPage<ImageBlogPo>) redisUtil.get(LmEnum.INDEX_BLOGS.getName());
         }
-        return ResultData.ok(ipage.getRecords());
+        return ResultData.ok(ipage);
     }
 
     // blog的喜欢量和浏览量从缓存中取最新
@@ -174,7 +174,7 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
     @Scheduled(cron = "0 0 * * * ?")
     @Override
     public void cacheImageBlogs() {
-        Page<ImageBlogPo> page = new Page<>(Integer.parseInt(CommonConstant.DEFAULT_PAGE_INDEX), Integer.parseInt(CommonConstant.DEFAULT_PAGE_SIZE));
+        Page<ImageBlogPo> page = new Page<>(Integer.parseInt(CommonConstant.DEFAULT_PAGE_INDEX), Integer.parseInt(CommonConstant.PAGE_SIZE_5));
         QueryWrapper<ImageBlogPo> imageBlogPoQueryWrapper = new QueryWrapper<>();
         imageBlogPoQueryWrapper.lambda()
                 .orderByDesc(ImageBlogPo::getPriorityNum, ImageBlogPo::getsCt)

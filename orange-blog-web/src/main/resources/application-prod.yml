@@ -67,6 +67,6 @@ elasticSearch:
     connectPerRoute: 50
 
 # mybatis plus插件
-#mybatis-plus:
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

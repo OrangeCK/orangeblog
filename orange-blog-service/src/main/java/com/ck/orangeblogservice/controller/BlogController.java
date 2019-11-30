@@ -40,12 +40,16 @@ public class BlogController {
      * @return
      */
     @RecordBlogView
-    @GetMapping(value = "/blogDetail/{blogId}")
-    public ModelAndView blogDetail(@PathVariable("blogId") String id){
+    @RequestMapping(value = "/blogDetail/{blogId}", method = RequestMethod.POST)
+    @ApiOperation(value = "blog的详情", notes = "blog的详情", httpMethod = CommonConstant.HTTP_METHOD_POST)
+    @ResponseBody
+    public ResultData blogDetail(@PathVariable("blogId") String id){
         ImageBlogPo imageBlogPo = imageBlogService.getById(id);
-        ModelAndView mv = new ModelAndView("lmblog");
-        mv.addObject("blog", imageBlogPo);
-        return mv;
+        if (imageBlogPo == null) {
+            return ResultData.error("抱歉，丢失了！");
+        } else {
+            return ResultData.ok(imageBlogPo);
+        }
     }
 
     @ApiOperation(value = "赞", notes = "赞", httpMethod = CommonConstant.HTTP_METHOD_POST)

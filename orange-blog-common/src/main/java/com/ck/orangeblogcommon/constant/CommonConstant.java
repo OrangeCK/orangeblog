@@ -14,5 +14,6 @@ public class CommonConstant {
     public static final String DEFAULT_PAGE_INDEX = "1";
     // 默认每页显示条数
     public static final String DEFAULT_PAGE_SIZE = "10";
+    public static final String PAGE_SIZE_5 = "5";
 
 }

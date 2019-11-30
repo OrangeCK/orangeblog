@@ -66,6 +66,17 @@ public class IndexController {
         }
     }
 
+    @ApiOperation(value = "blog的分页列表", notes = "blog的分页列表", httpMethod = CommonConstant.HTTP_METHOD_POST)
+    @RequestMapping(value = "/listBlogCardPage", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultData listBlogCardPage(@RequestBody ImageBlogVo imageBlogVo) {
+        if(imageBlogVo.getPageIndex() == 1){
+            return imageBlogService.blogsPageList(imageBlogVo, imageBlogVo.getPageIndex(), imageBlogVo.getPageSize(), false);
+        }else{
+            return imageBlogService.blogsPageList(imageBlogVo, imageBlogVo.getPageIndex(), imageBlogVo.getPageSize(), true);
+        }
+    }
+
     @ApiOperation(value = "搜索Blogs", notes = "搜索Blogs", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @RequestMapping(value = "/searchBlogs", method = RequestMethod.POST)
     @ResponseBody
