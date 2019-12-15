@@ -39,19 +39,14 @@ public class IndexController {
     @ApiOperation(value = "主页展示信息", notes = "主页展示信息", httpMethod = CommonConstant.HTTP_METHOD_POST)
     @RequestMapping(value = "/indexBlogs", method = RequestMethod.GET)
     public ModelAndView imagePageList(){
-//        ImageBlogVo imageBlogVo = new ImageBlogVo();
-//        ResultData resultData = imageBlogService.blogsPageList(imageBlogVo, Integer.parseInt(CommonConstant.DEFAULT_PAGE_INDEX),
-//                Integer.parseInt(CommonConstant.DEFAULT_PAGE_INDEX), false);
         ModelAndView mv = new ModelAndView("lmindex");
-//        mv.addObject("rows", ((IPage)resultData.getData()).getRecords());
-//        mv.addObject("total", ((IPage)resultData.getData()).getTotal());
         return mv;
     }
 
-    @ApiOperation(value = "得到更多的blogs", notes = "得到更多的blogs", httpMethod = CommonConstant.HTTP_METHOD_POST)
-    @RequestMapping(value = "/indexBlogsMore", method = RequestMethod.POST)
+    @ApiOperation(value = "blog的分页列表", notes = "blog的分页列表", httpMethod = CommonConstant.HTTP_METHOD_POST)
+    @RequestMapping(value = "/listBlogCardPage", method = RequestMethod.POST)
     @ResponseBody
-    public ResultData indexBlogsMore(@RequestBody ImageBlogVo imageBlogVo){
+    public ResultData listBlogCardPage(@RequestBody ImageBlogVo imageBlogVo) {
         boolean searchFlag = true;
         if(StringUtils.isNotBlank(imageBlogVo.getParentCategoryId())){
             searchFlag = false;
@@ -66,15 +61,18 @@ public class IndexController {
         }
     }
 
-    @ApiOperation(value = "blog的分页列表", notes = "blog的分页列表", httpMethod = CommonConstant.HTTP_METHOD_POST)
-    @RequestMapping(value = "/listBlogCardPage", method = RequestMethod.POST)
+    @ApiOperation(value = "最新发布前五条", notes = "最新发布前五条", httpMethod = CommonConstant.HTTP_METHOD_POST)
+    @RequestMapping(value = "/lastPublishBlogs", method = RequestMethod.POST)
     @ResponseBody
-    public ResultData listBlogCardPage(@RequestBody ImageBlogVo imageBlogVo) {
-        if(imageBlogVo.getPageIndex() == 1){
-            return imageBlogService.blogsPageList(imageBlogVo, imageBlogVo.getPageIndex(), imageBlogVo.getPageSize(), false);
-        }else{
-            return imageBlogService.blogsPageList(imageBlogVo, imageBlogVo.getPageIndex(), imageBlogVo.getPageSize(), true);
-        }
+    public ResultData lastPublishBlogs() {
+        return imageBlogService.orderPublishBlogs("s_ct");
+    }
+
+    @ApiOperation(value = "最受欢迎发布前五条", notes = "最受欢迎发布前五条", httpMethod = CommonConstant.HTTP_METHOD_POST)
+    @RequestMapping(value = "/popularPublishBlogs", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultData popularPublishBlogs() {
+        return imageBlogService.orderPublishBlogs("blog_view");
     }
 
     @ApiOperation(value = "搜索Blogs", notes = "搜索Blogs", httpMethod = CommonConstant.HTTP_METHOD_POST)

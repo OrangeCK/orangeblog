@@ -56,8 +56,8 @@ public class ImageBlogPo extends BasePo {
     private String sCid;
 
 	/*  */
-    @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm:ss", timezone = "GMT+8")
-    @JSONField(format = "yyyy年MM月dd日 HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @JSONField(format = "yyyy-MM-dd")
     private Date sCt;
 
 	/*  */

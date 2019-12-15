@@ -295,4 +295,16 @@ public class ImageBlogServiceImpl extends ServiceImpl<ImageBlogMapper, ImageBlog
         }
         return jsonArray;
     }
+
+    @Override
+    public ResultData orderPublishBlogs(String columns) {
+        QueryWrapper<ImageBlogPo> imageBlogPoQueryWrapper = new QueryWrapper<>();
+        imageBlogPoQueryWrapper.eq("status", LmEnum.BLOG_STATUS_1.getCode())
+                .select("title", "id")
+                .orderByDesc(columns)
+                .last("limit 5");
+        List<ImageBlogPo> imageBlogPoList = imageBlogMapper.selectList(imageBlogPoQueryWrapper);
+        return ResultData.ok(imageBlogPoList);
+    }
+
 }

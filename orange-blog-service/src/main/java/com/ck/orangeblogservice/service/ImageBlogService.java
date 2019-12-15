@@ -34,4 +34,6 @@ public interface ImageBlogService extends IService<ImageBlogPo> {
     ImageBlogPo getBlogDetailById(String id);
 
     JSONArray blogCategoryList();
+
+    ResultData orderPublishBlogs(String columns);
 }

@@ -29,8 +29,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        // 直接转发方式（Forward），浏览器只发出一次请求
-        registry.addViewController("/").setViewName("forward:/index/indexBlogs");
+        registry.addViewController("/").setViewName("redirect:/lmorange/");
+        registry.addViewController("/lmorange").setViewName("redirect:/lmorange/");
     }
 
     /**
